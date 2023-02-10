@@ -1,0 +1,65 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.8, pytest-7.2.1, pluggy-1.0.0
+rootdir: /home/runner/InCollege-Software-App
+collected 16 items
+
+Tests/testrunner.py ........F.......                                     [100%]
+
+=================================== FAILURES ===================================
+________________ test_register_inputs[First\nTest1now*\n-True] _________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f96fc1ac280>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f96fc1ac580>
+input = <_io.StringIO object at 0x7f96fd30c4c0>, results = True
+
+>   ???
+
+/home/runner/InCollegeSoftwareApp/Tests/testrunner.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <AccountSystem.AccountSystem object at 0x7f96fd320910>
+
+    def register(self):
+      success = False
+      if len(db) >= MAX_ACCOUNTS:
+        input(
+          "\nAll permitted accounts have been created, please come back later..."
+        )
+    
+      else:
+    
+        os.system("clear")
+        print(
+          f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - len(db)}):\n"
+        )
+        print(
+          "Password Requirements -\n\tMinimum of 8 characters\n\tMaximum of 12 characters\n\tAt least one capital letter\n\tOne digit\n\tOne special character\n"
+        )
+        while success == False:
+          username = input("Username: ")
+          password = input("Password: ")
+    
+          if not username in db:  # If username does not exist in the database
+    
+            if self.is_secure_password(password):
+              success = True
+              db[username] = password
+>             input("\nYou have successfully created an account...")
+E             EOFError: EOF when reading a line
+
+AccountSystem.py:62: EOFError
+----------------------------- Captured stdout call -----------------------------
+[H[2J[3JAccount Registration (# of Accounts Available - 5):
+
+Password Requirements -
+	Minimum of 8 characters
+	Maximum of 12 characters
+	At least one capital letter
+	One digit
+	One special character
+
+Username: Password: 
+You have successfully created an account...
+=========================== short test summary info ============================
+FAILED Tests/testrunner.py::test_register_inputs[First\nTest1now*\n-True] - E...
+========================= 1 failed, 15 passed in 2.25s =========================
