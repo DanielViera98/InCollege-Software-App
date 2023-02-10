@@ -1,7 +1,6 @@
 from debug import export_db, reset_db
 from App import InCollege
 from replit import db
-#Nonsense Code
 
 def main():
 	app = InCollege()
