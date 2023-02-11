@@ -14,7 +14,7 @@ def test_verify_password(passwords, results):
 
 reset_db()
 #Test register function on correct input, failing input, empty username, empty password, and empty username and password.
-@pytest.mark.parametrize("input, results", [('First\nTest1now*\n', True), ('Second\nFail\nSecond\n\n', False), ('\nFail\n\n', False), ('Fourth\n\n\n', False), ('\n\n\n', False)])
+@pytest.mark.parametrize("input, results", [('First\nTest1now*\n\n', True), ('Second\nFail\nSecond\n\n', False), ('\nFail\n\n', False), ('Fourth\n\n\n', False), ('\n\n\n', False)])
 def test_register_inputs(capsys, monkeypatch, input, results):
   input = StringIO(input)
   monkeypatch.setattr('sys.stdin', input)
