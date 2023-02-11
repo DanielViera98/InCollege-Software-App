@@ -27,12 +27,12 @@ def test_register_inputs(capsys, monkeypatch, input, results):
 input = (("D\nI234567*\n", True), ("D\nI234567*\n\n", False))
 #Test registering duplicate accounts
 def test_register_duplicate(capsys, monkeypatch):
-	reset_db()
-	for i,r in input:
-		print(i,r)
-		test = StringIO(i)
-		monkeypatch.setattr('sys.stdin', test)
-		assert system.register() == r
+  reset_db()
+  for i,r in input:
+    print(i,r)
+    test = StringIO(i)
+    monkeypatch.setattr('sys.stdin', test)
+    assert system.register() == r
 
 
 #Test login failure
@@ -47,15 +47,15 @@ def test_login_fail(capsys, monkeypatch):
 #Test login
 input = (("XASASDDASD\nI234567*\n\n", True), ("TASDASDASD\nI234567*\n\n", True))
 def test_login(capsys, monkeypatch):
-	reset_db()
-	for i,r in input:
-		test = StringIO(i)
-		monkeypatch.setattr('sys.stdin', test)
-		assert system.register() == r
-		
-	for i, r in input:
-		test = StringIO(i)
-		monkeypatch.setattr('sys.stdin', test)
-		assert system.login() == r
+  reset_db()
+  for i,r in input:
+    test = StringIO(i)
+    monkeypatch.setattr('sys.stdin', test)
+    assert system.register() == r
+    
+  for i, r in input:
+    test = StringIO(i)
+    monkeypatch.setattr('sys.stdin', test)
+    assert system.login() == r
 reset_db()
 

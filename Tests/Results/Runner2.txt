@@ -1,0 +1,72 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.8, pytest-7.2.1, pluggy-1.0.0
+rootdir: /home/runner/InCollege-Software-App
+collected 1 item
+
+Tests/testrunner2.py F                                                   [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_register_max_entries ___________________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f37b094b160>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f37b094a8c0>
+
+    def test_register_max_entries(capsys, monkeypatch):
+    	for i, r in input:
+    		print(i, r)
+    		test = StringIO(i)
+    		monkeypatch.setattr('sys.stdin', test)
+>   		assert system.register() == r
+
+Tests/testrunner2.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <AccountSystem.AccountSystem object at 0x7f37b1b04910>
+
+    def register(self):
+      success = False
+      if len(db) >= MAX_ACCOUNTS:
+        input(
+          "\nAll permitted accounts have been created, please come back later..."
+        )
+    
+      else:
+    
+        os.system("clear")
+        print(
+          f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - len(db)}):\n"
+        )
+        print(
+          "Password Requirements -\n\tMinimum of 8 characters\n\tMaximum of 12 characters\n\tAt least one capital letter\n\tOne digit\n\tOne special character\n"
+        )
+        while success == False:
+          username = input("Username: ")
+          password = input("Password: ")
+    
+          if not username in db:  # If username does not exist in the database
+    
+            if self.is_secure_password(password):
+              success = True
+              db[username] = password
+>             input("\nYou have successfully created an account...")
+E             EOFError: EOF when reading a line
+
+AccountSystem.py:62: EOFError
+----------------------------- Captured stdout call -----------------------------
+[H[2J[3JD1
+I234567*
+ True
+Account Registration (# of Accounts Available - 5):
+
+Password Requirements -
+	Minimum of 8 characters
+	Maximum of 12 characters
+	At least one capital letter
+	One digit
+	One special character
+
+Username: Password: 
+You have successfully created an account...
+=========================== short test summary info ============================
+FAILED Tests/testrunner2.py::test_register_max_entries - EOFError: EOF when r...
+============================== 1 failed in 0.76s ===============================
