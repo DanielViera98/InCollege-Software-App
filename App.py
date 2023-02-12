@@ -1,5 +1,6 @@
 from AccountSystem import AccountSystem
 import os
+import json
 
 
 class InCollege:
@@ -71,7 +72,24 @@ class InCollege:
 
 	# Handles job searches
 	def search_jobs(self):
+		self.post_jobs()
 		input("\nUnder construction...")
+  # Handles job posting
+	def post_jobs(username,job_title,description,employer,location,salary):
+		with open('job_postings.json', 'r') as file:
+		  jobs = json.load(file)
+
+    #adding a new job
+		jobs[username] = {
+    "title": job_title,
+    "description": description,
+    "employer": employer,
+    "location": location,
+    "salary": salary
+    }
+  # Write the updated data back to the file
+		with open('job_postings.json', 'w') as file:
+		  json.dump(jobs, file, indent=2)
 
 	# Handles networking
 	def network(self):
