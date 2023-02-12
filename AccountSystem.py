@@ -1,9 +1,7 @@
-from replit import db
 import json
 import os
 
 MAX_ACCOUNTS = 5
-
 
 
 class AccountSystem():
@@ -53,19 +51,19 @@ class AccountSystem():
       username = input("Username: ")
       password = input("Password: ")
 
-      try:
-
-        if db[username] == password:
-          success = True
-          input("\nYou have successfully logged in...")
-        else:
-          raise Exception()
-
-      except:
-        success = False
+      if self.verify_login_info(username, password):
+        success = True
+        input("\nYou have successfully logged in...")
+      else:
+        success, is_invalid_input = False, True
         input("\nIncorrect username or password. Please try again...")
-        retry = input("Keep trying? (Y/N): ")
-        retry = True if retry.lower() == "y" else False
+
+        while is_invalid_input:
+          retry = input("Keep trying? (Y/N): ")
+
+          if retry in ['y', 'n', 'Y', 'N']:
+            retry = True if retry.lower() == "y" else False
+            is_invalid_input = False if retry == True else False
 
     return success
 
@@ -81,7 +79,7 @@ class AccountSystem():
 
       os.system("clear")
       print(
-        f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - len(db)}):\n"
+        f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - len(self.num_accounts)}):\n"
       )
       print(
         "Password Requirements -\n\tMinimum of 8 characters\n\tMaximum of 12 characters\n\tAt least one capital letter\n\tOne digit\n\tOne special character\n"
@@ -92,7 +90,7 @@ class AccountSystem():
         last_name = input("Last name: ")
         first_name = input("First name: ")
 
-        if not username in db:  # If username does not exist in the database
+        if username not in self.accounts:  # If username does not exist in the database
 
           if self.is_secure_password(password):
             success = True
@@ -109,27 +107,35 @@ class AccountSystem():
 
     return success
 
+  def verify_login_info(self, username, password):
+    data = self.load_accounts()
+    if username in data:
+      return data[username]['password'] == password
+
+    else:
+      return False
+
   def has_capital_letter(self, password):
     for char in password:
       if char.isupper(): return True
     return False
-  
+
   def has_min_char(self, password):
     return len(password) >= 8
-  
+
   def has_max_char(self, password):
     return len(password) <= 12
-  
+
   def has_digit(self, password):
     for char in password:
       if char.isdigit(): return True
     return False
-  
+
   def has_special_char(self, password):
     for char in password:
       if not char.isalnum(): return True
     return False
-  
+
   def is_secure_password(self, password):
     return self.has_capital_letter(password) and\
       self.has_min_char(password) and\
@@ -137,4 +143,3 @@ class AccountSystem():
       self.has_max_char(password) and\
       self.has_digit(password) and\
       self.has_special_char(password)
-  
