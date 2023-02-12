@@ -1,10 +1,46 @@
 from replit import db
+import json
 import os
 
 MAX_ACCOUNTS = 5
 
 
+
 class AccountSystem():
+
+  # Handles login, returns True if login succeeded
+  def __init__(self):
+
+    self.accounts = self.load_accounts()
+    self.num_accounts = len(self.accounts)
+
+  def load_accounts(self):
+    with open('students.json', 'r') as f:
+      data = json.load(f)
+
+    return data
+
+  def update_num_accounts(self):
+    with open('students.json', 'r') as f:
+      data = json.load(f)
+
+    self.num_accounts = len(data)
+
+  def add_account(self, username, password, first_name, last_name):
+    # Load the contents of the JSON file into a Python dictionary
+    with open('students.json', 'r') as file:
+      data = json.load(file)
+
+    # Add a new object
+    data[username] = {
+      "password": password,
+      "first_name": first_name,
+      "last_name": last_name
+    }
+
+    # Write the updated data back to the file
+    with open('students.json', 'w') as file:
+      json.dump(data, file, indent=2)
 
   # Handles login, returns True if login succeeded
   def login(self):
@@ -36,7 +72,7 @@ class AccountSystem():
   # Handles registration, returns True if registration succeeded
   def register(self):
     success = False
-    if len(db) >= MAX_ACCOUNTS:
+    if self.num_accounts >= MAX_ACCOUNTS:
       input(
         "\nAll permitted accounts have been created, please come back later..."
       )
@@ -53,12 +89,15 @@ class AccountSystem():
       while success == False:
         username = input("Username: ")
         password = input("Password: ")
+        last_name = input("Last name: ")
+        first_name = input("First name: ")
 
         if not username in db:  # If username does not exist in the database
 
           if self.is_secure_password(password):
             success = True
-            db[username] = password
+            self.add_account(username, password, first_name, last_name)
+            self.update_num_accounts()
             input("\nYou have successfully created an account...")
           else:
             input("Invalid password...")
@@ -70,33 +109,32 @@ class AccountSystem():
 
     return success
 
-  ### Handles checking if registered password is secure ###
-
   def has_capital_letter(self, password):
     for char in password:
       if char.isupper(): return True
     return False
-
+  
   def has_min_char(self, password):
     return len(password) >= 8
-
+  
   def has_max_char(self, password):
     return len(password) <= 12
-
+  
   def has_digit(self, password):
     for char in password:
       if char.isdigit(): return True
     return False
-
+  
   def has_special_char(self, password):
     for char in password:
       if not char.isalnum(): return True
     return False
-
+  
   def is_secure_password(self, password):
     return self.has_capital_letter(password) and\
-        self.has_min_char(password) and\
-        self.has_max_char(password) and\
-        self.has_max_char(password) and\
-        self.has_digit(password) and\
-        self.has_special_char(password)
+      self.has_min_char(password) and\
+      self.has_max_char(password) and\
+      self.has_max_char(password) and\
+      self.has_digit(password) and\
+      self.has_special_char(password)
+  
