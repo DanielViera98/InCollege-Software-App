@@ -11,6 +11,6 @@ if __name__ == "__main__":
 	main()
 
 	# Uncomment below to clear the database
-	# reset_db()
+	reset_db()
 
 	export_db()
