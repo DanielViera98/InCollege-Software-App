@@ -9,7 +9,7 @@ class InCollege:
 		self.skills = [
 		 "Learn C", "Learn C#", "Learn Python", "Learn Java", "Learn HTML"
 		]
-		self.menu_options = ["Login", "Register"]
+		self.menu_options = ["Login","Why join InCollege", "Register"]
 		self.options = ["Search for jobs", "Find someone you know", "Learn a new skill"]
 		self.system = AccountSystem()
 
@@ -32,17 +32,21 @@ class InCollege:
 		while option != len(self.menu_options) + 1: 
 			os.system("clear")
 			print("Welcome to inCollege!\n")
+			print('"InCollege helped me find a job while in college"-student')
 			self.print_options(self.menu_options, "Exit")
 			
 			option = int(input("> "))
 			match option:
-				case 1: 
+				case 1:
 					if self.system.login(): 
 						self.show_options()
 				case 2: 
+					print("Video is now playing:")
+					input("('press ENTER when done')")
+				case 3: 
 					if self.system.register(): 
 						self.show_options()
-				case 3:	
+				case 4:	
 					return
 
 	# The options shown after successfully logging in
