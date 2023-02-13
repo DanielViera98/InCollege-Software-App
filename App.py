@@ -74,7 +74,7 @@ class InCollege:
 	def show_job_options(self):
 		option = -1
 
-		while option !=3:
+		while option !=4:
 			os.system("clear")
 			print("Choose a task:\n")
 			self.print_options(self.jobs_options)
@@ -87,6 +87,7 @@ class InCollege:
 					self.job_updater()
 				case 3:
 					return	
+				
 	# Handles job searches
 	def search_jobs(self):
 		input("\nUnder construction...")
@@ -124,10 +125,25 @@ class InCollege:
 		
 		return success
 
+	def search_people(self,first_name,last_name):
+		success = False
+		with open('students.json', 'r') as f:
+			data = json.load(f)
+		for username in data:
+			if((data[username]['first_name']==first_name)and (data[username]['last_name']==last_name)):
+				success = True
+				return success
+		return success
+		
 
 	# Handles networking
 	def network(self):
-		input("\nUnder construction...")
+		first_name = input("First Name: ")
+		last_name = input("Last Name: ")
+		if(self.search_people(first_name,last_name)):
+			input("They are a part of the InCollege system")
+		else:
+			input("They are not a part of the InCollege system")
 
 	# Handles learning new skills
 	def learn_skills(self):
