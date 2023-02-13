@@ -1,5 +1,6 @@
 import json
 import os
+from AccountAuth import is_secure_password, verify_login_info
 
 MAX_ACCOUNTS = 5
 
@@ -18,11 +19,11 @@ class AccountSystem():
 
     return data
 
-  def update_num_accounts(self):
-    with open('students.json', 'r') as f:
-      data = json.load(f)
+  def update_accounts(self):
+    data = self.load_accounts()
 
     self.num_accounts = len(data)
+    self.accounts = data
 
   def add_account(self, username, password, first_name, last_name):
     # Load the contents of the JSON file into a Python dictionary
@@ -40,6 +41,9 @@ class AccountSystem():
     with open('students.json', 'w') as file:
       json.dump(data, file, indent=2)
 
+    self.update_accounts()
+
+
   # Handles login, returns True if login succeeded
   def login(self):
 
@@ -51,7 +55,7 @@ class AccountSystem():
       username = input("Username: ")
       password = input("Password: ")
 
-      if self.verify_login_info(username, password):
+      if verify_login_info(self.accounts, username, password):
         success = True
         input("\nYou have successfully logged in...")
       else:
@@ -79,7 +83,7 @@ class AccountSystem():
 
       os.system("clear")
       print(
-        f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - len(self.num_accounts)}):\n"
+        f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS} - {self.num_accounts}:\n"
       )
       print(
         "Password Requirements -\n\tMinimum of 8 characters\n\tMaximum of 12 characters\n\tAt least one capital letter\n\tOne digit\n\tOne special character\n"
@@ -87,15 +91,14 @@ class AccountSystem():
       while success == False:
         username = input("Username: ")
         password = input("Password: ")
-        last_name = input("Last name: ")
-        first_name = input("First name: ")
+        first_name = input("First name: ").capitalize()
+        last_name = input("Last name: ").capitalize()
 
         if username not in self.accounts:  # If username does not exist in the database
 
-          if self.is_secure_password(password):
+          if is_secure_password(password):
             success = True
             self.add_account(username, password, first_name, last_name)
-            self.update_num_accounts()
             input("\nYou have successfully created an account...")
           else:
             input("Invalid password...")
@@ -106,40 +109,3 @@ class AccountSystem():
           return success
 
     return success
-
-  def verify_login_info(self, username, password):
-    data = self.load_accounts()
-    if username in data:
-      return data[username]['password'] == password
-
-    else:
-      return False
-
-  def has_capital_letter(self, password):
-    for char in password:
-      if char.isupper(): return True
-    return False
-
-  def has_min_char(self, password):
-    return len(password) >= 8
-
-  def has_max_char(self, password):
-    return len(password) <= 12
-
-  def has_digit(self, password):
-    for char in password:
-      if char.isdigit(): return True
-    return False
-
-  def has_special_char(self, password):
-    for char in password:
-      if not char.isalnum(): return True
-    return False
-
-  def is_secure_password(self, password):
-    return self.has_capital_letter(password) and\
-      self.has_min_char(password) and\
-      self.has_max_char(password) and\
-      self.has_max_char(password) and\
-      self.has_digit(password) and\
-      self.has_special_char(password)
