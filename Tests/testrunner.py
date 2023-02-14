@@ -11,7 +11,7 @@ def test_verify_password(passwords, results):
   assert system.is_secure_password(passwords) == results
 
 #Test register function on correct input, failing input, empty username, empty password, and empty username and password.
-@pytest.mark.parametrize("input, results", [('First\nTest1now*\n\n', True), ('Second\nFail\nSecond\n\n', False), ('\nFail\n\n', False), ('Fourth\n\n\n', False), ('\n\n\n', False)])
+@pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
 def test_register_inputs(capsys, monkeypatch, input, results):
   input = StringIO(input)
   monkeypatch.setattr('sys.stdin', input)
@@ -25,7 +25,6 @@ input = (("D\nI234567*\n", True), ("D\nI234567*\n\n", False))
 #Test registering duplicate accounts
 def test_register_duplicate(capsys, monkeypatch):
     for i,r in input:
-      print(i,r)
       test = StringIO(i)
       monkeypatch.setattr('sys.stdin', test)
       assert system.register() == r
