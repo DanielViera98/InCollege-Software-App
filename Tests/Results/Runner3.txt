@@ -8,8 +8,8 @@ Tests/testrunner3.py F                                                   [100%]
 =================================== FAILURES ===================================
 __________________________________ test_Tasks __________________________________
 
-capsys = <_pytest.capture.CaptureFixture object at 0x7f4b6bcab610>
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4b6bcab730>
+capsys = <_pytest.capture.CaptureFixture object at 0x7f670e15d300>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f670e15d420>
 
     def test_Tasks(capsys, monkeypatch):
       test = StringIO(input)
@@ -22,7 +22,7 @@ App.py:66: in show_options
     self.show_job_options()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <App.InCollege object at 0x7f4b6bcaace0>
+self = <App.InCollege object at 0x7f670e15c760>
 
     def show_job_options(self):
     	option = -1
@@ -51,4 +51,4 @@ App.py:82: ValueError
 > 
 =========================== short test summary info ============================
 FAILED Tests/testrunner3.py::test_Tasks - ValueError: invalid literal for int...
-============================== 1 failed in 0.05s ===============================
+============================== 1 failed in 0.07s ===============================

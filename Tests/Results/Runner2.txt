@@ -1,36 +1,51 @@
 ============================= test session starts ==============================
 platform linux -- Python 3.10.8, pytest-7.2.1, pluggy-1.0.0
 rootdir: /home/runner/InCollege-Software-App
-collected 0 items / 1 error
+collected 1 item
 
-==================================== ERRORS ====================================
-____________________ ERROR collecting Tests/testrunner2.py _____________________
-Tests/testrunner2.py:4: in <module>
-    from debug import reset_db
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/bdb.py:94: in trace_dispatch
-    return self.dispatch_return(frame, arg)
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/bdb.py:153: in dispatch_return
-    self.user_return(frame, arg)
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/pdb.py:294: in user_return
-    self.interaction(frame, None)
-venv/lib/python3.10/site-packages/IPython/core/debugger.py:335: in interaction
-    OldPdb.interaction(self, frame, traceback)
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/pdb.py:357: in interaction
-    self._cmdloop()
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/pdb.py:322: in _cmdloop
-    self.cmdloop()
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/cmd.py:126: in cmdloop
-    line = input(self.prompt)
-venv/lib/python3.10/site-packages/_pytest/capture.py:192: in read
-    raise OSError(
-E   OSError: pytest: reading from stdin while output is captured!  Consider using `-s`.
-------------------------------- Captured stdout --------------------------------
---Return--
-None
-> [0;32m<frozen importlib._bootstrap>[0m(241)[0;36m_call_with_frames_removed[0;34m()[0m
+Tests/testrunner2.py F                                                   [100%]
 
-ipdb> 
+=================================== FAILURES ===================================
+__________________________ test_register_max_entries ___________________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f10687e90f0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f10687e9120>
+
+    def test_register_max_entries(capsys, monkeypatch):
+    	for i, r in input:
+    		print(i, r)
+    		test = StringIO(i)
+    		monkeypatch.setattr('sys.stdin', test)
+>   		assert system.register() == r
+
+Tests/testrunner2.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <AccountSystem.AccountSystem object at 0x7f10687e8760>
+
+    def register(self):
+      success = False
+      if self.num_accounts >= MAX_ACCOUNTS:
+        input(
+          "\nAll permitted accounts have been created, please come back later..."
+        )
+    
+      else:
+    
+        os.system("clear")
+        print(
+>         f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - len(self.num_accounts)}):\n"
+        )
+E       TypeError: object of type 'int' has no len()
+
+AccountSystem.py:82: TypeError
+----------------------------- Captured stdout call -----------------------------
+[H[2J[3JD1
+I234567*
+A
+a
+
+ True
 =========================== short test summary info ============================
-ERROR Tests/testrunner2.py - OSError: pytest: reading from stdin while output...
-!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-=============================== 1 error in 1.09s ===============================
+FAILED Tests/testrunner2.py::test_register_max_entries - TypeError: object of...
+============================== 1 failed in 0.06s ===============================

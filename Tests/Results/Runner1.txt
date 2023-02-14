@@ -1,36 +1,184 @@
 ============================= test session starts ==============================
 platform linux -- Python 3.10.8, pytest-7.2.1, pluggy-1.0.0
 rootdir: /home/runner/InCollege-Software-App
-collected 0 items / 1 error
+collected 19 items
 
-==================================== ERRORS ====================================
-_____________________ ERROR collecting Tests/testrunner.py _____________________
-Tests/testrunner.py:3: in <module>
-    from debug import reset_db
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/bdb.py:94: in trace_dispatch
-    return self.dispatch_return(frame, arg)
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/bdb.py:153: in dispatch_return
-    self.user_return(frame, arg)
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/pdb.py:294: in user_return
-    self.interaction(frame, None)
-venv/lib/python3.10/site-packages/IPython/core/debugger.py:335: in interaction
-    OldPdb.interaction(self, frame, traceback)
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/pdb.py:357: in interaction
-    self._cmdloop()
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/pdb.py:322: in _cmdloop
-    self.cmdloop()
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/cmd.py:126: in cmdloop
-    line = input(self.prompt)
-venv/lib/python3.10/site-packages/_pytest/capture.py:192: in read
-    raise OSError(
-E   OSError: pytest: reading from stdin while output is captured!  Consider using `-s`.
-------------------------------- Captured stdout --------------------------------
---Return--
-None
-> [0;32m<frozen importlib._bootstrap>[0m(241)[0;36m_call_with_frames_removed[0;34m()[0m
+Tests/testrunner.py ........FFFFFFFFF.F                                  [100%]
 
-ipdb> 
+=================================== FAILURES ===================================
+____________ test_register_inputs[First\nTest1now*\nA\na\n\n-True] _____________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7fe4b37425f0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe4b3742590>
+input = 'First\nTest1now*\nA\na\n\n', results = True
+
+    @pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
+    def test_register_inputs(capsys, monkeypatch, input, results):
+>     for i, r in input:
+E     ValueError: not enough values to unpack (expected 2, got 1)
+
+Tests/testrunner.py:16: ValueError
+__________ test_register_inputs[Second\n\nFail\nSecond\nB\nb\n-False] __________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7fe4b35beaa0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe4b35be980>
+input = 'Second\n\nFail\nSecond\nB\nb\n', results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
+    def test_register_inputs(capsys, monkeypatch, input, results):
+>     for i, r in input:
+E     ValueError: not enough values to unpack (expected 2, got 1)
+
+Tests/testrunner.py:16: ValueError
+_________________ test_register_inputs[\nC\nc\nFail\n\n-False] _________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7fe4b37423e0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe4b3741c00>
+input = '\nC\nc\nFail\n\n', results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
+    def test_register_inputs(capsys, monkeypatch, input, results):
+>     for i, r in input:
+E     ValueError: not enough values to unpack (expected 2, got 1)
+
+Tests/testrunner.py:16: ValueError
+________________ test_register_inputs[Fourth\nD\nd\n\n\n-False] ________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7fe4b35bf820>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe4b35bee90>
+input = 'Fourth\nD\nd\n\n\n', results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
+    def test_register_inputs(capsys, monkeypatch, input, results):
+>     for i, r in input:
+E     ValueError: not enough values to unpack (expected 2, got 1)
+
+Tests/testrunner.py:16: ValueError
+___________________ test_register_inputs[\nE\ne\n\n\n-False] ___________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7fe4b35ea5f0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe4b35e9930>
+input = '\nE\ne\n\n\n', results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
+    def test_register_inputs(capsys, monkeypatch, input, results):
+>     for i, r in input:
+E     ValueError: not enough values to unpack (expected 2, got 1)
+
+Tests/testrunner.py:16: ValueError
+___________________ test_register_inputs[\n\ne\n\n\n-False] ____________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7fe4b35bfbb0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe4b35bd060>
+input = '\n\ne\n\n\n', results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
+    def test_register_inputs(capsys, monkeypatch, input, results):
+>     for i, r in input:
+E     ValueError: not enough values to unpack (expected 2, got 1)
+
+Tests/testrunner.py:16: ValueError
+___________________ test_register_inputs[\nE\n\n\n\n-False] ____________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7fe4b35ea110>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe4b35eb0d0>
+input = '\nE\n\n\n\n', results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
+    def test_register_inputs(capsys, monkeypatch, input, results):
+>     for i, r in input:
+E     ValueError: not enough values to unpack (expected 2, got 1)
+
+Tests/testrunner.py:16: ValueError
+____________________ test_register_inputs[\n\n\n\n\n-False] ____________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7fe4b35bd390>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe4b35bde10>
+input = '\n\n\n\n\n', results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
+    def test_register_inputs(capsys, monkeypatch, input, results):
+>     for i, r in input:
+E     ValueError: not enough values to unpack (expected 2, got 1)
+
+Tests/testrunner.py:16: ValueError
+___________________________ test_register_duplicate ____________________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7fe4b35e83a0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe4b35e8460>
+
+    def test_register_duplicate(capsys, monkeypatch):
+        for i,r in input:
+          test = StringIO(i)
+          monkeypatch.setattr('sys.stdin', test)
+>         assert system.register() == r
+
+Tests/testrunner.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <AccountSystem.AccountSystem object at 0x7fe4b35eb280>
+
+    def register(self):
+      success = False
+      if self.num_accounts >= MAX_ACCOUNTS:
+        input(
+          "\nAll permitted accounts have been created, please come back later..."
+        )
+    
+      else:
+    
+        os.system("clear")
+        print(
+>         f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - len(self.num_accounts)}):\n"
+        )
+E       TypeError: object of type 'int' has no len()
+
+AccountSystem.py:82: TypeError
+----------------------------- Captured stdout call -----------------------------
+[H[2J[3J
+__________________________________ test_login __________________________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7fe4b35bfbb0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe4b35bf1c0>
+
+    def test_login(capsys, monkeypatch):
+      for i,r in input:
+        test = StringIO(i)
+        monkeypatch.setattr('sys.stdin', test)
+>       assert system.register() == r
+
+Tests/testrunner.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <AccountSystem.AccountSystem object at 0x7fe4b35eb280>
+
+    def register(self):
+      success = False
+      if self.num_accounts >= MAX_ACCOUNTS:
+        input(
+          "\nAll permitted accounts have been created, please come back later..."
+        )
+    
+      else:
+    
+        os.system("clear")
+        print(
+>         f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - len(self.num_accounts)}):\n"
+        )
+E       TypeError: object of type 'int' has no len()
+
+AccountSystem.py:82: TypeError
+----------------------------- Captured stdout call -----------------------------
+[H[2J[3J
 =========================== short test summary info ============================
-ERROR Tests/testrunner.py - OSError: pytest: reading from stdin while output ...
-!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-=============================== 1 error in 2.63s ===============================
+FAILED Tests/testrunner.py::test_register_inputs[First\nTest1now*\nA\na\n\n-True]
+FAILED Tests/testrunner.py::test_register_inputs[Second\n\nFail\nSecond\nB\nb\n-False]
+FAILED Tests/testrunner.py::test_register_inputs[\nC\nc\nFail\n\n-False] - Va...
+FAILED Tests/testrunner.py::test_register_inputs[Fourth\nD\nd\n\n\n-False] - ...
+FAILED Tests/testrunner.py::test_register_inputs[\nE\ne\n\n\n-False] - ValueE...
+FAILED Tests/testrunner.py::test_register_inputs[\n\ne\n\n\n-False] - ValueEr...
+FAILED Tests/testrunner.py::test_register_inputs[\nE\n\n\n\n-False] - ValueEr...
+FAILED Tests/testrunner.py::test_register_inputs[\n\n\n\n\n-False] - ValueErr...
+FAILED Tests/testrunner.py::test_register_duplicate - TypeError: object of ty...
+FAILED Tests/testrunner.py::test_login - TypeError: object of type 'int' has ...
+========================= 10 failed, 9 passed in 0.14s =========================
