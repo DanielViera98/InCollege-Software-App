@@ -12,6 +12,7 @@ class InCollege:
     ]
     self.menu_options = ["Login","Why join InCollege", "Register"]
     self.options = ["Search for jobs", "Find someone you know", "Learn a new skill"]
+    self.job_options = ["Search for jobs", "Post a job"]
     self.system = AccountSystem()
 
   # Helper method to print options
@@ -62,7 +63,7 @@ class InCollege:
       option = int(input("> "))
       match option:
         case 1:
-          self.search_jobs()
+          self.search_opportunities()
         case 2:
           self.network()
         case 3:
@@ -70,30 +71,35 @@ class InCollege:
         case 4:
           return
 
-  def show_job_options(self):
+  def search_opportunities(self):
     option = -1
 
     while option !=3:
       os.system("clear")
       print("Choose a task:\n")
-      self.print_options(self.jobs_options)
+      self.print_options(self.job_options)
 
       option = int(input("> "))
       match option:
         case 1:
           self.search_jobs()
         case 2:
-          self.job_updater()
+          self.post_jobs()
         case 3:
           return  
-  # Handles job searches
-  def search_jobs(self):
-    input("\nUnder construction...")
-  
-  # Handles job posting
-  def post_jobs(self,username,job_title,description,employer,location,salary):
+    
+  def load_job_postings(self):
     with open('job_postings.json', 'r') as file:
       jobs = json.load(file)
+      
+    return jobs
+
+  def search_jobs(self):
+    input("Under construction...")
+  
+  # Handles job posting
+  def update_jobs(self,username,job_title,description,employer,location,salary):
+    jobs = self.load_job_postings()
 
       #adding a new job
     jobs[username] = {
@@ -107,20 +113,28 @@ class InCollege:
     with open('job_postings.json', 'w') as file:
       json.dump(jobs, file, indent=2)
 
-  def job_updater(self):
+  def post_jobs(self):
     success = False
-
-    while success==False:
-      username = input("Username: ")
-      job_title = input("Job Title: ")
-      description = input("Description: ")
-      employer = input("Employer: ")
-      location = input("Location: ")
-      salary = input("salary: ")
-
-      self.post_jobs(username,job_title,description,employer,location,salary)
-      success = True
+    jobs = self.load_job_postings()
     
+    if len(jobs) >= 5:
+      input(
+        "\nAll permitted jobs have been created, please come back later..."
+      )
+          
+    else:
+
+      while success==False:
+        username = input("Username: ")
+        job_title = input("Job Title: ")
+        description = input("Description: ")
+        employer = input("Employer: ")
+        location = input("Location: ")
+        salary = input("salary: ")
+
+        self.update_jobs(username,job_title,description,employer,location,salary)
+        success = True
+      
     return success
 
   def search_people(self,first_name,last_name):
@@ -136,8 +150,8 @@ class InCollege:
 
   # Handles networking
   def network(self):
-    first_name = input("First Name: ")
-    last_name = input("Last Name: ")
+    first_name = input("First Name: ").capitalize()
+    last_name = input("Last Name: ").capitalize()
     if(self.search_people(first_name,last_name)):
       print("They are a part of the InCollege system")
       input(f"A message has been sent to {first_name} {last_name} to log in and connect with you")     
