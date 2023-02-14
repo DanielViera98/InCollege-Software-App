@@ -9,7 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
-develop-eggs/
+develop-eggs/git st
 dist/
 downloads/
 eggs/
@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 
 *.json
+*.pyc
+App.cpython-310.pyc
