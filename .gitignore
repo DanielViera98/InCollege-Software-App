@@ -161,3 +161,4 @@ cython_debug/
 
 *.json
 *.pyc
+App.cpython-310.pyc
