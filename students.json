@@ -1,27 +1,2 @@
 {
-  "tan123": {
-    "password": "123",
-    "first_name": "Tan",
-    "last_name": "Thai"
-  },
-  "tan1234": {
-    "password": "Tan_20114",
-    "first_name": "Thai",
-    "last_name": "Tan"
-  },
-  "tan12345": {
-    "password": "Tan_20114",
-    "first_name": "Thai",
-    "last_name": "Tan"
-  },
-  "tan321": {
-    "password": "Tan-1234*",
-    "first_name": "Thai",
-    "last_name": "Tan"
-  },
-  "c": {
-    "password": "c",
-    "first_name": "craig",
-    "last_name": "sankar"
-  }
 }

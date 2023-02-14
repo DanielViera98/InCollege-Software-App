@@ -1,19 +1,8 @@
 ============================= test session starts ==============================
 platform linux -- Python 3.10.8, pytest-7.2.1, pluggy-1.0.0
 rootdir: /home/runner/InCollege-Software-App
-collected 0 items / 1 error
+collected 25 items
 
-==================================== ERRORS ====================================
-________________ ERROR collecting Tests/Sprint 1/testrunner.py _________________
-ImportError while importing test module '/home/runner/InCollege-Software-App/Tests/Sprint 1/testrunner.py'.
-Hint: make sure your test modules/packages have valid Python names.
-Traceback:
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/importlib/__init__.py:126: in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-Tests/Sprint 1/testrunner.py:3: in <module>
-    from AccountSystem import AccountSystem
-E   ModuleNotFoundError: No module named 'AccountSystem'
-=========================== short test summary info ============================
-ERROR Tests/Sprint 1/testrunner.py
-!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-=============================== 1 error in 0.18s ===============================
+Tests/testrunner.py .........................                            [100%]
+
+============================== 25 passed in 0.10s ==============================
