@@ -122,25 +122,25 @@ class InCollege:
       success = True
     
     return success
-  
-def search_people(self,first_name,last_name):
-  success = False
-  with open('students.json', 'r') as f:
+
+  def search_people(self,first_name,last_name):
+    success = False
+    with open('students.json', 'r') as f:
       data = json.load(f)
-  for username in data:
+    for username in data:
       if((data[username]['first_name']==first_name)and (data[username]['last_name']==last_name)):
-          success = True
-          return success
-  return success
+        success = True
+        return success
+    return success
+    
 
-
-# Handles networking
-def network(self):
-  first_name = input("First Name: ")
-  last_name = input("Last Name: ")
-  if(self.search_people(first_name,last_name)):
+  # Handles networking
+  def network(self):
+    first_name = input("First Name: ")
+    last_name = input("Last Name: ")
+    if(self.search_people(first_name,last_name)):
       input("They are a part of the InCollege system")
-  else:
+    else:
       input("They are not a part of the InCollege system")
 
   # Handles learning new skills
