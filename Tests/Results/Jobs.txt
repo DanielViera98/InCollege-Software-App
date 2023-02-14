@@ -1,19 +1,250 @@
 ============================= test session starts ==============================
 platform linux -- Python 3.10.8, pytest-7.2.1, pluggy-1.0.0
 rootdir: /home/runner/InCollege-Software-App
-collected 0 items / 1 error
+collected 17 items
 
-==================================== ERRORS ====================================
-______________ ERROR collecting Tests/Sprint 2/testrunner_jobs.py ______________
-ImportError while importing test module '/home/runner/InCollege-Software-App/Tests/Sprint 2/testrunner_jobs.py'.
-Hint: make sure your test modules/packages have valid Python names.
-Traceback:
-/nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/importlib/__init__.py:126: in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-Tests/Sprint 2/testrunner_jobs.py:3: in <module>
-    from App import InCollege
-E   ModuleNotFoundError: No module named 'App'
+Tests/testrunner_jobs.py .FFFFFFFFFFFFFFFF                               [100%]
+
+=================================== FAILURES ===================================
+_ test_job_updater[First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n-True] _
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e9162410>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91622c0>
+input = <_io.StringIO object at 0x7f57e914e7a0>, results = True
+
+    @pytest.mark.parametrize("input, results", [('First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', True), ('\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n', False), ('Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n', False), ('Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n', False), ('Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n', False), ('\n\n\n\n\n\n\n', False), ('\'None\'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False)])
+    def test_job_updater(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:19: AttributeError
+_ test_job_updater[\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n-False] _
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e91c1e70>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c1db0>
+input = <_io.StringIO object at 0x7f57e914e560>, results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', True), ('\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n', False), ('Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n', False), ('Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n', False), ('Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n', False), ('\n\n\n\n\n\n\n', False), ('\'None\'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False)])
+    def test_job_updater(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:19: AttributeError
+_ test_job_updater[Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n-False] _
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e91c3e80>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c3e20>
+input = <_io.StringIO object at 0x7f57e914e0e0>, results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', True), ('\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n', False), ('Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n', False), ('Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n', False), ('Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n', False), ('\n\n\n\n\n\n\n', False), ('\'None\'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False)])
+    def test_job_updater(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:19: AttributeError
+__ test_job_updater[Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n-False] ___
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e92ea7a0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e92ea5c0>
+input = <_io.StringIO object at 0x7f57e914c790>, results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', True), ('\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n', False), ('Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n', False), ('Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n', False), ('Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n', False), ('\n\n\n\n\n\n\n', False), ('\'None\'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False)])
+    def test_job_updater(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:19: AttributeError
+__ test_job_updater[Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n-False] __
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e92ea320>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e92ea0e0>
+input = <_io.StringIO object at 0x7f57e914c9d0>, results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', True), ('\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n', False), ('Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n', False), ('Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n', False), ('Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n', False), ('\n\n\n\n\n\n\n', False), ('\'None\'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False)])
+    def test_job_updater(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:19: AttributeError
+_ test_job_updater[Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n-False] _
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e91c01c0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c0280>
+input = <_io.StringIO object at 0x7f57e914e560>, results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', True), ('\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n', False), ('Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n', False), ('Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n', False), ('Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n', False), ('\n\n\n\n\n\n\n', False), ('\'None\'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False)])
+    def test_job_updater(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:19: AttributeError
+_ test_job_updater[Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n-False] _
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e92ea260>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c0ac0>
+input = <_io.StringIO object at 0x7f57e92c2b00>, results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', True), ('\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n', False), ('Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n', False), ('Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n', False), ('Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n', False), ('\n\n\n\n\n\n\n', False), ('\'None\'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False)])
+    def test_job_updater(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:19: AttributeError
+____________________ test_job_updater[\n\n\n\n\n\n\n-False] ____________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e91c1b70>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c1720>
+input = <_io.StringIO object at 0x7f57e914e560>, results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', True), ('\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n', False), ('Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n', False), ('Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n', False), ('Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n', False), ('\n\n\n\n\n\n\n', False), ('\'None\'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False)])
+    def test_job_updater(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:19: AttributeError
+_ test_job_updater['None'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n-False] _
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e91c1030>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c3100>
+input = <_io.StringIO object at 0x7f57e914e680>, results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', True), ('\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n', False), ('Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n', False), ('Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n', False), ('Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n', False), ('\n\n\n\n\n\n\n', False), ('\'None\'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False)])
+    def test_job_updater(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:19: AttributeError
+_ test_job_updater[Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n-False] _
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e91c2470>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c2050>
+input = <_io.StringIO object at 0x7f57e92c2c20>, results = False
+
+    @pytest.mark.parametrize("input, results", [('First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', True), ('\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n', False), ('Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n', False), ('Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n', False), ('Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n', False), ('\n\n\n\n\n\n\n', False), ('\'None\'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False), ('Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n', False)])
+    def test_job_updater(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:19: AttributeError
+_____________ test_job_updater_max_five[First\n\n\n\n\n\n\n-True] ______________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e9163130>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e9162d10>
+input = <_io.StringIO object at 0x7f57e914e680>, results = True
+
+    @pytest.mark.parametrize("input, results", [("First\n\n\n\n\n\n\n", True), ("Second\n\n\n\n\n\n\n", True), ("Third\n\n\n\n\n\n\n", True), ("Fourth\n\n\n\n\n\n\n", True), ("Fifth\n\n\n\n\n\n\n", True), ("Sixth\n\n\n\n\n\n\n", False)])
+    def test_job_updater_max_five(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:26: AttributeError
+_____________ test_job_updater_max_five[Second\n\n\n\n\n\n\n-True] _____________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e91c1660>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c3310>
+input = <_io.StringIO object at 0x7f57e92c2e60>, results = True
+
+    @pytest.mark.parametrize("input, results", [("First\n\n\n\n\n\n\n", True), ("Second\n\n\n\n\n\n\n", True), ("Third\n\n\n\n\n\n\n", True), ("Fourth\n\n\n\n\n\n\n", True), ("Fifth\n\n\n\n\n\n\n", True), ("Sixth\n\n\n\n\n\n\n", False)])
+    def test_job_updater_max_five(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:26: AttributeError
+_____________ test_job_updater_max_five[Third\n\n\n\n\n\n\n-True] ______________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e91c0be0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c3fa0>
+input = <_io.StringIO object at 0x7f57e92c28c0>, results = True
+
+    @pytest.mark.parametrize("input, results", [("First\n\n\n\n\n\n\n", True), ("Second\n\n\n\n\n\n\n", True), ("Third\n\n\n\n\n\n\n", True), ("Fourth\n\n\n\n\n\n\n", True), ("Fifth\n\n\n\n\n\n\n", True), ("Sixth\n\n\n\n\n\n\n", False)])
+    def test_job_updater_max_five(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:26: AttributeError
+_____________ test_job_updater_max_five[Fourth\n\n\n\n\n\n\n-True] _____________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e91c3070>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c3190>
+input = <_io.StringIO object at 0x7f57e914e830>, results = True
+
+    @pytest.mark.parametrize("input, results", [("First\n\n\n\n\n\n\n", True), ("Second\n\n\n\n\n\n\n", True), ("Third\n\n\n\n\n\n\n", True), ("Fourth\n\n\n\n\n\n\n", True), ("Fifth\n\n\n\n\n\n\n", True), ("Sixth\n\n\n\n\n\n\n", False)])
+    def test_job_updater_max_five(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:26: AttributeError
+_____________ test_job_updater_max_five[Fifth\n\n\n\n\n\n\n-True] ______________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e91c02b0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c1f30>
+input = <_io.StringIO object at 0x7f57e92c2e60>, results = True
+
+    @pytest.mark.parametrize("input, results", [("First\n\n\n\n\n\n\n", True), ("Second\n\n\n\n\n\n\n", True), ("Third\n\n\n\n\n\n\n", True), ("Fourth\n\n\n\n\n\n\n", True), ("Fifth\n\n\n\n\n\n\n", True), ("Sixth\n\n\n\n\n\n\n", False)])
+    def test_job_updater_max_five(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:26: AttributeError
+_____________ test_job_updater_max_five[Sixth\n\n\n\n\n\n\n-False] _____________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f57e91c1090>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f57e91c2860>
+input = <_io.StringIO object at 0x7f57e92c2dd0>, results = False
+
+    @pytest.mark.parametrize("input, results", [("First\n\n\n\n\n\n\n", True), ("Second\n\n\n\n\n\n\n", True), ("Third\n\n\n\n\n\n\n", True), ("Fourth\n\n\n\n\n\n\n", True), ("Fifth\n\n\n\n\n\n\n", True), ("Sixth\n\n\n\n\n\n\n", False)])
+    def test_job_updater_max_five(capsys, monkeypatch, input, results):
+      input = StringIO(input)
+      monkeypatch.setattr('sys.stdin', input)
+>     assert college.job_updater() == results
+E     AttributeError: 'InCollege' object has no attribute 'job_updater'
+
+Tests/testrunner_jobs.py:26: AttributeError
 =========================== short test summary info ============================
-ERROR Tests/Sprint 2/testrunner_jobs.py
-!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-=============================== 1 error in 0.15s ===============================
+FAILED Tests/testrunner_jobs.py::test_job_updater[First\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n-True]
+FAILED Tests/testrunner_jobs.py::test_job_updater[\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n-False]
+FAILED Tests/testrunner_jobs.py::test_job_updater[Third\n\nRecruit people\nDaniel Viera\nFlorida\n10$\n-False]
+FAILED Tests/testrunner_jobs.py::test_job_updater[Fourth\nRecruiter\n\nDaniel Viera\nFlorida\n10$\n-False]
+FAILED Tests/testrunner_jobs.py::test_job_updater[Fifth\nRecruiter\nRecruit people\n\nFlorida\n10$\n-False]
+FAILED Tests/testrunner_jobs.py::test_job_updater[Sixth\nRecruiter\nRecruit people\nDaniel Viera\n\n10$\n-False]
+FAILED Tests/testrunner_jobs.py::test_job_updater[Seventh\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n\n-False]
+FAILED Tests/testrunner_jobs.py::test_job_updater[\n\n\n\n\n\n\n-False] - Att...
+FAILED Tests/testrunner_jobs.py::test_job_updater['None'\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n-False]
+FAILED Tests/testrunner_jobs.py::test_job_updater[Firstttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\nRecruiter\nRecruit people\nDaniel Viera\nFlorida\n10$\n-False]
+FAILED Tests/testrunner_jobs.py::test_job_updater_max_five[First\n\n\n\n\n\n\n-True]
+FAILED Tests/testrunner_jobs.py::test_job_updater_max_five[Second\n\n\n\n\n\n\n-True]
+FAILED Tests/testrunner_jobs.py::test_job_updater_max_five[Third\n\n\n\n\n\n\n-True]
+FAILED Tests/testrunner_jobs.py::test_job_updater_max_five[Fourth\n\n\n\n\n\n\n-True]
+FAILED Tests/testrunner_jobs.py::test_job_updater_max_five[Fifth\n\n\n\n\n\n\n-True]
+FAILED Tests/testrunner_jobs.py::test_job_updater_max_five[Sixth\n\n\n\n\n\n\n-False]
+========================= 16 failed, 1 passed in 0.23s =========================
