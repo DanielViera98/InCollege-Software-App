@@ -1,8 +1,8 @@
 {
   "tan123": {
     "password": "123",
-    "firstName": "Tan",
-    "lastName": "Thai"
+    "first_name": "Tan",
+    "last_name": "Thai"
   },
   "tan1234": {
     "password": "Tan_20114",
@@ -19,8 +19,8 @@
     "first_name": "Thai",
     "last_name": "Tan"
   },
-  "craig": {
-    "password": "Craig123*",
+  "c": {
+    "password": "c",
     "first_name": "craig",
     "last_name": "sankar"
   }
