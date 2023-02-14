@@ -8,11 +8,16 @@ file2 = open("Tests/Results/Runner2.txt", "w+")
 file3 = open("Tests/Results/Runner3.txt", "w+")
 file3 = open("Tests/Results/Jobs.txt", "w+")
 file3 = open("Tests/Results/Search_someone.txt", "w+")
+file3 = open("Tests/Results/Jobs_max.txt", "w+")
 os.system('clear');
 
 def empty_students():
   student = open("students.json", "w")
   student.write("{\n}")
+def empty_jobs():
+  student = open("job_postings.json", "w")
+  student.write("{\n}")
+  
 empty_students()
 #Run tests, print to results files.
 os.system('echo "Running testrunner.py"')
@@ -54,6 +59,7 @@ print(tempstr)
 file3.close()
 
 empty_students()
+empty_jobs()
 os.system('echo "Finished testrunner3.py\n\nRunning testrunner_jobs.py"')
 #os.system('pytest "./Tests/Sprint 2/testrunner_jobs.py" > Tests/Results/Jobs.txt')
 os.system('pytest "./Tests/testrunner_jobs.py" > Tests/Results/Jobs.txt')
@@ -63,20 +69,22 @@ tempstr = str(temp)
 #MUST ESCAPE ' CHARACTER FIRST
 tempstr = tempstr.translate(str.maketrans('', '', '\'=b\\'))
 tempstr = tempstr[1:len(tempstr)-1]
-print(tempstr)
+print(tempstr, "<--- Expected")
 file3.close()
 
-empty_students()
-os.system('echo "Finished testrunner_jobs.py\n\nRunning testrunner_search_someone.py"')
-#os.system('pytest "./Tests/Sprint 2/testrunner_search_someone.py" > Tests/Results/Search_someone.txt')
-os.system('pytest "./Tests/testrunner_search_someone.py" > Tests/Results/Search_someone.txt')
+empty_jobs()
+os.system('echo "Finished testrunner_jobs.py\n\nRunning testrunner_jobs_max.py"')
+#os.system('pytest "./Tests/Sprint 2/testrunner_jobs_max.py" > Tests/Results/Jobs.txt')
+os.system('pytest "./Tests/testrunner_jobs_max.py" > Tests/Results/Jobs_max.txt')
 #Get result from file, print to Shell
-temp = subprocess.check_output(['tail', '-1', 'Tests/Results/Search_someone.txt'])
+temp = subprocess.check_output(['tail', '-1', 'Tests/Results/Jobs_max.txt'])
 tempstr = str(temp)
 #MUST ESCAPE ' CHARACTER FIRST
 tempstr = tempstr.translate(str.maketrans('', '', '\'=b\\'))
 tempstr = tempstr[1:len(tempstr)-1]
 print(tempstr)
-os.system('echo "Finished testrunner_search_someone.py\n"')
 file3.close()
+
+empty_jobs()
 empty_students()
+os.system('echo "Finished testrunner_jobs.py\n"')
