@@ -3,6 +3,52 @@ platform linux -- Python 3.10.8, pytest-7.2.1, pluggy-1.0.0
 rootdir: /home/runner/InCollege-Software-App
 collected 1 item
 
-Tests/testrunner3.py .                                                   [100%]
+Tests/testrunner3.py F                                                   [100%]
 
-============================== 1 passed in 0.41s ===============================
+=================================== FAILURES ===================================
+__________________________________ test_Tasks __________________________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f4b6bcab610>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4b6bcab730>
+
+    def test_Tasks(capsys, monkeypatch):
+      test = StringIO(input)
+      monkeypatch.setattr('sys.stdin', test)
+>     assert college.show_options() == None
+
+Tests/testrunner3.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+App.py:66: in show_options
+    self.show_job_options()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <App.InCollege object at 0x7f4b6bcaace0>
+
+    def show_job_options(self):
+    	option = -1
+    
+    	while option !=3:
+    		os.system("clear")
+    		print("Choose a task:\n")
+    		self.print_options(self.jobs_options)
+    
+>   		option = int(input("> "))
+E     ValueError: invalid literal for int() with base 10: ''
+
+App.py:82: ValueError
+----------------------------- Captured stdout call -----------------------------
+[H[2J[3J[H[2J[3JChoose a task:
+
+1. Search for Jobs/Internships
+2. Find someone you know
+3. Learn a new skill
+4. Back
+> Choose a task:
+
+1. Search for Jobs/Internships
+2. Post Job
+3. Back
+> 
+=========================== short test summary info ============================
+FAILED Tests/testrunner3.py::test_Tasks - ValueError: invalid literal for int...
+============================== 1 failed in 0.05s ===============================
