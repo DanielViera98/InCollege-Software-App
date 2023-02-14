@@ -139,9 +139,11 @@ class InCollege:
     first_name = input("First Name: ")
     last_name = input("Last Name: ")
     if(self.search_people(first_name,last_name)):
-      input("They are a part of the InCollege system")
+      print("They are a part of the InCollege system")
+      input(f"A message has been sent to {first_name} {last_name} to log in and connect with you")     
     else:
-      input("They are not a part of the InCollege system")
+      print("They are not a part of the InCollege system")
+      input(f"An invite has been sent to {first_name} {last_name} to join InCollege")
 
   # Handles learning new skills
   def learn_skills(self):
