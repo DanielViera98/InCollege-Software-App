@@ -4,16 +4,16 @@ rootdir: /home/runner/InCollege-Software-App
 collected 0 items / 1 error
 
 ==================================== ERRORS ====================================
-________________ ERROR collecting Tests/Sprint 1/testrunner2.py ________________
-ImportError while importing test module '/home/runner/InCollege-Software-App/Tests/Sprint 1/testrunner2.py'.
+______________ ERROR collecting Tests/Sprint 2/testrunner_jobs.py ______________
+ImportError while importing test module '/home/runner/InCollege-Software-App/Tests/Sprint 2/testrunner_jobs.py'.
 Hint: make sure your test modules/packages have valid Python names.
 Traceback:
 /nix/store/hd4cc9rh83j291r5539hkf6qd8lgiikb-python3-3.10.8/lib/python3.10/importlib/__init__.py:126: in import_module
     return _bootstrap._gcd_import(name[level:], package, level)
-Tests/Sprint 1/testrunner2.py:2: in <module>
-    from AccountSystem import AccountSystem
-E   ModuleNotFoundError: No module named 'AccountSystem'
+Tests/Sprint 2/testrunner_jobs.py:3: in <module>
+    from App import InCollege
+E   ModuleNotFoundError: No module named 'App'
 =========================== short test summary info ============================
-ERROR Tests/Sprint 1/testrunner2.py
+ERROR Tests/Sprint 2/testrunner_jobs.py
 !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-=============================== 1 error in 0.14s ===============================
+=============================== 1 error in 0.15s ===============================

@@ -13,10 +13,9 @@ def test_verify_password(passwords, results):
 #Test register function on correct input, failing input, empty username, empty password, and empty username and password.
 @pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
 def test_register_inputs(capsys, monkeypatch, input, results):
-  for i, r in input:
-    input = StringIO(i)
-    monkeypatch.setattr('sys.stdin', input)
-    assert system.register() == r
+  input = StringIO(input)
+  monkeypatch.setattr('sys.stdin', input)
+  assert system.register() == results
 
 #Test register function for duplicate usernames
 
