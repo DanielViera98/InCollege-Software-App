@@ -26,5 +26,12 @@
     "employer": "g",
     "location": "g",
     "salary": "g"
+  },
+  "x": {
+    "title": "x",
+    "description": "x",
+    "employer": "x",
+    "location": "x",
+    "salary": "x"
   }
 }
