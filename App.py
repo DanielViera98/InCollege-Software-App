@@ -13,6 +13,7 @@ class InCollege:
     self.menu_options = ["Login","Why join InCollege", "Register", "Useful Links"]
     self.options = ["Search for jobs", "Find someone you know", "Learn a new skill"]
     self.job_options = ["Search for jobs", "Post a job"]
+    self.lang_options = ["English", "Spanish"]
     self.system = AccountSystem()
     self.user = False
     
@@ -21,6 +22,34 @@ class InCollege:
     self.menu()
     os.system("clear")
     print("Thank you. Goodbye!")
+  
+  def set_language(self):
+
+    option = -1
+    back_option = len(self.lang_options) + 1
+
+    while option != back_option:
+      os.system("clear")
+      print("Language:\n")
+      print_options(self.lang_options)
+
+      try:
+        option = int(input("> "))
+        
+        match option:
+          case 1:
+            self.user["language"] = "en"
+            input("Language changed to English...")
+          case 2:
+            self.user["language"] = "es"
+            input("Language changed to Spanish...")
+          case 3:
+            return 
+          case _:
+            raise Exception() 
+          
+      except:
+        input("Invalid input...")
 
   # Displays the menu
   def menu(self):
