@@ -161,7 +161,8 @@ class InCollege:
     jobs = self.load_job_postings()
     
     #adding a new job
-    jobs[name] = {
+    jobs[len(jobs)+1] = {
+    "poster": name,
     "title": job_title,
     "description": description,
     "employer": employer,
