@@ -48,8 +48,11 @@ class InCollege:
           case _:
             raise Exception() 
           
-      except:
-        input("Invalid input...")
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
 
   # Displays the menu
   def menu(self):
@@ -85,8 +88,11 @@ class InCollege:
           case _:
             raise Exception()
         
-      except:
-        input("Invalid input...")
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
   
   # The options shown after successfully logging in
   def show_options(self):
@@ -113,8 +119,11 @@ class InCollege:
           case _:
             raise Exception()
           
-      except:
-        input("Invalid input...")
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
 
 
   def search_opportunities(self):
@@ -140,7 +149,11 @@ class InCollege:
             raise Exception() 
           
       except Exception as e:
-        input(f"Error: {e}")
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+          
     
   def load_job_postings(self):
     filename = "job_postings.json"
@@ -243,6 +256,9 @@ class InCollege:
           case _:
             raise Exception()
           
-      except:
-        input("Invalid input...")
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
       
