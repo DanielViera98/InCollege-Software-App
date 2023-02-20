@@ -47,7 +47,7 @@ class AccountSystem():
 
     self.update_accounts()
     
-  def search_account(self, username):
+  def get_account_name(self, username):
     accounts = self.load_accounts()
     name = [accounts[username]["first_name"], accounts[username]["last_name"]]
     return name
