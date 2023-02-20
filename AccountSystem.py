@@ -8,12 +8,16 @@ class AccountSystem():
 
   # Handles login, returns True if login succeeded
   def __init__(self):
-
     self.accounts = self.load_accounts()
     self.num_accounts = len(self.accounts)
 
   def load_accounts(self):
-    with open('students.json', 'r') as f:
+    filename = 'students.json'
+    if not os.path.exists(filename):
+      with open(filename, 'w') as f:
+        f.write('{}')  
+        
+    with open(filename, 'r') as f:
       data = json.load(f)
 
     return data
@@ -69,7 +73,9 @@ class AccountSystem():
             retry = True if retry.lower() == "y" else False
             is_invalid_input = False if retry == True else False
 
-    return success
+    if success: 
+      return username
+    else: return False
 
   # Handles registration, returns True if registration succeeded
   def register(self):

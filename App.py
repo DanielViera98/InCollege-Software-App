@@ -14,6 +14,7 @@ class InCollege:
     self.options = ["Search for jobs", "Find someone you know", "Learn a new skill"]
     self.job_options = ["Search for jobs", "Post a job"]
     self.system = AccountSystem()
+    self.user = False
     
   # Engine
   def run(self):
@@ -25,6 +26,7 @@ class InCollege:
   def menu(self):
     option = -1
     back_option = len(self.menu_options) + 1
+    self.username = False
     
     while option != back_option: 
       os.system("clear")
@@ -37,7 +39,9 @@ class InCollege:
 
         match option:
           case 1:
-            if self.system.login(): 
+            username = self.system.login()
+            if not isinstance(username, bool):
+              self.user = username
               self.show_options()
           case 2: 
             print("Video is now playing:")
@@ -110,7 +114,12 @@ class InCollege:
         input("Invalid input...")
     
   def load_job_postings(self):
-    with open('job_postings.json', 'r') as file:
+    filename = "job_postings.json"
+    if not os.path.exists(filename):
+      with open(filename, 'w') as f:
+        f.write('{}')  
+        
+    with open(filename, 'r') as file:
       jobs = json.load(file)
       
     return jobs
@@ -146,14 +155,13 @@ class InCollege:
     else:
 
       while success==False:
-        username = input("Username: ")
         job_title = input("Job Title: ")
         description = input("Description: ")
         employer = input("Employer: ")
         location = input("Location: ")
         salary = input("salary: ")
 
-        self.update_jobs(username,job_title,description,employer,location,salary)
+        self.update_jobs(self.user,job_title,description,employer,location,salary)
         success = True
       
     return success
