@@ -10,9 +10,11 @@ class InCollege:
     self.skills = [
      "Learn C", "Learn C#", "Learn Python", "Learn Java", "Learn HTML"
     ]
-    self.menu_options = ["Login","Why join InCollege", "Register"]
+    self.menu_options = ["Login","Why join InCollege", "Register", "Useful Links"]
     self.options = ["Search for jobs", "Find someone you know", "Learn a new skill"]
     self.job_options = ["Search for jobs", "Post a job"]
+    self.useful_links = ["General", "Browse InCollege", "Business Solutions", "Directories"]
+    self.general_links = ["Sign up", "Help Center", "About", "Press", "Blog", "Careers", "Developers"]
     self.system = AccountSystem()
 
   # Helper method to print options
@@ -49,7 +51,15 @@ class InCollege:
           if self.system.register(): 
             self.show_options()
         case 4:  
+          self.useful_links()
+        case 5:
           return
+  
+  def useful_links(self):
+    os.system("clear")
+    print("Useful Links:\n")
+    self.print_options(self.useful_links)
+    option = int(input("> "))
 
   # The options shown after successfully logging in
   def show_options(self):
