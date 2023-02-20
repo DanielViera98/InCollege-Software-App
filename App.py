@@ -10,7 +10,7 @@ class InCollege:
     self.skills = [
      "Learn C", "Learn C#", "Learn Python", "Learn Java", "Learn HTML"
     ]
-    self.menu_options = ["Login","Why join InCollege", "Register", "Useful Links"]
+    self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links"]
     self.options = ["Job Search/Internship", "Find someone you know", "Learn a new skill"]
     self.job_options = ["Search for jobs", "Post a job"]
     self.lang_options = ["English", "Spanish"]
@@ -48,8 +48,11 @@ class InCollege:
           case _:
             raise Exception() 
           
-      except:
-        input("Invalid input...")
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
 
   # Displays the menu
   def menu(self):
@@ -73,11 +76,11 @@ class InCollege:
               self.user = username
               self.show_options()
           case 2: 
-            print("Video is now playing:")
-            input("('press ENTER when done')")
-          case 3: 
             if self.system.register(): 
               self.show_options()
+          case 3: 
+            print("Video is now playing:")
+            input("('press ENTER when done')")
           case 4:  
             useful_links()
           case 5:
@@ -85,8 +88,11 @@ class InCollege:
           case _:
             raise Exception()
         
-      except:
-        input("Invalid input...")
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
   
   # The options shown after successfully logging in
   def show_options(self):
@@ -113,8 +119,11 @@ class InCollege:
           case _:
             raise Exception()
           
-      except:
-        input("Invalid input...")
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
 
 
   def search_opportunities(self):
@@ -140,7 +149,11 @@ class InCollege:
             raise Exception() 
           
       except Exception as e:
-        input(f"Error: {e}")
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+          
     
   def load_job_postings(self):
     filename = "job_postings.json"
@@ -161,7 +174,8 @@ class InCollege:
     jobs = self.load_job_postings()
     
     #adding a new job
-    jobs[name] = {
+    jobs[len(jobs)+1] = {
+    "poster": name,
     "title": job_title,
     "description": description,
     "employer": employer,
@@ -242,6 +256,9 @@ class InCollege:
           case _:
             raise Exception()
           
-      except:
-        input("Invalid input...")
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
       

@@ -1,6 +1,6 @@
 import json
 import os
-from AccountAuth import is_secure_password, verify_login_info
+from AccountAuth import is_secure_password, verify_login_info, is_valid_username
 
 MAX_ACCOUNTS = 5
 
@@ -72,15 +72,19 @@ class AccountSystem():
         input("\nIncorrect username or password. Please try again...")
 
         while is_invalid_input:
+          os.system("clear")
           retry = input("Keep trying? (Y/N): ")
 
           if retry in ['y', 'n', 'Y', 'N']:
             retry = True if retry.lower() == "y" else False
             is_invalid_input = False if retry == True else False
+          else:
+            input("Invalid input...")
 
     if success: 
       return username
-    else: return False
+    else: 
+      return False
 
   # Handles registration, returns True if registration succeeded
   def register(self):
@@ -91,32 +95,34 @@ class AccountSystem():
       )
 
     else:
-
-      os.system("clear")
-      print(
-        f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS} - {self.num_accounts}:\n"
-      )
-      print(
-        "Password Requirements -\n\tMinimum of 8 characters\n\tMaximum of 12 characters\n\tAt least one capital letter\n\tOne digit\n\tOne special character\n"
-      )
-      while success == False:
+      username, password = "", ""
+      while not is_valid_username(username) and not is_secure_password(password):
+        os.system("clear")
+        print(
+          f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - self.num_accounts}:\n"
+        )
+        print(
+          "Password Requirements -\n\tMinimum of 8 characters\n\tMaximum of 12 characters\n\tAt least one capital letter\n\tOne digit\n\tOne special character\n"
+        )
+        
         username = input("Username: ")
-        password = input("Password: ")
-        first_name = input("First name: ").capitalize()
-        last_name = input("Last name: ").capitalize()
+        if is_valid_username(username): 
 
-        if username not in self.accounts:  # If username does not exist in the database
+          if username not in self.accounts:  # If username does not exist in the database
+            password = input("Password: ")
+            if is_secure_password(password):
+              first_name = input("First name: ").capitalize()
+              last_name = input("Last name: ").capitalize()
+              self.add_account(username, password, first_name, last_name)
+              success = True
+              input("\nAccount registered...")
+            else:
+              input("Invalid password...")
 
-          if is_secure_password(password):
-            success = True
-            self.add_account(username, password, first_name, last_name)
-            input("\nYou have successfully created an account...")
           else:
-            input("Invalid password...")
-            return success
-
+            input("Username taken...")
+        
         else:
-          input("Username taken...")
-          return success
+          input("Invalid username...")
 
     return success

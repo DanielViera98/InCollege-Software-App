@@ -1,5 +1,18 @@
 ### Handles checking if registered password is secure ###
 
+def is_valid_username(username):
+  # Check if the length of the username is between 4 and 16 characters
+  if len(username) < 4 or len(username) > 16:
+    return False
+  
+  # Check that the username only contains letters, numbers, underscores, and hyphens
+  for character in username:
+    if not (character.isalnum() or character == '_' or character == '-'):
+      return False
+  
+  # If all checks pass, return True
+  return True
+
 def verify_login_info(data, username, password):
   if username in data:
     return data[username]['password'] == password

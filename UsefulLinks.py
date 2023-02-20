@@ -31,8 +31,11 @@ def useful_links():
         case _:
           raise Exception()
       
-    except:
-      input("Invalid Input")
+    except Exception as e:
+      if type(e) == ValueError:
+        input("Invalid input...")
+      else:
+        input(f"Error: {e} {type(e)}")
         
 def general():
   option = -1
@@ -67,8 +70,11 @@ def general():
         case _:
           raise Exception()
       
-    except:
-      input("Invalid Input")
+    except Exception as e:
+      if type(e) == ValueError:
+        input("Invalid input...")
+      else:
+        input(f"Error: {e} {type(e)}")
 
 def browse():
   input("Under construction...")
