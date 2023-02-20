@@ -1,6 +1,6 @@
 from AccountSystem import AccountSystem
 from UsefulLinks import useful_links
-from Helper import print_options
+from Helpers import print_options
 import os
 import json
 class InCollege:

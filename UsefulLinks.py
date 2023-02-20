@@ -1,6 +1,5 @@
-
 import os
-from Helper import print_options
+from Helpers import print_options
 from AccountSystem import AccountSystem
 
 useful_links_list = ["General", "Browse InCollege", "Business Solutions", "Directories"]
