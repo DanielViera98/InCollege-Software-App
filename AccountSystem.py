@@ -4,7 +4,6 @@ from AccountAuth import is_secure_password, verify_login_info
 
 MAX_ACCOUNTS = 5
 
-
 class AccountSystem():
 
   # Handles login, returns True if login succeeded
@@ -34,7 +33,8 @@ class AccountSystem():
     data[username] = {
       "password": password,
       "first_name": first_name,
-      "last_name": last_name
+      "last_name": last_name,
+      "language": "en"
     }
 
     # Write the updated data back to the file
