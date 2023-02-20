@@ -190,7 +190,7 @@ class InCollege:
         location = input("Location: ")
         salary = input("salary: ")
 
-        name = self.system.search_account(self.user)
+        name = self.system.get_account_name(self.user)
         full_name = ' '.join(name)
         self.update_jobs(full_name,job_title,description,employer,location,salary)
         input("Job posting created...")
