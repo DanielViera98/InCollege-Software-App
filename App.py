@@ -1,8 +1,8 @@
 from AccountSystem import AccountSystem
+from UsefulLinks import useful_links
+from Helper import print_options
 import os
 import json
-
-
 class InCollege:
 
   # Constructor
@@ -13,15 +13,7 @@ class InCollege:
     self.menu_options = ["Login","Why join InCollege", "Register", "Useful Links"]
     self.options = ["Search for jobs", "Find someone you know", "Learn a new skill"]
     self.job_options = ["Search for jobs", "Post a job"]
-    self.useful_links = ["General", "Browse InCollege", "Business Solutions", "Directories"]
-    self.general_links = ["Sign up", "Help Center", "About", "Press", "Blog", "Careers", "Developers"]
     self.system = AccountSystem()
-
-  # Helper method to print options
-  def print_options(self, options, label="Back"):
-    for i, option in enumerate(options):
-      print(f"{i+1}. {option}")
-    print(f"{len(options)+1}. {label}")
     
   # Engine
   def run(self):
@@ -32,71 +24,90 @@ class InCollege:
   # Displays the menu
   def menu(self):
     option = -1
+    back_option = len(self.menu_options) + 1
     
-    while option != len(self.menu_options) + 1: 
+    while option != back_option: 
       os.system("clear")
       print("Welcome to inCollege!\n")
       print('"InCollege helped me find a job while in college"-student')
-      self.print_options(self.menu_options, "Exit")
+      print_options(self.menu_options, "Exit")
       
-      option = int(input("> "))
-      match option:
-        case 1:
-          if self.system.login(): 
-            self.show_options()
-        case 2: 
-          print("Video is now playing:")
-          input("('press ENTER when done')")
-        case 3: 
-          if self.system.register(): 
-            self.show_options()
-        case 4:  
-          self.useful_links()
-        case 5:
-          return
-  
-  def useful_links(self):
-    os.system("clear")
-    print("Useful Links:\n")
-    self.print_options(self.useful_links)
-    option = int(input("> "))
+      try:
+        option = int(input("> "))
 
+        match option:
+          case 1:
+            if self.system.login(): 
+              self.show_options()
+          case 2: 
+            print("Video is now playing:")
+            input("('press ENTER when done')")
+          case 3: 
+            if self.system.register(): 
+              self.show_options()
+          case 4:  
+            useful_links()
+          case 5:
+            return
+          case _:
+            raise Exception()
+        
+      except:
+        input("Invalid input...")
+  
   # The options shown after successfully logging in
   def show_options(self):
     option = -1
+    back_option = len(self.options) + 1
     
-    while option != 4:
+    while option != back_option:
       os.system("clear")
       print("Choose a task:\n")
-      self.print_options(self.options)
+      print_options(self.options)
       
-      option = int(input("> "))
-      match option:
-        case 1:
-          self.search_opportunities()
-        case 2:
-          self.network()
-        case 3:
-          self.learn_skills()
-        case 4:
-          return
+      try:
+        option = int(input("> "))
+        
+        match option:
+          case 1:
+            self.search_opportunities()
+          case 2:
+            self.network()
+          case 3:
+            self.learn_skills()
+          case 4:
+            return
+          case _:
+            raise Exception()
+          
+      except:
+        input("Invalid input...")
+
 
   def search_opportunities(self):
     option = -1
+    back_option = len(self.job_options) + 1
 
-    while option !=3:
+    while option != back_option:
       os.system("clear")
       print("Choose a task:\n")
-      self.print_options(self.job_options)
+      print_options(self.job_options)
 
-      option = int(input("> "))
-      match option:
-        case 1:
-          self.search_jobs()
-        case 2:
-          self.post_jobs()
-        case 3:
-          return  
+      try:
+        option = int(input("> "))
+        
+        match option:
+          case 1:
+            self.search_jobs()
+          case 2:
+            self.post_jobs()
+          case 3:
+            return 
+          case _:
+            raise Exception() 
+          
+      except:
+        input("Invalid input...")
     
   def load_job_postings(self):
     with open('job_postings.json', 'r') as file:
@@ -174,17 +185,23 @@ class InCollege:
   # Handles learning new skills
   def learn_skills(self):
     option = -1
+    back_option = len(self.skills) + 1
     
-    while option != len(self.skills) + 1:
+    while option != back_option:
       os.system("clear")
       print("Select a skill to learn:\n")
-      self.print_options(self.skills)
-  
-      option = int(input("> "))
-      match option:
-        case option if option in [1,2,3,4,5]:
-          input("\nUnder construction...")
-        case 6: 
-          return
-  
+      print_options(self.skills)
+
+      try:
+        option = int(input("> "))
+        match option:
+          case option if option in [1,2,3,4,5]:
+            input("Under construction...")
+          case 6: 
+            return
+          case _:
+            raise Exception()
+          
+      except:
+        input("Invalid input...")
       
