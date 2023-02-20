@@ -11,7 +11,7 @@ class InCollege:
      "Learn C", "Learn C#", "Learn Python", "Learn Java", "Learn HTML"
     ]
     self.menu_options = ["Login","Why join InCollege", "Register", "Useful Links"]
-    self.options = ["Search for jobs", "Find someone you know", "Learn a new skill"]
+    self.options = ["Job Search/Internship", "Find someone you know", "Learn a new skill"]
     self.job_options = ["Search for jobs", "Post a job"]
     self.lang_options = ["English", "Spanish"]
     self.system = AccountSystem()
@@ -21,7 +21,7 @@ class InCollege:
   def run(self):
     self.menu()
     os.system("clear")
-    print("Thank you. Goodbye!")
+    print("Thank you for using inCollege. Goodbye!")
   
   def set_language(self):
 
@@ -69,7 +69,7 @@ class InCollege:
         match option:
           case 1:
             username = self.system.login()
-            if not isinstance(username, bool):
+            if isinstance(username, str):
               self.user = username
               self.show_options()
           case 2: 
@@ -123,7 +123,7 @@ class InCollege:
 
     while option != back_option:
       os.system("clear")
-      print("Choose a task:\n")
+      print("Job Search/Internship:\n")
       print_options(self.job_options)
 
       try:
@@ -139,8 +139,8 @@ class InCollege:
           case _:
             raise Exception() 
           
-      except:
-        input("Invalid input...")
+      except Exception as e:
+        input(f"Error: {e}")
     
   def load_job_postings(self):
     filename = "job_postings.json"
@@ -150,18 +150,18 @@ class InCollege:
         
     with open(filename, 'r') as file:
       jobs = json.load(file)
-      
+    
     return jobs
 
   def search_jobs(self):
     input("Under construction...")
   
   # Handles job posting
-  def update_jobs(self,username,job_title,description,employer,location,salary):
+  def update_jobs(self,name,job_title,description,employer,location,salary):
     jobs = self.load_job_postings()
-
-      #adding a new job
-    jobs[username] = {
+    
+    #adding a new job
+    jobs[name] = {
     "title": job_title,
     "description": description,
     "employer": employer,
@@ -190,7 +190,10 @@ class InCollege:
         location = input("Location: ")
         salary = input("salary: ")
 
-        self.update_jobs(self.user,job_title,description,employer,location,salary)
+        name = self.system.search_account(self.user)
+        full_name = ' '.join(name)
+        self.update_jobs(full_name,job_title,description,employer,location,salary)
+        input("Job posting created...")
         success = True
       
     return success
