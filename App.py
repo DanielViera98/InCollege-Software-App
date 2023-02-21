@@ -38,10 +38,12 @@ class InCollege:
         option = int(input("> "))
         match option:
           case 1:
-            self.user["language"] = "en"
+            print("Trying")
+            self.system.set_language(self.user, "English")
             input("Language changed to English...")
           case 2:
-            self.user["language"] = "es"
+            print("Trying")
+            self.system.set_language(self.user, "Spanish")
             input("Language changed to Spanish...")
           case 3:
             return 
@@ -303,8 +305,12 @@ class InCollege:
     
   def guest_controls(self):
     os.system("clear")
-    options = [("1: Toggle Email: ", self.email), ("2: Toggle SMS: ", self.SMS),
-               ("3: Toggle Targeted Advertising: ", self.targeted_advertising), ("4: Return: ")]
+    email = self.system.get_email(self.user)
+    SMS = self.system.get_SMS(self.user)
+    targeted_advertising = self.system.get_targeted_advertising(self.user)
+    
+    options = [("1: Toggle Email: ", email), ("2: Toggle SMS: ", SMS)
+               ("3: Toggle Targeted Advertising: ", targeted_advertising)]
     
     for u, v in options:
         print(u, v)
@@ -312,13 +318,16 @@ class InCollege:
     try:    
         match option:
             case 1:
-                self.toggle_options("Email")
+                print("Try 1")
+                self.system.toggle_option("email")
         match option:
             case 2:
-                self.toggle_options("SMS")
+                print("Try 2")
+                self.system.toggle_options("SMS")
         match option:
             case 3:
-                self.toggle_options("targeted_advertising")
+                print("Try 3")
+                self.system.toggle_options("targeted_advertising")
             case 4:
                 return
             case _:

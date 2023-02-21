@@ -8,12 +8,16 @@ class Student:
   email=True,
   SMS=True,
   targeted_advertising=True,
-  language = "English", #True = English, False = Spanish
+  language = None, 
   ):
     self.username = username
     self.password = password
     self.first_name = first_name
     self.last_name = last_name
+    self.email = email
+    self.SMS = SMS
+    self.targeted_advertising = targeted_advertising
+    self.language = language
   
   def record(self):
     info = {
@@ -29,11 +33,3 @@ class Student:
   def add_job(self, job_posting):
     self.job_postings.append(job_posting)
 
-  def toggle_option(self, option):
-    self.option = not self.option
-    
-  def change_language(self, option):
-    if option == "English":
-      self.language = "English"
-    else:
-      self.language = "Spanish"

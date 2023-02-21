@@ -161,19 +161,3 @@ def guest_controls(self):
             else:
                 input(f"Error: {e} {type(e)}")
                 guest_controls()
-
-def languages(self):
-    os.system("clear")
-    print("Choose Language: ")
-    print("1: English")
-    print("2: Spanish")
-    print("3: Return")
-    option = input("> ")
-    if option == 1:
-        self.toggle_option("English")
-        input("Language switched to English. ")
-    elif option == 2:
-        self.toggle_option("Spanish")
-        input("Language switched to Spanish. ")
-    elif option == 3:
-        return

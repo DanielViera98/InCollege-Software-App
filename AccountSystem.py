@@ -28,7 +28,7 @@ class AccountSystem():
     self.num_accounts = len(data)
     self.accounts = data
 
-  def add_account(self, username, password, first_name, last_name):
+  def add_account(self, username, password, first_name, last_name, email, SMS, targeted_advertising):
     # Load the contents of the JSON file into a Python dictionary
     with open('students.json', 'r') as file:
       data = json.load(file)
@@ -38,7 +38,10 @@ class AccountSystem():
       "password": password,
       "first_name": first_name,
       "last_name": last_name,
-      "language": "en"
+      "language": "en",
+      "email" : email,
+      "SMS" : SMS,
+      "targeted_advertising": targeted_advertising,
     }
 
     # Write the updated data back to the file
@@ -51,8 +54,38 @@ class AccountSystem():
     accounts = self.load_accounts()
     name = [accounts[username]["first_name"], accounts[username]["last_name"]]
     return name
+  
+  def get_targeted_advertising(self, username):
+    accounts = self.load_accounts()
+    targeted_advertising = accounts[username]["targeted_advertising"]
+    return targeted_advertising
+  
+  def get_email(self, username):
+    accounts = self.load_accounts()
+    email = accounts[username]["email"]
+    return email
+  
+  def get_SMS(self, username):
+    accounts = self.load_accounts()
+    SMS = accounts[username]["SMS"]
+    return SMS
 
+  def toggle_option(self, option):
+    self.email = not self.option
 
+#NOT FINISHED
+  def set_language(self, username, option):
+    accounts = self.load_accounts()
+    with open('students.json', 'r') as file:
+      data = json.load(file)
+    print("In set language")
+    
+
+    
+    with open('students.json', 'w') as file:
+      json.dump(data, file, indent=2)
+    #[accounts[username]["language"]] = option
+    
   # Handles login, returns True if login succeeded
   def login(self):
 
@@ -113,7 +146,7 @@ class AccountSystem():
             if is_secure_password(password):
               first_name = input("First name: ").capitalize()
               last_name = input("Last name: ").capitalize()
-              self.add_account(username, password, first_name, last_name)
+              self.add_account(username, password, first_name, last_name, True, True, True)
               success = True
               input("\nAccount registered...")
             else:
