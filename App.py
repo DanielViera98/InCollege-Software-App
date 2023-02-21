@@ -1,5 +1,6 @@
 from AccountSystem import AccountSystem
 from UsefulLinks import useful_links
+from ImportantLinks import links
 from Helpers import print_options
 import os
 import json
@@ -10,8 +11,8 @@ class InCollege:
     self.skills = [
      "Learn C", "Learn C#", "Learn Python", "Learn Java", "Learn HTML"
     ]
-    self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links"]
-    self.options = ["Job Search/Internship", "Find someone you know", "Learn a new skill"]
+    self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links", "Important Links"]
+    self.options = ["Job Search/Internship", "Find someone you know", "Learn a new skill", "Important Links"]
     self.job_options = ["Search for jobs", "Post a job"]
     self.lang_options = ["English", "Spanish"]
     self.system = AccountSystem()
@@ -35,7 +36,6 @@ class InCollege:
 
       try:
         option = int(input("> "))
-        
         match option:
           case 1:
             self.user["language"] = "en"
@@ -84,6 +84,8 @@ class InCollege:
           case 4:  
             useful_links()
           case 5:
+            self.important_links()
+          case 6:
             return
           case _:
             raise Exception()
@@ -115,6 +117,8 @@ class InCollege:
           case 3:
             self.learn_skills()
           case 4:
+            self.important_links()
+          case 5:
             return
           case _:
             raise Exception()
@@ -261,4 +265,69 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
-      
+
+  def important_links(self):
+    value = None
+    value = links()
+    if value == "privacy":
+      self.privacy_policy()
+    if value == "language":
+      self.set_language()
+  
+  def privacy_policy(self):
+    file = open("Misc Files/privacy policy.txt", "r")
+    os.system("clear")
+    print("Privacy Policy: ")
+    print(file.read())
+    privacy_options = ["Guest Controls"]
+    print_options(privacy_options)
+    option = int(input(">"))
+    try:    
+        if option == 1:
+            self.guest_controls()
+        elif option == 2:
+            file.close()
+            return
+        else:
+            file.close()
+            raise Exception()
+        
+    except Exception as e:
+            if type(e) == ValueError:
+                input("Invalid input...")
+                privacy_options()
+            else:
+                input(f"Error: {e} {type(e)}")
+                privacy_options()
+    file.close()
+    
+  def guest_controls(self):
+    os.system("clear")
+    options = [("1: Toggle Email: ", self.email), ("2: Toggle SMS: ", self.SMS),
+               ("3: Toggle Targeted Advertising: ", self.targeted_advertising), ("4: Return: ")]
+    
+    for u, v in options:
+        print(u, v)
+    option = int(input("> "))    
+    try:    
+        match option:
+            case 1:
+                self.toggle_options("Email")
+        match option:
+            case 2:
+                self.toggle_options("SMS")
+        match option:
+            case 3:
+                self.toggle_options("targeted_advertising")
+            case 4:
+                return
+            case _:
+                raise Exception()
+    
+    except Exception as e:
+            if type(e) == ValueError:
+                input("Invalid input...")
+                self.guest_controls()
+            else:
+                input(f"Error: {e} {type(e)}")
+                self.guest_controls()

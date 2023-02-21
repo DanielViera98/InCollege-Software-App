@@ -4,7 +4,12 @@ class Student:
   username=None,
   password=None,
   first_name=None,
-  last_name=None):
+  last_name=None,
+  email=True,
+  SMS=True,
+  targeted_advertising=True,
+  language = "English", #True = English, False = Spanish
+  ):
     self.username = username
     self.password = password
     self.first_name = first_name
@@ -24,3 +29,11 @@ class Student:
   def add_job(self, job_posting):
     self.job_postings.append(job_posting)
 
+  def toggle_option(self, option):
+    self.option = not self.option
+    
+  def change_language(self, option):
+    if option == "English":
+      self.language = "English"
+    else:
+      self.language = "Spanish"

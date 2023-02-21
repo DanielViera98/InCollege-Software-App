@@ -1,0 +1,6 @@
+What are cookies?
+Sometimes delicious baked goods. In this case, data which is downloaded from your device
+in order to save information about user accounts.
+
+What are they for?
+To let our website remember your account, as well as your personalization options.
