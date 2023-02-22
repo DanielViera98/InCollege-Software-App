@@ -101,15 +101,17 @@ class AccountSystem():
       json.dump(accounts, file, indent=2)
 
 #NOT FINISHED
-  def set_language(self, username, option):
+  def set_language(self, user, language):
     accounts = self.load_accounts()
-    with open('students.json', 'r') as file:
-      data = json.load(file)
-    print("In set language")
+    
+    match language:
+      case "English":
+        accounts[user]['language'] = 'en'
+      case "Spanish":
+        accounts[user]['language'] = 'es'
     
     with open('students.json', 'w') as file:
-      json.dump(data, file, indent=2)
-    #[accounts[username]["language"]] = option
+      json.dump(accounts, file, indent=2)
     
   # Handles login, returns True if login succeeded
   def login(self):
