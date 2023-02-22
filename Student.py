@@ -4,11 +4,20 @@ class Student:
   username=None,
   password=None,
   first_name=None,
-  last_name=None):
+  last_name=None,
+  email=True,
+  SMS=True,
+  targeted_advertising=True,
+  language = None, 
+  ):
     self.username = username
     self.password = password
     self.first_name = first_name
     self.last_name = last_name
+    self.email = email
+    self.SMS = SMS
+    self.targeted_advertising = targeted_advertising
+    self.language = language
   
   def record(self):
     info = {

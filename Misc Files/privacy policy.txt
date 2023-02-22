@@ -1,0 +1,14 @@
+Effective Date: 2/21/2023
+
+What do we collect?
+Registration info such as name, job title, username, password, etc.
+
+What do we do with it?
+Store it for registration, job postings, share it with other users for networking
+and job searching.
+
+Can I delete my info?
+To remove your information from the database, please email project7@InCollege.com
+
+What is the data security?
+The information is held in plaintext in a .json file.

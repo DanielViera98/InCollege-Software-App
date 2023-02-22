@@ -1,6 +1,7 @@
 from AccountSystem import AccountSystem
 from UsefulLinks import useful_links
-from Helpers import print_options
+from ImportantLinks import links
+from Helpers import print_options, print_toggle_options
 import os
 import json
 class InCollege:
@@ -10,8 +11,9 @@ class InCollege:
     self.skills = [
      "Learn C", "Learn C#", "Learn Python", "Learn Java", "Learn HTML"
     ]
-    self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links"]
-    self.options = ["Job Search/Internship", "Find someone you know", "Learn a new skill"]
+    self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links", "Important Links"]
+    self.options = ["Job Search/Internship", "Find someone you know", "Learn a new skill", "Important Links"]
+    self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
     self.job_options = ["Search for jobs", "Post a job"]
     self.lang_options = ["English", "Spanish"]
     self.system = AccountSystem()
@@ -35,13 +37,14 @@ class InCollege:
 
       try:
         option = int(input("> "))
-        
         match option:
           case 1:
-            self.user["language"] = "en"
+            print("Trying")
+            self.system.set_language(self.user, "English")
             input("Language changed to English...")
           case 2:
-            self.user["language"] = "es"
+            print("Trying")
+            self.system.set_language(self.user, "Spanish")
             input("Language changed to Spanish...")
           case 3:
             return 
@@ -84,6 +87,8 @@ class InCollege:
           case 4:  
             useful_links()
           case 5:
+            self.important_links()
+          case 6:
             return
           case _:
             raise Exception()
@@ -115,6 +120,8 @@ class InCollege:
           case 3:
             self.learn_skills()
           case 4:
+            self.important_links()
+          case 5:
             return
           case _:
             raise Exception()
@@ -261,4 +268,76 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
+
+  def important_links(self):
+    value = None
+    value = links()
+    if value == "privacy":
+      self.privacy_policy()
+    if value == "language":
+      self.set_language()
+  
+  def privacy_policy(self):
+    file = open("Misc Files/privacy policy.txt", "r")
+    os.system("clear")
+    print("Privacy Policy: ")
+    print(file.read())
+    privacy_options = ["Guest Controls"]
+    print_options(privacy_options)
+    option = int(input("> "))
+    try:    
+        if option == 1:
+            self.guest_controls()
+        elif option == 2:
+            file.close()
+            return
+        else:
+            file.close()
+            raise Exception()
+        
+    except Exception as e:
+            if type(e) == ValueError:
+                input("Invalid input...")
+                privacy_options()
+            else:
+                input(f"Error: {e} {type(e)}")
+                privacy_options()
+    file.close()
+    
+  def guest_controls(self):
+    option = -1
+    back_option = len(self.skills) + 1
+    email = self.system.get_email(self.user)
+    sms = self.system.get_SMS(self.user)
+    targeted_advertising = self.system.get_targeted_advertising(self.user)
+    
+    toggle_options = [email, sms, targeted_advertising]
+    options = zip(self.guest_control_options, toggle_options)
+    
+    while option != back_option:
+      os.system("clear")
+      print("Select an option:\n")
+      print_toggle_options(options)
+        
+      try:    
+          option = int(input("> "))
+          match option:
+              case 1:
+                  print("Try 1")
+                  self.system.toggle_email(self.user)
+              case 2:
+                  print("Try 2")
+                  self.system.toggle_SMS(self.user)
+              case 3:
+                  print("Try 3")
+                  self.system.toggle_targeted_advertising(self.user)
+              case 4:
+                  return
+              case _:
+                  raise Exception()
       
+      except Exception as e:
+              if type(e) == ValueError:
+                  input("Invalid input...")
+              else:
+                  input(f"Error guest: {e} {type(e)}")

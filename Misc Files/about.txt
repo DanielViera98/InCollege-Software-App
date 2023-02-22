@@ -1,0 +1,5 @@
+InCollege was created by Project7 for LinkedIn. It provides a way for students to network
+with each other and build skills in order to prepare them for the workforce and their future.
+It is tailored towards students in order to provide accurate and useful help which may be
+needed, but not neccesarily useful for those already experienced in the workforce. It is also
+a useful introductory tool before transitioning to LinkedIn

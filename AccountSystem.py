@@ -28,7 +28,7 @@ class AccountSystem():
     self.num_accounts = len(data)
     self.accounts = data
 
-  def add_account(self, username, password, first_name, last_name):
+  def add_account(self, username, password, first_name, last_name, email, SMS, targeted_advertising):
     # Load the contents of the JSON file into a Python dictionary
     with open('students.json', 'r') as file:
       data = json.load(file)
@@ -38,10 +38,13 @@ class AccountSystem():
       "password": password,
       "first_name": first_name,
       "last_name": last_name,
-      "language": "en"
+      "language": "en",
+      "email" : email,
+      "SMS" : SMS,
+      "targeted_advertising": targeted_advertising,
     }
-
-    # Write the updated data back to the file
+    
+    # # Write the updated data back to the file
     with open('students.json', 'w') as file:
       json.dump(data, file, indent=2)
 
@@ -51,8 +54,58 @@ class AccountSystem():
     accounts = self.load_accounts()
     name = [accounts[username]["first_name"], accounts[username]["last_name"]]
     return name
+  
+  def get_targeted_advertising(self, username):
+    accounts = self.load_accounts()
+    targeted_advertising = accounts[username]["targeted_advertising"]
+    return targeted_advertising
+  
+  def get_email(self, username):
+    accounts = self.load_accounts()
+    email = accounts[username]["email"]
+    return email
+  
+  def get_SMS(self, username):
+    accounts = self.load_accounts()
+    SMS = accounts[username]["SMS"]
+    return SMS
+
+  def toggle_email(self, user):
+    accounts = self.load_accounts()
+    accounts[user]['email'] = not accounts[user]['email']
+    
+    with open('students.json', 'w') as file:
+      json.dump(accounts, file, indent=2)
+
+    
+  def toggle_SMS(self, user):
+    accounts = self.load_accounts()
+    accounts[user]['SMS'] = not accounts[user]['SMS']
+    
+    with open('students.json', 'w') as file:
+      json.dump(accounts, file, indent=2)
 
 
+  def toggle_targeted_advertising(self, user):
+    accounts = self.load_accounts()
+    accounts[user]['targeted_advertising'] = not accounts[user]['targeted_advertising']
+    
+    with open('students.json', 'w') as file:
+      json.dump(accounts, file, indent=2)
+
+#NOT FINISHED
+  def set_language(self, user, language):
+    accounts = self.load_accounts()
+    
+    match language:
+      case "English":
+        accounts[user]['language'] = 'en'
+      case "Spanish":
+        accounts[user]['language'] = 'es'
+    
+    with open('students.json', 'w') as file:
+      json.dump(accounts, file, indent=2)
+    
   # Handles login, returns True if login succeeded
   def login(self):
 
@@ -113,7 +166,7 @@ class AccountSystem():
             if is_secure_password(password):
               first_name = input("First name: ").capitalize()
               last_name = input("Last name: ").capitalize()
-              self.add_account(username, password, first_name, last_name)
+              self.add_account(username, password, first_name, last_name, True, True, True)
               success = True
               input("\nAccount registered...")
             else:
