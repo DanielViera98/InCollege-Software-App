@@ -27,13 +27,6 @@ class AccountSystem():
 
     self.num_accounts = len(data)
     self.accounts = data
-    
-  # def update_data(self, data):
-  #   # Write the updated data back to the file
-  #   with open('students.json', 'w') as file:
-  #     json.dump(data, file, indent=2)
-
-  #   self.update_accounts()
 
   def add_account(self, username, password, first_name, last_name, email, SMS, targeted_advertising):
     # Load the contents of the JSON file into a Python dictionary

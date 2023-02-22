@@ -1,7 +1,7 @@
 from AccountSystem import AccountSystem
 from UsefulLinks import useful_links
 from ImportantLinks import links
-from Helpers import print_options
+from Helpers import print_options, print_toggle_options
 import os
 import json
 class InCollege:
@@ -13,6 +13,7 @@ class InCollege:
     ]
     self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links", "Important Links"]
     self.options = ["Job Search/Internship", "Find someone you know", "Learn a new skill", "Important Links"]
+    self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
     self.job_options = ["Search for jobs", "Post a job"]
     self.lang_options = ["English", "Spanish"]
     self.system = AccountSystem()
@@ -306,13 +307,17 @@ class InCollege:
   def guest_controls(self):
     option = -1
     back_option = len(self.skills) + 1
+    email = self.system.get_email(self.user)
+    sms = self.system.get_SMS(self.user)
+    targeted_advertising = self.system.get_targeted_advertising(self.user)
     
-    options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
+    toggle_options = [email, sms, targeted_advertising]
+    options = zip(self.guest_control_options, toggle_options)
     
     while option != back_option:
       os.system("clear")
       print("Select an option:\n")
-      print_options(options)
+      print_toggle_options(options)
         
       try:    
           option = int(input("> "))
