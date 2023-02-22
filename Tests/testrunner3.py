@@ -14,7 +14,3 @@ def test_Tasks(capsys, monkeypatch):
   assert college.show_options() == None
 
 
-def test1(capsys, monkeypatch):
-  test = StringIO(input)
-  monkeypatch.setattr('sys.stdin', test)
-  assert college.show_options() == None
