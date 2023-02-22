@@ -309,25 +309,26 @@ class InCollege:
     SMS = self.system.get_SMS(self.user)
     targeted_advertising = self.system.get_targeted_advertising(self.user)
     
-    options = [("1: Toggle Email: ", email), ("2: Toggle SMS: ", SMS)
+    options = [("1: Toggle Email: ", email), ("2: Toggle SMS: ", SMS),
                ("3: Toggle Targeted Advertising: ", targeted_advertising)]
     
     for u, v in options:
         print(u, v)
-    option = int(input("> "))    
+    print("Select an option")
+    option = int(input("> "))  
     try:    
         match option:
             case 1:
                 print("Try 1")
-                self.system.toggle_option("email")
+                self.system.toggle_email()
         match option:
             case 2:
                 print("Try 2")
-                self.system.toggle_options("SMS")
+                self.system.toggle_SMS()
         match option:
             case 3:
                 print("Try 3")
-                self.system.toggle_options("targeted_advertising")
+                self.system.toggle_targeted_advertising()
             case 4:
                 return
             case _:

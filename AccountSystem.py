@@ -70,8 +70,14 @@ class AccountSystem():
     SMS = accounts[username]["SMS"]
     return SMS
 
-  def toggle_option(self, option):
-    self.email = not self.option
+  def toggle_email(self):
+    self.email = not self.email
+    
+  def toggle_SMS(self):
+    self.SMS = not self.SMS
+
+  def toggle_targeted_advertising(self):
+    self.targeted_advertising = not self.targeted_advertising
 
 #NOT FINISHED
   def set_language(self, username, option):
