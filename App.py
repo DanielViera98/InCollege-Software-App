@@ -283,7 +283,7 @@ class InCollege:
     print(file.read())
     privacy_options = ["Guest Controls"]
     print_options(privacy_options)
-    option = int(input(">"))
+    option = int(input("> "))
     try:    
         if option == 1:
             self.guest_controls()
@@ -304,38 +304,35 @@ class InCollege:
     file.close()
     
   def guest_controls(self):
-    os.system("clear")
-    email = self.system.get_email(self.user)
-    SMS = self.system.get_SMS(self.user)
-    targeted_advertising = self.system.get_targeted_advertising(self.user)
+    option = -1
+    back_option = len(self.skills) + 1
     
-    options = [("1: Toggle Email: ", email), ("2: Toggle SMS: ", SMS),
-               ("3: Toggle Targeted Advertising: ", targeted_advertising)]
+    options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
     
-    for u, v in options:
-        print(u, v)
-    print("Select an option")
-    option = int(input("> "))  
-    try:    
-        match option:
-            case 1:
-                print("Try 1")
-                self.system.toggle_SMS(self.user)
-        match option:
-            case 2:
-                print("Try 2")
-                self.system.toggle_email(self.user)
-        match option:
-            case 3:
-                print("Try 3")
-                self.system.toggle_targeted_advertising(self.user)
-            case 4:
-                return
-            case _:
-                raise Exception()
-    
-    except Exception as e:
-            if type(e) == ValueError:
-                input("Invalid input...")
-            else:
-                input(f"Error guest: {e} {type(e)}")
+    while option != back_option:
+      os.system("clear")
+      print("Select an option:\n")
+      print_options(options)
+        
+      try:    
+          option = int(input("> "))
+          match option:
+              case 1:
+                  print("Try 1")
+                  self.system.toggle_email(self.user)
+              case 2:
+                  print("Try 2")
+                  self.system.toggle_SMS(self.user)
+              case 3:
+                  print("Try 3")
+                  self.system.toggle_targeted_advertising(self.user)
+              case 4:
+                  return
+              case _:
+                  raise Exception()
+      
+      except Exception as e:
+              if type(e) == ValueError:
+                  input("Invalid input...")
+              else:
+                  input(f"Error guest: {e} {type(e)}")

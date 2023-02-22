@@ -79,7 +79,7 @@ class AccountSystem():
 
   def toggle_email(self, user):
     accounts = self.load_accounts()
-    accounts[user]['SMS'] = not accounts[user]['SMS']
+    accounts[user]['email'] = not accounts[user]['email']
     
     with open('students.json', 'w') as file:
       json.dump(accounts, file, indent=2)
@@ -95,7 +95,7 @@ class AccountSystem():
 
   def toggle_targeted_advertising(self, user):
     accounts = self.load_accounts()
-    accounts[user]['SMS'] = not accounts[user]['SMS']
+    accounts[user]['targeted_advertising'] = not accounts[user]['targeted_advertising']
     
     with open('students.json', 'w') as file:
       json.dump(accounts, file, indent=2)
