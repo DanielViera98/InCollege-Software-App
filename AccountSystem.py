@@ -27,6 +27,13 @@ class AccountSystem():
 
     self.num_accounts = len(data)
     self.accounts = data
+    
+  # def update_data(self, data):
+  #   # Write the updated data back to the file
+  #   with open('students.json', 'w') as file:
+  #     json.dump(data, file, indent=2)
+
+  #   self.update_accounts()
 
   def add_account(self, username, password, first_name, last_name, email, SMS, targeted_advertising):
     # Load the contents of the JSON file into a Python dictionary
@@ -43,8 +50,8 @@ class AccountSystem():
       "SMS" : SMS,
       "targeted_advertising": targeted_advertising,
     }
-
-    # Write the updated data back to the file
+    
+    # # Write the updated data back to the file
     with open('students.json', 'w') as file:
       json.dump(data, file, indent=2)
 
@@ -70,14 +77,28 @@ class AccountSystem():
     SMS = accounts[username]["SMS"]
     return SMS
 
-  def toggle_email(self):
-    self.email = not self.email
+  def toggle_email(self, user):
+    accounts = self.load_accounts()
+    accounts[user]['SMS'] = not accounts[user]['SMS']
     
-  def toggle_SMS(self):
-    self.SMS = not self.SMS
+    with open('students.json', 'w') as file:
+      json.dump(accounts, file, indent=2)
 
-  def toggle_targeted_advertising(self):
-    self.targeted_advertising = not self.targeted_advertising
+    
+  def toggle_SMS(self, user):
+    accounts = self.load_accounts()
+    accounts[user]['SMS'] = not accounts[user]['SMS']
+    
+    with open('students.json', 'w') as file:
+      json.dump(accounts, file, indent=2)
+
+
+  def toggle_targeted_advertising(self, user):
+    accounts = self.load_accounts()
+    accounts[user]['SMS'] = not accounts[user]['SMS']
+    
+    with open('students.json', 'w') as file:
+      json.dump(accounts, file, indent=2)
 
 #NOT FINISHED
   def set_language(self, username, option):
@@ -85,8 +106,6 @@ class AccountSystem():
     with open('students.json', 'r') as file:
       data = json.load(file)
     print("In set language")
-    
-
     
     with open('students.json', 'w') as file:
       json.dump(data, file, indent=2)

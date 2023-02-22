@@ -320,15 +320,15 @@ class InCollege:
         match option:
             case 1:
                 print("Try 1")
-                self.system.toggle_email()
+                self.system.toggle_SMS(self.user)
         match option:
             case 2:
                 print("Try 2")
-                self.system.toggle_SMS()
+                self.system.toggle_email(self.user)
         match option:
             case 3:
                 print("Try 3")
-                self.system.toggle_targeted_advertising()
+                self.system.toggle_targeted_advertising(self.user)
             case 4:
                 return
             case _:
@@ -337,7 +337,5 @@ class InCollege:
     except Exception as e:
             if type(e) == ValueError:
                 input("Invalid input...")
-                self.guest_controls()
             else:
-                input(f"Error: {e} {type(e)}")
-                self.guest_controls()
+                input(f"Error guest: {e} {type(e)}")
