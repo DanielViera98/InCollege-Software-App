@@ -9,6 +9,7 @@ class Student:
   SMS=True,
   targeted_advertising=True,
   language = None, 
+  friends = []
   ):
     self.username = username
     self.password = password
@@ -18,6 +19,7 @@ class Student:
     self.SMS = SMS
     self.targeted_advertising = targeted_advertising
     self.language = language
+    self.friends = friends
   
   def record(self):
     info = {

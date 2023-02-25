@@ -24,6 +24,7 @@ class InCollege:
     self.menu()
     os.system("clear")
     print("Thank you for using inCollege. Goodbye!")
+
   
   def set_language(self):
 
@@ -39,11 +40,9 @@ class InCollege:
         option = int(input("> "))
         match option:
           case 1:
-            print("Trying")
             self.system.set_language(self.user, "English")
             input("Language changed to English...")
           case 2:
-            print("Trying")
             self.system.set_language(self.user, "Spanish")
             input("Language changed to Spanish...")
           case 3:
@@ -56,7 +55,7 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
-
+          
   # Displays the menu
   def menu(self):
     option = -1
