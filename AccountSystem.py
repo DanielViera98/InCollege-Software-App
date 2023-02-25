@@ -28,7 +28,7 @@ class AccountSystem():
     self.num_accounts = len(data)
     self.accounts = data
 
-  def add_account(self, username, password, first_name, last_name, email, SMS, targeted_advertising, friends):
+  def add_account(self, username, password, first_name, last_name, email, SMS, targeted_advertising, friends, requests):
     # Load the contents of the JSON file into a Python dictionary
     with open('students.json', 'r') as file:
       data = json.load(file)
@@ -41,8 +41,9 @@ class AccountSystem():
       "language": "en",
       "email" : email,
       "SMS" : SMS,
-      "targeted_advertising": targeted_advertising,
-      "friends_list:" : friends,
+      "targeted_advertising" : targeted_advertising,
+      "friends_list" : friends,
+      "requests" : requests,
     }
     
     # # Write the updated data back to the file
@@ -107,6 +108,17 @@ class AccountSystem():
     with open('students.json', 'w') as file:
       json.dump(accounts, file, indent=2)
     
+  def add_request(self, user, language):
+    accounts = self.load_accounts()
+    
+    accounts[user]['language'] = 'TEST'
+    
+    with open('students.json', 'w') as file:
+      json.dump(accounts, file, indent=2)
+      
+  def remove_request(self, user, language):
+    accounts = self.load_accounts()
+    
   # Handles login, returns True if login succeeded
   def login(self):
 
@@ -168,7 +180,8 @@ class AccountSystem():
               first_name = input("First name: ").capitalize()
               last_name = input("Last name: ").capitalize()
               friends = []
-              self.add_account(username, password, first_name, last_name, True, True, True, friends)
+              requests = []
+              self.add_account(username, password, first_name, last_name, True, True, True, friends, requests)
               success = True
               input("\nAccount registered...")
             else:

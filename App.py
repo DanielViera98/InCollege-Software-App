@@ -12,7 +12,7 @@ class InCollege:
      "Learn C", "Learn C#", "Learn Python", "Learn Java", "Learn HTML"
     ]
     self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links", "Important Links"]
-    self.options = ["Job Search/Internship", "Find someone you know", "Learn a new skill", "Important Links"]
+    self.options = ["Job Search/Internship", "Network", "Learn a new skill", "Important Links"]
     self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
     self.job_options = ["Search for jobs", "Post a job"]
     self.lang_options = ["English", "Spanish"]
@@ -225,7 +225,7 @@ class InCollege:
     for username in data:
       if((data[username]['first_name']==first_name)and (data[username]['last_name']==last_name)):
         success = True
-        return success
+        return username
     return success
     
 
@@ -233,8 +233,14 @@ class InCollege:
   def network(self):
     first_name = input("First Name: ").capitalize()
     last_name = input("Last Name: ").capitalize()
-    if(self.search_people(first_name,last_name)):
+    username = self.search_people(first_name, last_name)
+    if(username != False):
+      #Gets username of target, appends username of sender into requests
       print("They are a part of the InCollege system")
+      accounts = self.system.load_accounts()
+      accounts[username]['requests'].append(self.user)
+      with open('students.json', 'w') as file:
+        json.dump(accounts, file, indent=2)
       input(f"A message has been sent to {first_name} {last_name} to log in and connect with you")     
       return True
     else:
