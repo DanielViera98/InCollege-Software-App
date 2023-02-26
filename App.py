@@ -16,6 +16,8 @@ class InCollege:
     self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
     self.job_options = ["Search for jobs", "Post a job"]
     self.lang_options = ["English", "Spanish"]
+    self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List"]
+    self.request_options = ["Accept Friend Request", "Deny Friend Request"]
     self.system = AccountSystem()
     self.user = False
     
@@ -231,6 +233,37 @@ class InCollege:
 
   # Handles networking
   def network(self):
+    
+    option = -1
+    back_option = len(self.options) + 1
+    
+    while option != back_option:
+      os.system("clear")
+      print("Choose a task:\n")
+      print_options(self.network_options)
+      
+      try:
+        option = int(input("> "))
+        
+        match option:
+          case 1:
+            self.send_request()
+          case 2:
+            self.pending_requests()
+          case 3:
+            self.manage_friends()
+          case 4:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+          
+  def send_request(self):
     first_name = input("First Name: ").capitalize()
     last_name = input("Last Name: ").capitalize()
     username = self.search_people(first_name, last_name)
@@ -248,6 +281,41 @@ class InCollege:
       input(f"An invite has been sent to {first_name} {last_name} to join InCollege")
       return False
 
+  def pending_requests(self):
+    accounts = self.system.load_accounts()
+    option = -1
+    back_option = len(self.options) + 1
+    
+    while option != back_option:
+      os.system("clear")
+      for u in accounts[self.user]['requests']:
+        print(u)
+      
+      print("\nChoose a task:\n")
+      print_options(self.request_options)
+      
+      try:
+        option = int(input("> "))
+        
+        match option:
+          case 1:
+            self.accept_friend(accounts)
+          case 2:
+            self.delete_friend(accounts)
+          case 3:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+
+  def accept_friend(self, accounts):
+    delete = input("Enter the request to deny: ")
+    
   # Handles learning new skills
   def learn_skills(self):
     option = -1
