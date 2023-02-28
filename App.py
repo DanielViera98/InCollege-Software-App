@@ -104,12 +104,14 @@ class InCollege:
   def show_options(self):
     option = -1
     back_option = len(self.options) + 1
-    
+    accounts = self.system.load_accounts()
     while option != back_option:
       os.system("clear")
+      if (accounts[self.user]['requests']):
+        print(f">>>      You have {len(accounts[self.user]['requests'])} Friend Requests. To view them, go to Network      <<<")
       print("Choose a task:\n")
       print_options(self.options)
-      
+        
       try:
         option = int(input("> "))
         
