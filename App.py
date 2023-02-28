@@ -18,6 +18,7 @@ class InCollege:
     self.lang_options = ["English", "Spanish"]
     self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List"]
     self.request_options = ["Accept Friend Request", "Deny Friend Request"]
+    self.friends_options = ["Remove Friend"]
     self.system = AccountSystem()
     self.user = False
     
@@ -235,7 +236,6 @@ class InCollege:
 
   # Handles networking
   def network(self):
-    
     option = -1
     back_option = len(self.options) + 1
     
@@ -396,7 +396,45 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
     
-    
+  def manage_friends(self):
+    accounts = self.system.load_accounts()
+    option = -1
+    back_option = len(self.friends_options) + 1
+    while option != back_option:
+      os.system("clear")
+      if len(accounts[self.user]['friends_list']) == 0:
+        input("Nobody here, go to \"Network -> Send Friend Request\" to find a friend! ")
+        return
+      i = 0
+      for u in accounts[self.user]['friends_list']:
+        print(f"{i}. {u}")
+        i = i+1
+      print("\nChoose a task:\n")
+      print_options(self.friends_options)
+      
+      try:
+        option = int(input("> "))
+        
+        match option:
+          case 1:
+            remove = int(input("Which friend would you like to remove? "))
+            username = accounts[self.user]['friends_list'][remove-1]
+            accounts[self.user]['friends_list'].remove(username)
+            accounts[username]['friends_list'].remove(self.user)
+            input("Friend Removed.")
+            with open('students.json', 'w') as file:
+              json.dump(accounts, file, indent=2)
+          case 2:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+
   # Handles learning new skills
   def learn_skills(self):
     option = -1
