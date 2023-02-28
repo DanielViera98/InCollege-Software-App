@@ -262,7 +262,8 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
-          
+  
+  #Adds username to "pending" array of searched user if present         #FINISHED
   def send_request(self):
     first_name = input("First Name: ").capitalize()
     last_name = input("Last Name: ").capitalize()
@@ -288,9 +289,14 @@ class InCollege:
     
     while option != back_option:
       os.system("clear")
+      requests = []
+      i = int(0)
       for u in accounts[self.user]['requests']:
-        print(u)
-      
+        requests.append(u)
+        print(f"{i+1}. {u}")
+      if (len(requests) == 0):
+        input("No Friend Requests")
+        return
       print("\nChoose a task:\n")
       print_options(self.request_options)
       
@@ -299,9 +305,9 @@ class InCollege:
         
         match option:
           case 1:
-            self.accept_friend(accounts)
+            self.accept_request(accounts, requests)
           case 2:
-            self.delete_friend(accounts)
+            self.delete_request(accounts, requests)
           case 3:
             return
           case _:
@@ -313,8 +319,81 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
 
-  def accept_friend(self, accounts):
-    delete = input("Enter the request to deny: ")
+  #accepts pending friend from 'requests' list of self.user             #FINISHED
+  def accept_request(self, accounts, requests):
+    option = -1
+    back_option = len(requests) + 1
+    
+    while option != back_option:
+      os.system("clear")
+      print("Pending Requests:")
+      requests = accounts[self.user]['requests']
+      back_option = len(requests) + 1
+
+      if (len(requests) == 0):
+        input("No Friend Requests")
+        return
+      print_options(requests)
+      
+      try:
+        option = int(input(f"\nChoose a request to accept, or enter {back_option} to exit\n> "))
+        if (option == back_option):
+          return
+        choice = requests[option-1]
+        
+        if (requests[option-1]):
+          accounts[self.user]['friends_list'].append(choice)
+          accounts[choice]['friends_list'].append(self.user)
+          accounts[self.user]['requests'].remove(choice)
+          
+          with open('students.json', 'w') as file:
+            json.dump(accounts, file, indent=2)
+          input(f"Accepted {choice}!")
+        else:  
+          raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+          
+  #denies pending friend from 'requests' list of self.user              #FINISHED
+  def delete_request(self, accounts, requests):
+    option = -1
+    back_option = len(requests) + 1
+
+    while option != back_option:
+      os.system("clear")
+      print("Pending Requests:")
+      requests = accounts[self.user]['requests']
+      if (len(requests) == 0):
+        input("No Friend Requests")
+        return
+      back_option = len(requests) + 1
+      print_options(requests)
+      
+      try:
+        option = int(input(f"\nChoose a request to deny, or enter {back_option} to exit\n> "))
+        if (option == back_option):
+          return
+        choice = requests[option-1]
+  
+        if (requests[option-1]):
+          accounts[self.user]['requests'].remove(choice)
+          
+          with open('students.json', 'w') as file:
+            json.dump(accounts, file, indent=2)
+          input(f"Denied {choice}!")
+        else:  
+          raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+    
     
   # Handles learning new skills
   def learn_skills(self):
