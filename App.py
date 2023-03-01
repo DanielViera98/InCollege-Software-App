@@ -12,10 +12,13 @@ class InCollege:
      "Learn C", "Learn C#", "Learn Python", "Learn Java", "Learn HTML"
     ]
     self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links", "Important Links"]
-    self.options = ["Job Search/Internship", "Find someone you know", "Learn a new skill", "Important Links"]
+    self.options = ["Job Search/Internship", "Network", "Learn a new skill", "Important Links"]
     self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
     self.job_options = ["Search for jobs", "Post a job"]
     self.lang_options = ["English", "Spanish"]
+    self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List"]
+    self.request_options = ["Accept Friend Request", "Deny Friend Request"]
+    self.friends_options = ["Remove Friend"]
     self.system = AccountSystem()
     self.user = False
     
@@ -24,6 +27,7 @@ class InCollege:
     self.menu()
     os.system("clear")
     print("Thank you for using inCollege. Goodbye!")
+
   
   def set_language(self):
 
@@ -39,11 +43,9 @@ class InCollege:
         option = int(input("> "))
         match option:
           case 1:
-            print("Trying")
             self.system.set_language(self.user, "English")
             input("Language changed to English...")
           case 2:
-            print("Trying")
             self.system.set_language(self.user, "Spanish")
             input("Language changed to Spanish...")
           case 3:
@@ -56,7 +58,7 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
-
+          
   # Displays the menu
   def menu(self):
     option = -1
@@ -103,12 +105,14 @@ class InCollege:
   def show_options(self):
     option = -1
     back_option = len(self.options) + 1
-    
+    accounts = self.system.load_accounts()
     while option != back_option:
       os.system("clear")
+      if (accounts[self.user]['requests']):
+        print(f">>>      You have {len(accounts[self.user]['requests'])} Friend Requests. To view them, go to Network      <<<")
       print("Choose a task:\n")
       print_options(self.options)
-      
+        
       try:
         option = int(input("> "))
         
@@ -226,22 +230,210 @@ class InCollege:
     for username in data:
       if((data[username]['first_name']==first_name)and (data[username]['last_name']==last_name)):
         success = True
-        return success
+        return username
     return success
     
 
   # Handles networking
   def network(self):
+    option = -1
+    back_option = len(self.options) + 1
+    
+    while option != back_option:
+      os.system("clear")
+      print("Choose a task:\n")
+      print_options(self.network_options)
+      
+      try:
+        option = int(input("> "))
+        
+        match option:
+          case 1:
+            self.send_request()
+          case 2:
+            self.pending_requests()
+          case 3:
+            self.manage_friends()
+          case 4:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+  
+  #Adds username to "pending" array of searched user if present         #FINISHED
+  def send_request(self):
     first_name = input("First Name: ").capitalize()
     last_name = input("Last Name: ").capitalize()
-    if(self.search_people(first_name,last_name)):
+    username = self.search_people(first_name, last_name)
+    if(username != False):
+      #Gets username of target, appends username of sender into requests
       print("They are a part of the InCollege system")
+      accounts = self.system.load_accounts()
+      accounts[username]['requests'].append(self.user)
+      with open('students.json', 'w') as file:
+        json.dump(accounts, file, indent=2)
       input(f"A message has been sent to {first_name} {last_name} to log in and connect with you")     
       return True
     else:
       print("They are not a part of the InCollege system")
       input(f"An invite has been sent to {first_name} {last_name} to join InCollege")
       return False
+
+  def pending_requests(self):
+    accounts = self.system.load_accounts()
+    option = -1
+    back_option = len(self.options) + 1
+    
+    while option != back_option:
+      os.system("clear")
+      requests = []
+      i = int(0)
+      for u in accounts[self.user]['requests']:
+        requests.append(u)
+        print(f"{i+1}. {u}")
+      if (len(requests) == 0):
+        input("No Friend Requests")
+        return
+      print("\nChoose a task:\n")
+      print_options(self.request_options)
+      
+      try:
+        option = int(input("> "))
+        
+        match option:
+          case 1:
+            self.accept_request(accounts, requests)
+          case 2:
+            self.delete_request(accounts, requests)
+          case 3:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+
+  #accepts pending friend from 'requests' list of self.user             #FINISHED
+  def accept_request(self, accounts, requests):
+    option = -1
+    back_option = len(requests) + 1
+    
+    while option != back_option:
+      os.system("clear")
+      print("Pending Requests:")
+      requests = accounts[self.user]['requests']
+      back_option = len(requests) + 1
+
+      if (len(requests) == 0):
+        input("No Friend Requests")
+        return
+      print_options(requests)
+      
+      try:
+        option = int(input(f"\nChoose a request to accept, or enter {back_option} to exit\n> "))
+        if (option == back_option):
+          return
+        choice = requests[option-1]
+        
+        if (requests[option-1]):
+          accounts[self.user]['friends_list'].append(choice)
+          accounts[choice]['friends_list'].append(self.user)
+          accounts[self.user]['requests'].remove(choice)
+          
+          with open('students.json', 'w') as file:
+            json.dump(accounts, file, indent=2)
+          input(f"Accepted {choice}!")
+        else:  
+          raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+          
+  #denies pending friend from 'requests' list of self.user              #FINISHED
+  def delete_request(self, accounts, requests):
+    option = -1
+    back_option = len(requests) + 1
+
+    while option != back_option:
+      os.system("clear")
+      print("Pending Requests:")
+      requests = accounts[self.user]['requests']
+      if (len(requests) == 0):
+        input("No Friend Requests")
+        return
+      back_option = len(requests) + 1
+      print_options(requests)
+      
+      try:
+        option = int(input(f"\nChoose a request to deny, or enter {back_option} to exit\n> "))
+        if (option == back_option):
+          return
+        choice = requests[option-1]
+  
+        if (requests[option-1]):
+          accounts[self.user]['requests'].remove(choice)
+          
+          with open('students.json', 'w') as file:
+            json.dump(accounts, file, indent=2)
+          input(f"Denied {choice}!")
+        else:  
+          raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+    
+  def manage_friends(self):
+    accounts = self.system.load_accounts()
+    option = -1
+    back_option = len(self.friends_options) + 1
+    while option != back_option:
+      os.system("clear")
+      if len(accounts[self.user]['friends_list']) == 0:
+        input("Nobody here, go to \"Network -> Send Friend Request\" to find a friend! ")
+        return
+      i = 0
+      for u in accounts[self.user]['friends_list']:
+        print(f"{i}. {u}")
+        i = i+1
+      print("\nChoose a task:\n")
+      print_options(self.friends_options)
+      
+      try:
+        option = int(input("> "))
+        
+        match option:
+          case 1:
+            remove = int(input("Which friend would you like to remove? "))
+            username = accounts[self.user]['friends_list'][remove-1]
+            accounts[self.user]['friends_list'].remove(username)
+            accounts[username]['friends_list'].remove(self.user)
+            input("Friend Removed.")
+            with open('students.json', 'w') as file:
+              json.dump(accounts, file, indent=2)
+          case 2:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
 
   # Handles learning new skills
   def learn_skills(self):
