@@ -81,9 +81,9 @@ class InCollege:
               self.user = username
               self.show_options()
           case 2: 
-            if self.system.register(): 
-              input("REGISTER FINISHED")
-              #self.show_options()                #CAUSES ERROR - NOT SURE WHY
+            self.system.register()
+              #input("REGISTER FINISHED")
+              #self.show_options()                #CAUSES ERROR - NOT SURE WHY. Need to go to options.
           case 3: 
             print("Video is now playing:")
             input("('press ENTER when done')")
@@ -109,7 +109,7 @@ class InCollege:
     accounts = self.system.load_accounts()
     while option != back_option:
       os.system("clear")
-      if (accounts[self.user]['requests']):
+      if (accounts[self.user]['requests'] != []):
         print(f">>>      You have {len(accounts[self.user]['requests'])} Friend Requests. To view them, go to Network      <<<")
       print("Choose a task:\n")
       print_options(self.options)

@@ -9,7 +9,7 @@ file3 = open("Tests/Results/Runner3.txt", "w+")
 file3 = open("Tests/Results/Jobs.txt", "w+")
 file3 = open("Tests/Results/Search_someone.txt", "w+")
 file3 = open("Tests/Results/Jobs_max.txt", "w+")
-os.system('clear');
+os.system('clear')
 
 def empty_students():
   student = open("students.json", "w")
