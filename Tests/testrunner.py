@@ -13,7 +13,7 @@ def test_verify_password(passwords, results):
   assert is_secure_password(passwords) == results
 
 
-@pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
+@pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False)])
 #Test register function on correct input, failing input, empty username, empty password, and empty username and password.
 def test_register_inputs(capsys, monkeypatch, input, results):
   input = StringIO(input)

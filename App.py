@@ -82,7 +82,8 @@ class InCollege:
               self.show_options()
           case 2: 
             if self.system.register(): 
-              self.show_options()
+              input("REGISTER FINISHED")
+              #self.show_options()                #CAUSES ERROR - NOT SURE WHY
           case 3: 
             print("Video is now playing:")
             input("('press ENTER when done')")
