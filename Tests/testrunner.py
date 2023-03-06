@@ -50,3 +50,5 @@ def test_login(capsys, monkeypatch):
     test = StringIO(i)
     monkeypatch.setattr('sys.stdin', test)
     assert system.login() != r
+
+empty_students()
