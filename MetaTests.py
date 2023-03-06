@@ -7,11 +7,9 @@ os.system('clear')
 def empty_students():
   student = open("students.json", "w")
   student.write("{\n}")
-  student.close()
 def empty_jobs():
   jobs = open("job_postings.json", "w")
   jobs.write("{\n}")
-  jobs.close()
   
 empty_students()
 #Run tests, print to results files.

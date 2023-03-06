@@ -193,4 +193,7 @@ class AccountSystem():
         else:
           input("Invalid username...")
 
-    return success
+    if success:
+      return username
+    else:
+      return False

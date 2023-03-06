@@ -81,9 +81,10 @@ class InCollege:
               self.user = username
               self.show_options()
           case 2: 
-            self.system.register()
-              #input("REGISTER FINISHED")
-              #self.show_options()                #CAUSES ERROR - NOT SURE WHY. Need to go to options.
+              username = self.system.register()
+              if username:
+                self.user = username
+                self.show_options()
           case 3: 
             print("Video is now playing:")
             input("('press ENTER when done')")
