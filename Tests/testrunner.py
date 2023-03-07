@@ -41,13 +41,13 @@ def test_login_fail(capsys, monkeypatch):
 
 #Test login
 def test_login(capsys, monkeypatch):
-  register =  (("XASASDDASD\nI234567*\nNobody\nHere\n\n", True), ("TASDASDASD\nI234567*\nEmpty\nField\n\n", True))
-  login = (("XASASDDASD\nI234567*\n\nN\n", False), ("TASDASDASD\nI234567*\n\nN\n", False))
-  for i,r in register:
+  register =  ("XASASDDASD\nI234567*\nNobody\nHere\n\n", "TASDASDASD\nI234567*\nEmpty\nField\n\n")
+  login = ("XASASDDASD\nI234567*\n\nN\n", "TASDASDASD\nI234567*\n\nN\n")
+  for i in register:
     test = StringIO(i)
     monkeypatch.setattr('sys.stdin', test)
     assert type(system.register()) == str
-  for i, r in login:
+  for i in login:
     test = StringIO(i)
     monkeypatch.setattr('sys.stdin', test)
-    assert system.login() != r
+    assert type(system.login()) == str
