@@ -1,8 +1,10 @@
 import pytest
 from io import StringIO
 from App import InCollege
+from AccountSystem import AccountSystem
 
 college = InCollege()
+system = AccountSystem()
 
 #search_jobs To Be Implemented
 def test_search_jobs(capsys, monkeypatch):
@@ -25,6 +27,12 @@ def test_search_jobs(capsys, monkeypatch):
 #Tests correct input, every empty field, all empty fields, long input
 #Empty fields will fail because checks currently not implemented due to not being required
 def test_post_jobs(capsys, monkeypatch, input, results):
+  register =  ("XASASDDASD\nI234567*\nNobody\nHere\n\n", "TASDASDASD\nI234567*\nEmpty\nField\n\n")
+  for i in register:
+    test = StringIO(i)
+    monkeypatch.setattr('sys.stdin', test)
+    assert type(system.register()) == str
+  
   input = StringIO(input)
   monkeypatch.setattr('sys.stdin', input)
   assert college.post_jobs() == results
