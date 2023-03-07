@@ -1,0 +1,8 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.8, pytest-7.2.1, pluggy-1.0.0
+rootdir: /home/runner/InCollege-Software-App
+collected 1 item
+
+Tests/testrunner3.py .                                                   [100%]
+
+============================== 1 passed in 0.03s ===============================
