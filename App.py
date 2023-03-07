@@ -39,14 +39,15 @@ class InCollege:
       print("Language:\n")
       print_options(self.lang_options)
 
+      accounts = self.system.load_accounts()
       try:
         option = int(input("> "))
         match option:
           case 1:
-            self.system.set_language(self.user, "English")
+            accounts[self.user]['language'] = 'en'
             input("Language changed to English...")
           case 2:
-            self.system.set_language(self.user, "Spanish")
+            accounts[self.user]['language'] = 'es'
             input("Language changed to Spanish...")
           case 3:
             return 
@@ -58,6 +59,9 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
+          
+      with open('students.json', 'w') as file:
+              json.dump(accounts, file, indent=2)
           
   # Displays the menu
   def menu(self):
@@ -138,7 +142,6 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
 
-
   def search_opportunities(self):
     option = -1
     back_option = len(self.job_options) + 1
@@ -166,8 +169,7 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
-          
-    
+   
   def load_job_postings(self):
     filename = "job_postings.json"
     if not os.path.exists(filename):
@@ -234,7 +236,6 @@ class InCollege:
         success = True
         return username
     return success
-    
 
   # Handles networking
   def network(self):

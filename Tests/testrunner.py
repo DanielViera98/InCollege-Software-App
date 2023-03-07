@@ -37,8 +37,6 @@ def test_login_fail(capsys, monkeypatch):
   monkeypatch.setattr('sys.stdin', input)
   assert system.login() == False
 
-
-
 #Test login
 def test_login(capsys, monkeypatch):
   register =  ("XASASDDASD\nI234567*\nNobody\nHere\n\n", "TASDASDASD\nI234567*\nEmpty\nField\n\n")
