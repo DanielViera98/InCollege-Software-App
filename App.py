@@ -31,6 +31,10 @@ class InCollege:
   #Allows user to swap language preference between English & Spanish. Doesn't actually do anything
   #except change language value between 'es' and 'en'
   def set_language(self):
+    if (self.user == False):
+        os.system("clear")
+        input("Not logged in")
+        return
     option = -1
     back_option = len(self.lang_options) + 1
     
@@ -132,6 +136,7 @@ class InCollege:
           case 4:
             self.important_links()
           case 5:
+            self.user = False
             return
           case _:
             raise Exception()
@@ -507,6 +512,10 @@ class InCollege:
   
   #Gives user option to toggle email, sms, and targeted advertising
   def guest_controls(self):
+    if (self.user == False):
+        os.system("clear")
+        input("Not logged in")
+        return
     option = -1
     back_option = len(self.skills) + 1
     
