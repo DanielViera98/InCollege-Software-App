@@ -22,15 +22,14 @@ def test_register_inputs(capsys, monkeypatch):
   monkeypatch.setattr('sys.stdin', input)
   assert system.register() == False
   
-  
-input = (("Duplicate\nI234567*\nFirst\nLast\n\n", True), ("Duplicate\nI234567*\nFirst\nLast\n\n", False))
-#Test registering duplicate accounts
+#Test registering duplicate accounts - First return is a string, second is false
 def test_register_duplicate(capsys, monkeypatch):
-    for i,r in input:
-      test = StringIO(i)
-      monkeypatch.setattr('sys.stdin', test)
-      assert system.register() == r
-
+  test = StringIO("Duplicate\nI234567*\nFirst\nLast\n\n")
+  monkeypatch.setattr('sys.stdin', test)
+  assert type(system.register()) == str
+  test = StringIO("Duplicate\nI234567*\nFirst\nLast\n\n")
+  monkeypatch.setattr('sys.stdin', test)
+  assert system.register() == False
 
 #Test login failure
 def test_login_fail(capsys, monkeypatch):
@@ -47,7 +46,7 @@ def test_login(capsys, monkeypatch):
   for i,r in register:
     test = StringIO(i)
     monkeypatch.setattr('sys.stdin', test)
-    assert system.register() == r
+    assert type(system.register()) == str
   for i, r in login:
     test = StringIO(i)
     monkeypatch.setattr('sys.stdin', test)
