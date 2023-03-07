@@ -1,9 +1,6 @@
 import json
 import os
 
-import json
-import os
-
 class Profile_manager:
     def __init__(self):
         self.filename = "profiles.json"
