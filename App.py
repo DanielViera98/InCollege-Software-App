@@ -93,6 +93,7 @@ class InCollege:
               if username:
                 self.user = username
                 self.show_options()
+
           case 3: 
             print("Video is now playing:")
             input("('press ENTER when done')")
