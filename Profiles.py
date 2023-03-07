@@ -25,8 +25,8 @@ class Profile_manager:
         new_profile = {
             "username": username,
             "title": title,
-            "major": major.capitalize(),
-            "university": university.capitalize(),
+            "major": major,
+            "university": university,
             "info": info,
             "experience": experience,
             "education": education
@@ -57,8 +57,8 @@ class Profile_manager:
 
             # Prompt user for new information
             new_title = input("Enter new title (press enter to skip): ")
-            new_major = input("Enter new major (press enter to skip): ").capitalize()
-            new_university = input("Enter new university (press enter to skip): ").capitalize()
+            new_major = input("Enter new major (press enter to skip): ").title()
+            new_university = input("Enter new university (press enter to skip): ").title()
             new_info = input("Enter new info (press enter to skip): ")
             new_experience = input("Enter new experience (press enter to skip): ")
             new_education = input("Enter new education (press enter to skip): ")
