@@ -1,7 +1,7 @@
 import json
 import os
 from AccountAuth import is_secure_password, verify_login_info, is_valid_username
-from profile import Profile_manager
+from Profiles import Profile_manager
 
 MAX_ACCOUNTS = 10
 
