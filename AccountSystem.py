@@ -7,12 +7,11 @@ MAX_ACCOUNTS = 10
 
 class AccountSystem():
 
-  #Initialize
+  # Handles login, returns True if login succeeded
   def __init__(self):
     self.accounts = self.load_accounts()
     self.num_accounts = len(self.accounts)
 
-  #Pull accounts from students.json and return them. If .json doesn't exist, create empty .json
   def load_accounts(self):
     filename = 'students.json'
     if not os.path.exists(filename):
@@ -30,7 +29,6 @@ class AccountSystem():
     self.num_accounts = len(data)
     self.accounts = data
 
-  #Create an account with all user entered input and add to .json
   def add_account(self, username, password, first_name, last_name, email, SMS, targeted_advertising, friends, requests):
     # Load the contents of the JSON file into a Python dictionary
     with open('students.json', 'r') as file:
@@ -74,13 +72,11 @@ class AccountSystem():
     if(question == "y"):
       new_profile.edit_profile(username)
     
-  #Returns full name ("first" + " " + "last") of user "username"
   def get_account_name(self, username):
     accounts = self.load_accounts()
     name = [accounts[username]["first_name"], accounts[username]["last_name"]]
     return name
   
-  #The following six functions get and toggle user guest controls
   def get_targeted_advertising(self, username):
     accounts = self.load_accounts()
     targeted_advertising = accounts[username]["targeted_advertising"]
@@ -102,6 +98,7 @@ class AccountSystem():
     
     with open('students.json', 'w') as file:
       json.dump(accounts, file, indent=2)
+
     
   def toggle_SMS(self, user):
     accounts = self.load_accounts()
@@ -110,14 +107,39 @@ class AccountSystem():
     with open('students.json', 'w') as file:
       json.dump(accounts, file, indent=2)
 
+
   def toggle_targeted_advertising(self, user):
     accounts = self.load_accounts()
     accounts[user]['targeted_advertising'] = not accounts[user]['targeted_advertising']
     
     with open('students.json', 'w') as file:
       json.dump(accounts, file, indent=2)
-  
-  # Handles login, returns username if login succeeded
+
+#ERROR WHEN NOT LOGGED IN
+  def set_language(self, user, language):
+    accounts = self.load_accounts()
+    
+    match language:
+      case "English":
+        accounts[user]['language'] = 'en'
+      case "Spanish":
+        accounts[user]['language'] = 'es'
+    
+    with open('students.json', 'w') as file:
+      json.dump(accounts, file, indent=2)
+    
+  def add_request(self, user, language):
+    accounts = self.load_accounts()
+    
+    accounts[user]['language'] = 'TEST'
+    
+    with open('students.json', 'w') as file:
+      json.dump(accounts, file, indent=2)
+      
+  def remove_request(self, user, language):
+    accounts = self.load_accounts()
+    
+  # Handles login, returns True if login succeeded
   def login(self):
 
     retry = True
@@ -150,7 +172,7 @@ class AccountSystem():
     else: 
       return False
 
-  # Handles registration, returns username if registration succeeded
+  # Handles registration, returns True if registration succeeded
   def register(self):
     success = False
     if self.num_accounts >= MAX_ACCOUNTS:
@@ -195,3 +217,4 @@ class AccountSystem():
       return username
     else:
       return False
+    
