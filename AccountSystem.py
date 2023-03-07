@@ -1,6 +1,7 @@
 import json
 import os
 from AccountAuth import is_secure_password, verify_login_info, is_valid_username
+from profile import Profile_manager
 
 MAX_ACCOUNTS = 10
 
@@ -45,12 +46,31 @@ class AccountSystem():
       "friends_list" : friends,
       "requests" : requests,
     }
+      
     
     # # Write the updated data back to the file
     with open('students.json', 'w') as file:
       json.dump(data, file, indent=2)
 
+    # # #adding new profile for account
+    # new_profile = Profile_manager()
+    # new_profile.update_profiles(username,"-","-","-","-","-","-")
+
+    # # #asking if they want to edit profile:
+    # question = input("Would you like to customize your profile?(y/n)")
+    # if(question == "y"):
+    #   new_profile.edit_profile(username)
+
     self.update_accounts()
+    
+     # #adding new profile for account
+    new_profile = Profile_manager()
+    new_profile.update_profiles(username,"-","-","-","-","-","-")
+
+    # #asking if they want to edit profile:
+    question = input("Would you like to customize your profile?(y/n)")
+    if(question == "y"):
+      new_profile.edit_profile(username)
     
   def get_account_name(self, username):
     accounts = self.load_accounts()
@@ -193,4 +213,8 @@ class AccountSystem():
         else:
           input("Invalid username...")
 
-    return success
+    if success:
+      return username
+    else:
+      return False
+    

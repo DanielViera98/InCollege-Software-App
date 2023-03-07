@@ -82,6 +82,7 @@ class InCollege:
               self.show_options()
           case 2: 
             if self.system.register(): 
+              self.user=username
               self.show_options()
           case 3: 
             print("Video is now playing:")
