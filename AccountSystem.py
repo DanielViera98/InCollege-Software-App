@@ -119,7 +119,7 @@ class AccountSystem():
   def remove_request(self, user, language):
     accounts = self.load_accounts()
     
-  # Handles login, returns True if login succeeded
+  # Handles login, returns username if login succeeded
   def login(self):
 
     retry = True
@@ -152,7 +152,7 @@ class AccountSystem():
     else: 
       return False
 
-  # Handles registration, returns True if registration succeeded
+  # Handles registration, returns username if registration succeeded
   def register(self):
     success = False
     if self.num_accounts >= MAX_ACCOUNTS:
@@ -193,4 +193,7 @@ class AccountSystem():
         else:
           input("Invalid username...")
 
-    return success
+    if success:
+      return username
+    else:
+      return False

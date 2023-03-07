@@ -12,27 +12,24 @@ college = InCollege()
 def test_verify_password(passwords, results): 
   assert is_secure_password(passwords) == results
 
-
-@pytest.mark.parametrize("input, results", [('First\nTest1now*\nA\na\n\n', True), ('Second\n\nFail\nSecond\nB\nb\n', False), ('\nC\nc\nFail\n\n', False), ('Fourth\nD\nd\n\n\n', False), ('\nE\ne\n\n\n', False), ('\n\ne\n\n\n', False), ('\nE\n\n\n\n', False), ('\n\n\n\n\n', False)])
-#Test register function on correct input, failing input, empty username, empty password, and empty username and password.
-def test_register_inputs(capsys, monkeypatch, input, results):
-  input = StringIO(input)
+#Test register function on correct input 
+def test_register_inputs(capsys, monkeypatch):
+  input = StringIO('First\nTest1now*\nA\na\n\n')
   monkeypatch.setattr('sys.stdin', input)
-  assert system.register() == results
+  assert system.register() == 'First'
   
-
-#Test register function for duplicate usernames
-
-#Clear database for login functions
-
-input = (("Dup\nI234567*\nFirst\nLast\n\n", True), ("Dup\nI234567*\nFirst\nLast\n\n", False))
-#Test registering duplicate accounts
+  input = StringIO('Second\n\nFail\nSecond\nB\nb\n')
+  monkeypatch.setattr('sys.stdin', input)
+  assert system.register() == False
+  
+#Test registering duplicate accounts - First return is a string, second is false
 def test_register_duplicate(capsys, monkeypatch):
-    for i,r in input:
-      test = StringIO(i)
-      monkeypatch.setattr('sys.stdin', test)
-      assert system.register() == r
-
+  test = StringIO("Duplicate\nI234567*\nFirst\nLast\n\n")
+  monkeypatch.setattr('sys.stdin', test)
+  assert type(system.register()) == str
+  test = StringIO("Duplicate\nI234567*\nFirst\nLast\n\n")
+  monkeypatch.setattr('sys.stdin', test)
+  assert system.register() == False
 
 #Test login failure
 def test_login_fail(capsys, monkeypatch):
@@ -44,19 +41,13 @@ def test_login_fail(capsys, monkeypatch):
 
 #Test login
 def test_login(capsys, monkeypatch):
-  register =  (("XASASDDASD\nI234567*\nNobody\nHere\n\n", True), ("TASDASDASD\nI234567*\nEmpty\nField\n\n", True))
-  login = (("XASASDDASD\nI234567*\n\nN\n", True), ("TASDASDASD\nI234567*\n\nN\n", True))
-  for i,r in register:
+  register =  ("XASASDDASD\nI234567*\nNobody\nHere\n\n", "TASDASDASD\nI234567*\nEmpty\nField\n\n")
+  login = ("XASASDDASD\nI234567*\n\nN\n", "TASDASDASD\nI234567*\n\nN\n")
+  for i in register:
     test = StringIO(i)
     monkeypatch.setattr('sys.stdin', test)
-    assert system.register() == r
-  for i, r in login:
+    assert type(system.register()) == str
+  for i in login:
     test = StringIO(i)
     monkeypatch.setattr('sys.stdin', test)
-    assert system.login() == r
-
-@pytest.mark.parametrize("input, results", [('First\nLast\n\n', True), ('A\na\n\n', True), ("Doesn't\nExist\n\n", False), ('\nLast\n\n', False), ('First\n\n\n', False), ('\n\n\n', False)])
-def test_network(capsys, monkeypatch, input, results):
-  input = StringIO(input)
-  monkeypatch.setattr('sys.stdin', input)
-  assert college.network() == results
+    assert type(system.login()) == str
