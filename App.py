@@ -501,14 +501,15 @@ class InCollege:
   def guest_controls(self):
     option = -1
     back_option = len(self.skills) + 1
-    email = self.system.get_email(self.user)
-    sms = self.system.get_SMS(self.user)
-    targeted_advertising = self.system.get_targeted_advertising(self.user)
-    
-    toggle_options = [email, sms, targeted_advertising]
-    options = zip(self.guest_control_options, toggle_options)
     
     while option != back_option:
+      
+      email = self.system.get_email(self.user)
+      sms = self.system.get_SMS(self.user)
+      targeted_advertising = self.system.get_targeted_advertising(self.user)
+      
+      toggle_options = [email, sms, targeted_advertising]
+      options = zip(self.guest_control_options, toggle_options)
       os.system("clear")
       print("Select an option:\n")
       print_toggle_options(options)
