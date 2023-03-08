@@ -103,7 +103,7 @@ class Profile_manager:
                     else:
                         input("Already have max number of Experiences. ")
                 case 2:
-                    input("Not Implemented Yet")
+                    self.edit_experience(profile)
                 case 3:
                     return
 
@@ -157,3 +157,54 @@ class Profile_manager:
             else:
                 input("You've reached the max number of experiences, returning. ")
                 
+    def edit_experience(self, profile):
+        os.system("clear")
+        print("--------Editing Experience--------\n")
+        num = 1
+        for i in profile['experience']:
+            print("Experience ", num, ":")
+            print("\tJob Title: ", i[0])
+            print("\tDescription:\n\t\t", i[5], "\n")
+            num = num + 1
+        edit_num = int(input("Which Experience would you like to edit (Enter the number): "))
+        edit_num = edit_num - 1
+        self.edit_options = ["Job Title", "Employer", "Date Started", "Date Ended", "Location", "Description"]
+        option = -1
+        back_option = len(self.edit_options) + 1
+        
+        while option != back_option:
+            os.system("clear")
+            edit = profile['experience'][edit_num]
+            print("Experience: ", edit_num+1, ":")
+            print("\tJob Title: ", edit[0])
+            print("\tEmployer: ", edit[1])
+            print("\tDate Started: ", edit[2])
+            print("\tDate Ended: ", edit[3])
+            print("\tLocation: ", edit[4])
+            print("\tDescription:\n\t\t", edit[5], "\n")
+            
+            print("Choose what to change: ")
+            print_options(self.edit_options)
+            choice = int(input("> "))
+            match choice:
+                case 1:
+                    profile['experience'][edit_num][0] = input("New Job Title: ")
+                case 2:
+                    profile['experience'][edit_num][1] = input("New Employer: ")
+                case 3:
+                    profile['experience'][edit_num][2] = input("New Date Started: ")
+                case 4:
+                    profile['experience'][edit_num][3] = input("New Date Ended: ")
+                case 5:
+                    profile['experience'][edit_num][4] = input("New Location: ")
+                case 6:
+                    profile['experience'][edit_num][5] = input("New Description: ")
+                case 7: 
+                    option = back_option
+                case _:
+                    input("ERROR, RETURN")
+                    option = back_option
+            
+            with open(self.filename, 'w') as file:
+                json.dump(self.profiles, file, indent=2)
+    
