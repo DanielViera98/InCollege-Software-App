@@ -95,19 +95,27 @@ class Profile_manager:
             os.system("clear")
             print("Experience:")
             print_options(self.options)
-            option = int(input("> "))
-            match option:
-                case 1:
-                    if len(profile['experience']) < 3:
-                        self.add_experience(profile)
-                    else:
-                        input("Already have max number of Experiences. ")
-                case 2:
-                    self.edit_experience(profile)
-                case 3:
-                    return
+            try:
+                option = int(input("> "))
+                match option:
+                    case 1:
+                        if len(profile['experience']) < 3:
+                            self.add_experience(profile)
+                        else:
+                            input("Already have max number of Experiences. ")
+                    case 2:
+                        self.edit_experience(profile)
+                    case 3:
+                        return
+                    case _:
+                        raise Exception() 
+                    
+            except Exception as e:
+                if type(e) == ValueError:
+                    input("Invalid input...")
+                else:
+                    input(f"Error: {e} {type(e)}")
 
-        return
     
     def add_experience(self, profile):
         add = True
@@ -147,7 +155,7 @@ class Profile_manager:
                 
             with open(self.filename, 'w') as file:
                     json.dump(self.profiles, file, indent=2)
-                
+            
             if len(profile['experience']) < 3:
                 temp = input("Would you like to add another Experience(y/n)? ")
                 if temp == 'y':
@@ -159,6 +167,9 @@ class Profile_manager:
                 
     def edit_experience(self, profile):
         os.system("clear")
+        if len(profile['experience']) < 1:
+            input("No experiences to edit, press enter to return. ")
+            return
         print("--------Editing Experience--------\n")
         num = 1
         for i in profile['experience']:
