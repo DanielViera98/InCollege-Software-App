@@ -74,6 +74,10 @@ class AccountSystem():
     if(question == "y"):
       new_profile.edit_profile(username)
     
+    question = input("Would you like to view your finished profile?(y/n)")
+    if question == 'y':
+      new_profile.view_profile(username)
+    
   #Returns full name ("first" + " " + "last") of user "username"
   def get_account_name(self, username):
     accounts = self.load_accounts()

@@ -35,6 +35,20 @@ class Profile_manager:
         with open(self.filename, 'w') as file:
             json.dump(self.profiles, file, indent=2)
 
+    def get_profile(self, username):
+        for profile in self.profiles:
+            if profile['username'] == username:
+                return profile
+        
+    def view_profile(self, username):
+        os.system("clear")
+        profile = self.get_profile(username)
+        print("Username: ", profile['username'], "\nTitle: ", profile['title'], "\nMajor: ", profile['major'],
+              "\nUniversity: ", profile['university'], "\nInfo: ", profile['info'])
+        self.view_experiences(profile)
+        print("\nEducation: ", "NOT IMPLEMENTED")
+        
+        
     def search_profiles(self, keyword):
         results = []
         for profile in self.profiles:
@@ -116,7 +130,6 @@ class Profile_manager:
                 else:
                     input(f"Error: {e} {type(e)}")
 
-    
     def add_experience(self, profile):
         add = True
         while (len(profile['experience']) < 3 and add == True):
@@ -124,14 +137,7 @@ class Profile_manager:
             print("--------Adding Experience--------\n")
             counter = len(profile['experience'])
             profile['experience'].append(["-", "-", "-", "-", "-", "-"])
-            for i in profile['experience']:
-                print("Experience:")
-                print("\tJob Title: ", i[0])
-                print("\tEmployer: ", i[1])
-                print("\tDate Started: ", i[2])
-                print("\tDate Ended: ", i[3])
-                print("\tLocation: ", i[4])
-                print("\tDescription:\n\t\t", i[5], "\n")
+            self.view_experiences(profile)
 
             temp = ""
             temp = input("Enter job title (press enter to skip): ") 
@@ -219,3 +225,12 @@ class Profile_manager:
             with open(self.filename, 'w') as file:
                 json.dump(self.profiles, file, indent=2)
     
+    def view_experiences(self, profile):
+        for i in profile['experience']:
+            print("Experience:")
+            print("\tJob Title: ", i[0])
+            print("\tEmployer: ", i[1])
+            print("\tDate Started: ", i[2])
+            print("\tDate Ended: ", i[3])
+            print("\tLocation: ", i[4])
+            print("\tDescription:\n\t\t", i[5], "\n")
