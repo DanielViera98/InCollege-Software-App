@@ -1,8 +1,7 @@
 import json
 import os
 
-import json
-import os
+from Helpers import print_options
 
 class Profile_manager:
     def __init__(self):
@@ -61,7 +60,9 @@ class Profile_manager:
                 new_major = input("Enter new major (press enter to skip): ").title()
                 new_university = input("Enter new university (press enter to skip): ").title()
                 new_info = input("Enter new info (press enter to skip): ")
-                new_experience = self.get_experience(profile)
+                test = input("Would you like to add an Experience (y/n)? ")
+                if test != "":
+                    self.get_experience(profile)
                 new_education = input("Enter new education (press enter to skip): ")
 
                 # Update profile with new information
@@ -73,8 +74,6 @@ class Profile_manager:
                     profile['university'] = new_university
                 if new_info:
                     profile['info'] = new_info
-                if new_experience:
-                    profile['experience'] = new_experience
                 if new_education:
                     profile['education'] = new_education
 
@@ -87,17 +86,34 @@ class Profile_manager:
         print("Profile not found.")
         
     def get_experience(self, profile):
-        print("Experience:")
-        test = input("Would you like to add/edit an Experience (Max of three), y/n? ")
-        if (profile['experience'] == [] and test == 'y'):
-            print("No Experiences, adding!")
-            self.add_experience(profile)
+        self.options = ["Add Experience (Max of Three)", "Edit Experience"]
+        
+        option = -1
+        back_option = len(self.options) + 1
+    
+        while option != back_option:
+            os.system("clear")
+            print("Experience:")
+            print_options(self.options)
+            option = int(input("> "))
+            match option:
+                case 1:
+                    if len(profile['experience']) < 3:
+                        self.add_experience(profile)
+                    else:
+                        input("Already have max number of Experiences. ")
+                case 2:
+                    input("Not Implemented Yet")
+                case 3:
+                    return
 
         return
     
     def add_experience(self, profile):
         add = True
         while (len(profile['experience']) < 3 and add == True):
+            os.system("clear")
+            print("--------Adding Experience--------\n")
             counter = len(profile['experience'])
             profile['experience'].append(["-", "-", "-", "-", "-", "-"])
             for i in profile['experience']:
@@ -138,3 +154,6 @@ class Profile_manager:
                     add = True
                 else:
                     add = False
+            else:
+                input("You've reached the max number of experiences, returning. ")
+                
