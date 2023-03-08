@@ -28,7 +28,7 @@ class Profile_manager:
             "university": university,
             "info": info,
             "experience": [],
-            "education": education
+            "education": []
         }
         self.profiles.append(new_profile)
         self.num_profiles += 1
@@ -63,7 +63,9 @@ class Profile_manager:
                 test = input("Would you like to add an Experience (y/n)? ")
                 if test != "":
                     self.get_experience(profile)
-                new_education = input("Enter new education (press enter to skip): ")
+                new_education = input("Would you like to add an Education (y/n)? ")
+                if new_education == "y":
+                    self.add_education(profile)
 
                 # Update profile with new information
                 if new_title:
@@ -74,8 +76,8 @@ class Profile_manager:
                     profile['university'] = new_university
                 if new_info:
                     profile['info'] = new_info
-                if new_education:
-                    profile['education'] = new_education
+                """if new_education:
+                    profile['education'] = new_education"""
 
                 # Write updated profiles to file
                 with open(self.filename, 'w') as file:
@@ -219,3 +221,37 @@ class Profile_manager:
             with open(self.filename, 'w') as file:
                 json.dump(self.profiles, file, indent=2)
     
+
+    def add_education(self,profile):
+        add = True
+        if (len(profile['education']) >= 1):
+            input("Education already exists(enter to continue)")
+            add = False
+        while (len(profile['education']) < 1 and add == True):
+            os.system("clear")
+            print("--------Adding Experience--------\n")
+            counter = len(profile['education'])
+            profile['education'].append(["-", "-", "-"])
+            for i in profile['education']:
+                print("Education:")
+                print("\tSchool Name: ", i[0])
+                print("\tDegree: ", i[1])
+                print("\tYears Attended: ", i[2],"\n")
+                
+            temp = ""
+            temp = input("Enter School Name (press enter to skip): ") 
+            if (temp):
+                profile['education'][counter][0] = temp
+            temp = input("Enter Degree (press enter to skip): ") 
+            if (temp):
+                profile['education'][counter][1] = temp
+            temp = input("Enter Years Attended (press enter to skip): ") 
+            if (temp):
+                profile['education'][counter][2] = temp
+                
+            with open(self.filename, 'w') as file:
+                    json.dump(self.profiles, file, indent=2)
+            
+            add = False
+            
+                
