@@ -57,11 +57,11 @@ class Profile_manager:
 
             # Prompt user for new information
             new_title = input("Enter new title (press enter to skip): ")
-            new_major = input("Enter new major (press enter to skip): ").capitalize()
-            new_university = input("Enter new university (press enter to skip): ").capitalize()
+            new_major = input("Enter new major (press enter to skip): ").title()
+            new_university = input("Enter new university (press enter to skip): ").title()
             new_info = input("Enter new info (press enter to skip): ")
             new_experience = input("Enter new experience (press enter to skip): ")
-            new_education = input("Enter new education (press enter to skip): ")
+            new_education = input("Enter new education: School Name/Degree/Years Attended  (press enter to skip): ")
 
             # Update profile with new information
             if new_title:

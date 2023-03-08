@@ -2,6 +2,7 @@ from AccountSystem import AccountSystem
 from UsefulLinks import useful_links
 from ImportantLinks import links
 from Helpers import print_options, print_toggle_options
+from Profiles import Profile_manager
 import os
 import json
 class InCollege:
@@ -12,7 +13,7 @@ class InCollege:
      "Learn C", "Learn C#", "Learn Python", "Learn Java", "Learn HTML"
     ]
     self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links", "Important Links"]
-    self.options = ["Job Search/Internship", "Network", "Learn a new skill", "Important Links"]
+    self.options = ["Job Search/Internship", "Network", "Learn a new skill", "Important Links","Edit Profile"]
     self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
     self.job_options = ["Search for jobs", "Post a job"]
     self.lang_options = ["English", "Spanish"]
@@ -137,6 +138,9 @@ class InCollege:
           case 4:
             self.important_links()
           case 5:
+            curr_profile = Profile_manager()
+            curr_profile.edit_profile(self.user)
+          case 6:
             self.user = False
             return
           case _:
