@@ -1,8 +1,7 @@
 import json
 import os
 
-import json
-import os
+from Helpers import print_options
 
 class Profile_manager:
     def __init__(self):
@@ -25,10 +24,10 @@ class Profile_manager:
         new_profile = {
             "username": username,
             "title": title,
-            "major": major.capitalize(),
-            "university": university.capitalize(),
+            "major": major,
+            "university": university,
             "info": info,
-            "experience": experience,
+            "experience": [],
             "education": education
         }
         self.profiles.append(new_profile)
@@ -44,43 +43,168 @@ class Profile_manager:
         return results
     
     def edit_profile(self, username):
-       for profile in self.profiles:
-        if profile['username'] == username:
-            print("Current profile information:")
-            print("Title:", profile['title'])
-            print("Major:", profile['major'])
-            print("University:", profile['university'])
-            print("Info:", profile['info'])
-            print("Experience:", profile['experience'])
-            print("Education:", profile['education'])
-            print("\n")
+        os.system("clear")
+        for profile in self.profiles:
+            if profile['username'] == username:
+                print("Current profile information:")
+                print("Title:", profile['title'])
+                print("Major:", profile['major'])
+                print("University:", profile['university'])
+                print("Info:", profile['info'])
+                print("Experience:", profile['experience'])
+                print("Education:", profile['education'])
+                print("\n")
 
-            # Prompt user for new information
-            new_title = input("Enter new title (press enter to skip): ")
-            new_major = input("Enter new major (press enter to skip): ").title()
-            new_university = input("Enter new university (press enter to skip): ").title()
-            new_info = input("Enter new info (press enter to skip): ")
-            new_experience = input("Enter new experience (press enter to skip): ")
-            new_education = input("Enter new education: School Name/Degree/Years Attended  (press enter to skip): ")
+                # Prompt user for new information
+                new_title = input("Enter new title (press enter to skip): ")
+                new_major = input("Enter new major (press enter to skip): ").title()
+                new_university = input("Enter new university (press enter to skip): ").title()
+                new_info = input("Enter new info (press enter to skip): ")
+                test = input("Would you like to add an Experience (y/n)? ")
+                if test != "":
+                    self.get_experience(profile)
+                new_education = input("Enter new education (press enter to skip): ")
 
-            # Update profile with new information
-            if new_title:
-                profile['title'] = new_title
-            if new_major:
-                profile['major'] = new_major
-            if new_university:
-                profile['university'] = new_university
-            if new_info:
-                profile['info'] = new_info
-            if new_experience:
-                profile['experience'] = new_experience
-            if new_education:
-                profile['education'] = new_education
+                # Update profile with new information
+                if new_title:
+                    profile['title'] = new_title
+                if new_major:
+                    profile['major'] = new_major
+                if new_university:
+                    profile['university'] = new_university
+                if new_info:
+                    profile['info'] = new_info
+                if new_education:
+                    profile['education'] = new_education
 
-            # Write updated profiles to file
+                # Write updated profiles to file
+                with open(self.filename, 'w') as file:
+                    json.dump(self.profiles, file, indent=2)
+
+                print("Profile updated successfully!")
+                return
+        print("Profile not found.")
+        
+    def get_experience(self, profile):
+        self.options = ["Add Experience (Max of Three)", "Edit Experience"]
+        
+        option = -1
+        back_option = len(self.options) + 1
+    
+        while option != back_option:
+            os.system("clear")
+            print("Experience:")
+            print_options(self.options)
+            option = int(input("> "))
+            match option:
+                case 1:
+                    if len(profile['experience']) < 3:
+                        self.add_experience(profile)
+                    else:
+                        input("Already have max number of Experiences. ")
+                case 2:
+                    self.edit_experience(profile)
+                case 3:
+                    return
+
+        return
+    
+    def add_experience(self, profile):
+        add = True
+        while (len(profile['experience']) < 3 and add == True):
+            os.system("clear")
+            print("--------Adding Experience--------\n")
+            counter = len(profile['experience'])
+            profile['experience'].append(["-", "-", "-", "-", "-", "-"])
+            for i in profile['experience']:
+                print("Experience:")
+                print("\tJob Title: ", i[0])
+                print("\tEmployer: ", i[1])
+                print("\tDate Started: ", i[2])
+                print("\tDate Ended: ", i[3])
+                print("\tLocation: ", i[4])
+                print("\tDescription:\n\t\t", i[5], "\n")
+
+            temp = ""
+            temp = input("Enter job title (press enter to skip): ") 
+            if (temp):
+                profile['experience'][counter][0] = temp
+            temp = input("Enter Employer (press enter to skip): ") 
+            if (temp):
+                profile['experience'][counter][1] = temp
+            temp = input("Enter Date Started (press enter to skip): ") 
+            if (temp):
+                profile['experience'][counter][2] = temp
+            temp = input("Enter Date Ended (press enter to skip): ") 
+            if (temp):
+                profile['experience'][counter][3] = temp
+            temp = input("Enter Location (press enter to skip): ") 
+            if (temp):
+                profile['experience'][counter][4] = temp
+            temp = input("Enter Description (press enter to skip): ") 
+            if (temp):
+                profile['experience'][counter][5] = temp
+                
+            with open(self.filename, 'w') as file:
+                    json.dump(self.profiles, file, indent=2)
+                
+            if len(profile['experience']) < 3:
+                temp = input("Would you like to add another Experience(y/n)? ")
+                if temp == 'y':
+                    add = True
+                else:
+                    add = False
+            else:
+                input("You've reached the max number of experiences, returning. ")
+                
+    def edit_experience(self, profile):
+        os.system("clear")
+        print("--------Editing Experience--------\n")
+        num = 1
+        for i in profile['experience']:
+            print("Experience ", num, ":")
+            print("\tJob Title: ", i[0])
+            print("\tDescription:\n\t\t", i[5], "\n")
+            num = num + 1
+        edit_num = int(input("Which Experience would you like to edit (Enter the number): "))
+        edit_num = edit_num - 1
+        self.edit_options = ["Job Title", "Employer", "Date Started", "Date Ended", "Location", "Description"]
+        option = -1
+        back_option = len(self.edit_options) + 1
+        
+        while option != back_option:
+            os.system("clear")
+            edit = profile['experience'][edit_num]
+            print("Experience: ", edit_num+1, ":")
+            print("\tJob Title: ", edit[0])
+            print("\tEmployer: ", edit[1])
+            print("\tDate Started: ", edit[2])
+            print("\tDate Ended: ", edit[3])
+            print("\tLocation: ", edit[4])
+            print("\tDescription:\n\t\t", edit[5], "\n")
+            
+            print("Choose what to change: ")
+            print_options(self.edit_options)
+            choice = int(input("> "))
+            match choice:
+                case 1:
+                    profile['experience'][edit_num][0] = input("New Job Title: ")
+                case 2:
+                    profile['experience'][edit_num][1] = input("New Employer: ")
+                case 3:
+                    profile['experience'][edit_num][2] = input("New Date Started: ")
+                case 4:
+                    profile['experience'][edit_num][3] = input("New Date Ended: ")
+                case 5:
+                    profile['experience'][edit_num][4] = input("New Location: ")
+                case 6:
+                    profile['experience'][edit_num][5] = input("New Description: ")
+                case 7: 
+                    option = back_option
+                case _:
+                    input("ERROR, RETURN")
+                    option = back_option
+            
             with open(self.filename, 'w') as file:
                 json.dump(self.profiles, file, indent=2)
-
-            print("Profile updated successfully!")
-            return
-    print("Profile not found.")
+    
