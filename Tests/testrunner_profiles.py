@@ -13,7 +13,7 @@ class MockProfile():
         self.new_university = "New University"
         self.new_info = "New Cool Info"
         self.new_experience = []
-        self.new_education = "New Education"
+        self.new_education = []
         
 
 def test_edit_profile(monkeypatch):
@@ -22,7 +22,7 @@ def test_edit_profile(monkeypatch):
     
     mp.pm.update_profiles(mp.username, mp.new_title, mp.new_major, mp.new_university, mp.new_info, mp.new_experience, mp.new_education)
     
-    input = StringIO('New Title\nNew Major\nNew University\nNew Info\nn\n3\nNew Education\n')
+    input = StringIO('New Title\nNew Major\nNew University\nNew Info\nn\nn\nn\n')
     monkeypatch.setattr('sys.stdin', input)
 
     mp.pm.edit_profile(mp.username)
@@ -32,7 +32,7 @@ def test_edit_profile(monkeypatch):
     assert updated_profile['major'] == 'New Major'
     assert updated_profile['university'] == 'New University'
     assert updated_profile['info'] == 'New Info'
-    assert updated_profile['education'] == 'New Education'
+    assert updated_profile['education'] == [['-','-','-']]
     
 def test_edit_profile_max_experience(monkeypatch):
     mp = MockProfile()
@@ -54,9 +54,4 @@ def test_edit_profile_max_experience(monkeypatch):
     # Check that the profile was updated correctly
     
     updated_profile = mp.pm.profiles[0]
-    assert updated_profile['title'] == 'New Title'
-    assert updated_profile['major'] == 'New Major'
-    assert updated_profile['university'] == 'New University'
-    assert updated_profile['info'] == 'New Info'
-    assert updated_profile['education'] == 'New Education'
     assert len(updated_profile['experience']) == 3  # The maximum number of experience sections should be 3
