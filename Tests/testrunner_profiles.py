@@ -1,51 +1,62 @@
 import json
+from io import StringIO
 from Profiles import Profile_manager
 
-def test_add_profile():
-    # Initialize the profile manager and load existing profiles
-    pm = Profile_manager()
-    initial_num_profiles = pm.num_profiles
-    with open('example_profiles.json') as f:
-        expected_profiles = json.load(f)
+class MockProfile():
+    
+    def __init__(self):
+    
+        self.pm = Profile_manager()
+        self.username = "tan123"
+        self.new_title = "New Software Developer"
+        self.new_major = "New Computer Science"
+        self.new_university = "New University"
+        self.new_info = "New Cool Info"
+        self.new_experience = []
+        self.new_education = "New Education"
+        
 
-    # Add a new profile
-    new_profile = {
-        "username": "jsmith",
-        "title": "Software Engineer",
-        "major": "Computer Science",
-        "university": "Stanford",
-        "info": "Passionate about coding",
-        "experience": [],
-        "education": "Bachelor's degree"
-    }
-    pm.update_profiles(**new_profile)
+def test_edit_profile(monkeypatch):
+    # Call the edit_profile method with a valid username and new information
+    mp = MockProfile()
+    
+    mp.pm.update_profiles(mp.username, mp.new_title, mp.new_major, mp.new_university, mp.new_info, mp.new_experience, mp.new_education)
+    
+    input = StringIO('New Title\nNew Major\nNew University\nNew Info\nn\n3\nNew Education\n')
+    monkeypatch.setattr('sys.stdin', input)
 
-    # Check if the number of profiles has increased
-    assert pm.num_profiles == initial_num_profiles + 1
+    mp.pm.edit_profile(mp.username)
+    
+    updated_profile = mp.pm.profiles[0]
+    assert updated_profile['title'] == 'New Title'
+    assert updated_profile['major'] == 'New Major'
+    assert updated_profile['university'] == 'New University'
+    assert updated_profile['info'] == 'New Info'
+    assert updated_profile['education'] == 'New Education'
+    
+def test_edit_profile_max_experience(monkeypatch):
+    mp = MockProfile()
+    
+    mp.pm.update_profiles(mp.username, mp.new_title, mp.new_major, mp.new_university, mp.new_info, mp.new_experience, mp.new_education)
 
-    # Check if the new profile has been saved correctly
-    expected_profiles.append(new_profile)
-    with open(pm.filename) as f:
-        saved_profiles = json.load(f)
-    assert saved_profiles == expected_profiles
+    # Mock the input function to return input that tries to add more than three experience sections
+    for i in range(2):
+        input_string = 'Exp1\nExp2\nExp3\nExp4\nExp5\nExp6\ny\n'
+        input = StringIO(input_string)
+        monkeypatch.setattr('builtins.input', lambda _: input.readline().rstrip())
 
-def test_edit_profile():
-    # Initialize the profile manager and load existing profiles
-    pm = Profile_manager()
-    with open('example_profiles.json') as f:
-        initial_profiles = json.load(f)
+        mp.pm.add_experience(mp.pm.profiles[0])
 
-    # Edit an existing profile
-    username = "tan123"
-    new_title = "Software Developer"
-    pm.edit_profile(username, new_title=new_title)
-
-    # Check if the profile has been edited correctly
-    for profile in pm.profiles:
-        if profile["username"] == username:
-            assert profile["title"] == new_title
-
-    # Check if the edited profile has been saved correctly
-    with open(pm.filename) as f:
-        saved_profiles = json.load(f)
-    assert saved_profiles == pm.profiles
+    input_string = 'Exp1\nExp2\nExp3\nExp4\nExp5\nExp6\n'
+    input = StringIO(input_string)
+    monkeypatch.setattr('builtins.input', lambda _: input.readline().rstrip())
+    mp.pm.add_experience(mp.pm.profiles[0])
+    # Check that the profile was updated correctly
+    
+    updated_profile = mp.pm.profiles[0]
+    assert updated_profile['title'] == 'New Title'
+    assert updated_profile['major'] == 'New Major'
+    assert updated_profile['university'] == 'New University'
+    assert updated_profile['info'] == 'New Info'
+    assert updated_profile['education'] == 'New Education'
+    assert len(updated_profile['experience']) == 3  # The maximum number of experience sections should be 3
