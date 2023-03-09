@@ -78,12 +78,12 @@ class Profile_manager:
         new_major = input("Enter new major (press enter to skip): ").title()
         new_university = input("Enter new university (press enter to skip): ").title()
         new_info = input("Enter new info (press enter to skip): ")
-        test = input("Would you like to add an Experience (y/n)? ")
+        test = input("Would you like to add/edit an Experience (y/n)? ")
         if test == "y":
             self.get_experience(profile)
-        new_education = input("Would you like to add an Education (y/n)? ")
+        new_education = input("Would you like to add/edit an Education (y/n)? ")
         if new_education == "y":
-            self.add_education(profile)
+            self.get_education(profile)
 
         # Update profile with new information
         if new_title:
@@ -244,6 +244,37 @@ class Profile_manager:
             print("\tLocation: ", i[4])
             print("\tDescription:\n\t\t", i[5], "\n")
 
+    def get_education(self, profile):
+        self.education_options = ["Add Education (Max of Three)", "Edit Education"]
+        
+        option = -1
+        back_option = len(self.education_options) + 1
+    
+        while option != back_option:
+            os.system("clear")
+            print("Education:")
+            print_options(self.education_options)
+            try:
+                option = int(input("> "))
+                match option:
+                    case 1:
+                        if len(profile['education']) < 3:
+                            self.add_education(profile)
+                        else:
+                            input("Already have max number of Educations. ")
+                    case 2:
+                        self.edit_education(profile)
+                    case 3:
+                        return
+                    case _:
+                        raise Exception() 
+                    
+            except Exception as e:
+                if type(e) == ValueError:
+                    input("Invalid input...")
+                else:
+                    input(f"Error: {e} {type(e)}")
+                    
     def add_education(self,profile):
         add = True
         if (len(profile['education']) >= 1):
@@ -275,7 +306,53 @@ class Profile_manager:
                     json.dump(self.profiles, file, indent=2)
             
             add = False
+       
+    def edit_education(self, profile):
+        os.system("clear")
+        if len(profile['education']) < 1:
+            input("No education to edit, press enter to return. ")
+            return
+        print("--------Editing Education--------\n")
+        num = 1
+        for i in profile['education']:
+            print("Education ", num, ":")
+            print("\tSchool Name: ", i[0])
+            print("\tDegree: ", i[1], "\n")
+            num = num + 1
+        
+        edit_num = int(input("Which Education would you like to edit (Enter the number): "))
+        edit_num = edit_num - 1
+        self.edit_options = ["School Name", "Degree", "Years Attended"]
+        option = -1
+        back_option = len(self.edit_options) + 1
+        
+        while option != back_option:
+            os.system("clear")
+            edit = profile['education'][edit_num]
+            print("Education: ", edit_num+1, ":")
+            print("\tSchool Name: ", edit[0])
+            print("\tDegree: ", edit[1])
+            print("\tYears Attended: ", edit[2])
             
+            print("Choose what to change: ")
+            print_options(self.edit_options)
+            choice = int(input("> "))
+            match choice:
+                case 1:
+                    profile['education'][edit_num][0] = input("New School Name: ")
+                case 2:
+                    profile['education'][edit_num][1] = input("New Degree: ")
+                case 3:
+                    profile['education'][edit_num][1] = input("New Years Attended: ")
+                case 4: 
+                    option = back_option
+                case _:
+                    input("ERROR, RETURN")
+                    option = back_option
+            
+            with open(self.filename, 'w') as file:
+                json.dump(self.profiles, file, indent=2)
+                     
     def view_education(self, profile):
         if len(profile['education']) == 0:
             print("Education: -")
