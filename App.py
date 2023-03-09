@@ -3,6 +3,7 @@ from Profiles import Profile_manager
 from UsefulLinks import useful_links
 from ImportantLinks import links
 from Helpers import print_options, print_toggle_options
+from Profiles import Profile_manager
 import os
 import json
 class InCollege:
