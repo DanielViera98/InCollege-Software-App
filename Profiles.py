@@ -37,12 +37,8 @@ class Profile_manager:
 
     def get_profile(self, username):
         for profile in self.profiles:
-            print(profile['username'], "<>", username)
             if profile['username'] == username:
-                print(profile['username'], " <-->", username)
                 return profile
-        print(username)
-        input("Returning False")
         return False
         
     def view_profile(self, username):
