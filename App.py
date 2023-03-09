@@ -350,7 +350,7 @@ class InCollege:
       if (len(requests) == 0):  #If no more requests, print so and return
         input("No Friend Requests")
         return
-      print_options(s)
+      print_options()
       
       try:
         option = int(input(f"\nChoose a request to accept, or enter {back_option} to exit\n> "))
