@@ -32,7 +32,7 @@ def test_edit_profile(monkeypatch):
     assert updated_profile['major'] == 'New Major'
     assert updated_profile['university'] == 'New University'
     assert updated_profile['info'] == 'New Info'
-    assert updated_profile['education'] == [['-','-','-']]
+    assert updated_profile['education'] == []
     
 def test_edit_profile_max_experience(monkeypatch):
     mp = MockProfile()
