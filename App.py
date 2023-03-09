@@ -229,14 +229,12 @@ class InCollege:
     return success
 
   def search_people(self,first_name,last_name):
-    success = False
     with open('students.json', 'r') as f:
       data = json.load(f)
     for username in data:
       if((data[username]['first_name']==first_name)and (data[username]['last_name']==last_name)):
-        success = True
         return username
-    return success
+    return False
 
   # Handles networking 
   def network(self):
@@ -340,7 +338,7 @@ class InCollege:
       if (len(requests) == 0):  #If no more requests, print so and return
         input("No Friend Requests")
         return
-      print_options(requests)
+      print_options(s)
       
       try:
         option = int(input(f"\nChoose a request to accept, or enter {back_option} to exit\n> "))
