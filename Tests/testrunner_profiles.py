@@ -1,5 +1,5 @@
 import json
-from Profile_manager import Profile_manager
+from Profiles import Profile_manager
 
 def test_add_profile():
     # Initialize the profile manager and load existing profiles
