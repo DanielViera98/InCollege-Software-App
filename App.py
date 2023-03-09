@@ -572,9 +572,10 @@ class InCollege:
     option = -1
     back_option = len(self.profile_options) + 1
     while option != back_option:
+      self.profile = Profile_manager()
       os.system("clear")
       print("Choose a task:\n")
-      print_options(self.profile_options)  
+      print_options(self.profile_options)
       try:
         option = int(input("> "))
         match option:
