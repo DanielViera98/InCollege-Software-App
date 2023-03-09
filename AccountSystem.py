@@ -66,17 +66,14 @@ class AccountSystem():
     self.update_accounts()
     
      # #adding new profile for account
-    new_profile = Profile_manager()
-    new_profile.update_profiles(username,"-","-","-","-","-","-")
+    
 
     # #asking if they want to edit profile:
     question = input("Would you like to customize your profile?(y/n)")
     if(question == "y"):
+      new_profile = Profile_manager()
+      new_profile.update_profiles(username,"-","-","-","-","-","-")
       new_profile.edit_profile(username)
-    
-    question = input("Would you like to view your finished profile?(y/n)")
-    if question == 'y':
-      new_profile.view_profile(username)
     
   #Returns full name ("first" + " " + "last") of user "username"
   def get_account_name(self, username):

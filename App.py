@@ -1,4 +1,5 @@
 from AccountSystem import AccountSystem
+from Profiles import Profile_manager
 from UsefulLinks import useful_links
 from ImportantLinks import links
 from Helpers import print_options, print_toggle_options
@@ -18,9 +19,10 @@ class InCollege:
     self.lang_options = ["English", "Spanish"]
     self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List"]
     self.request_options = ["Accept Friend Request", "Deny Friend Request"]
-    self.friends_options = ["Remove Friend"]
+    self.friends_options = ["Remove Friend", "View Profile"]
     self.system = AccountSystem()
     self.user = False
+    self.profile = Profile_manager()
     
   # Engine
   def run(self):
@@ -420,7 +422,10 @@ class InCollege:
         return
       i = 0
       for u in accounts[self.user]['friends_list']:
-        print(f"{i}. {u}")
+        if self.profile.get_profile(u) == False:
+          print(f"{i+1}. {u} - No Profile Created") 
+        else:
+          print(f"{i+1}. {u} - Profile Created!")
         i = i+1
       print("\nChoose a task:\n")
       print_options(self.friends_options)
@@ -438,6 +443,11 @@ class InCollege:
             with open('students.json', 'w') as file:
               json.dump(accounts, file, indent=2)
           case 2:
+            view = int(input("Which friend's profile would you like to view? "))
+            username = accounts[self.user]['friends_list'][view-1]
+            self.profile.view_profile(username)
+            input("Press ENTER to return to friend's list. ")
+          case 3:
             return
           case _:
             raise Exception()

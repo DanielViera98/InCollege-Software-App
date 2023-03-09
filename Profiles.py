@@ -39,10 +39,14 @@ class Profile_manager:
         for profile in self.profiles:
             if profile['username'] == username:
                 return profile
+        return False
         
     def view_profile(self, username):
         os.system("clear")
         profile = self.get_profile(username)
+        if profile == False:
+            input("No Profile for user. ")
+            return
         print("Username: ", profile['username'], "\nTitle: ", profile['title'], "\nMajor: ", profile['major'],
               "\nUniversity: ", profile['university'], "\nInfo: ", profile['info'])
         self.view_experiences(profile)
@@ -75,7 +79,7 @@ class Profile_manager:
                 new_university = input("Enter new university (press enter to skip): ").title()
                 new_info = input("Enter new info (press enter to skip): ")
                 test = input("Would you like to add an Experience (y/n)? ")
-                if test != "":
+                if test == "y":
                     self.get_experience(profile)
                 new_education = input("Enter new education (press enter to skip): ")
 
@@ -94,8 +98,11 @@ class Profile_manager:
                 # Write updated profiles to file
                 with open(self.filename, 'w') as file:
                     json.dump(self.profiles, file, indent=2)
-
+                
                 print("Profile updated successfully!")
+                question = input("Would you like to view your finished profile?(y/n)")
+                if question == 'y':
+                    self.view_profile(username)
                 return
         print("Profile not found.")
         
@@ -226,6 +233,8 @@ class Profile_manager:
                 json.dump(self.profiles, file, indent=2)
     
     def view_experiences(self, profile):
+        if len(profile['experience']) == 0:
+            print("Experience: -")
         for i in profile['experience']:
             print("Experience:")
             print("\tJob Title: ", i[0])
