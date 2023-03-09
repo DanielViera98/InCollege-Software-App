@@ -37,8 +37,12 @@ class Profile_manager:
 
     def get_profile(self, username):
         for profile in self.profiles:
+            print(profile['username'], "<>", username)
             if profile['username'] == username:
+                print(profile['username'], " <-->", username)
                 return profile
+        print(username)
+        input("Returning False")
         return False
         
     def view_profile(self, username):
@@ -50,7 +54,7 @@ class Profile_manager:
         print("Username: ", profile['username'], "\nTitle: ", profile['title'], "\nMajor: ", profile['major'],
               "\nUniversity: ", profile['university'], "\nInfo: ", profile['info'])
         self.view_experiences(profile)
-        print("\nEducation: ", "NOT IMPLEMENTED")
+        self.view_education(profile)
         
     def search_profiles(self, keyword):
         results = []
@@ -272,4 +276,11 @@ class Profile_manager:
             
             add = False
             
-                
+    def view_education(self, profile):
+        if len(profile['education']) == 0:
+            print("Education: -")
+        for i in profile['education']:
+            print("Education:")
+            print("\tSchool Name: ", i[0])
+            print("\tDegree: ", i[1])
+            print("\tYears Attended: ", i[2])
