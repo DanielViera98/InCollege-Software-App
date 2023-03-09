@@ -27,26 +27,27 @@ class InCollege:
     self.menu()
     os.system("clear")
     print("Thank you for using inCollege. Goodbye!")
-
   
+  #Allows user to swap language preference between English & Spanish. Doesn't actually do anything
+  #except change language value between 'es' and 'en'
   def set_language(self):
-
     option = -1
     back_option = len(self.lang_options) + 1
-
+    
     while option != back_option:
       os.system("clear")
       print("Language:\n")
       print_options(self.lang_options)
-
+      accounts = self.system.load_accounts()
+      
       try:
         option = int(input("> "))
         match option:
           case 1:
-            self.system.set_language(self.user, "English")
+            accounts[self.user]['language'] = 'en'
             input("Language changed to English...")
           case 2:
-            self.system.set_language(self.user, "Spanish")
+            accounts[self.user]['language'] = 'es'
             input("Language changed to Spanish...")
           case 3:
             return 
@@ -58,6 +59,9 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
+          
+      with open('students.json', 'w') as file:
+              json.dump(accounts, file, indent=2)
           
   # Displays the menu
   def menu(self):
@@ -81,8 +85,10 @@ class InCollege:
               self.user = username
               self.show_options()
           case 2: 
-            if self.system.register(): 
-              self.show_options()
+              username = self.system.register()
+              if username:
+                self.user = username
+                self.show_options()
           case 3: 
             print("Video is now playing:")
             input("('press ENTER when done')")
@@ -105,17 +111,17 @@ class InCollege:
   def show_options(self):
     option = -1
     back_option = len(self.options) + 1
-    accounts = self.system.load_accounts()
     while option != back_option:
+      accounts = self.system.load_accounts()
       os.system("clear")
+      #If user has requests, print alert message
       if (accounts[self.user]['requests']):
         print(f">>>      You have {len(accounts[self.user]['requests'])} Friend Requests. To view them, go to Network      <<<")
+      
       print("Choose a task:\n")
-      print_options(self.options)
-        
+      print_options(self.options)  
       try:
         option = int(input("> "))
-        
         match option:
           case 1:
             self.search_opportunities()
@@ -136,7 +142,7 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
 
-
+  #Manages Jobs options, both search & post
   def search_opportunities(self):
     option = -1
     back_option = len(self.job_options) + 1
@@ -164,8 +170,7 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
-          
-    
+   
   def load_job_postings(self):
     filename = "job_postings.json"
     if not os.path.exists(filename):
@@ -232,9 +237,8 @@ class InCollege:
         success = True
         return username
     return success
-    
 
-  # Handles networking
+  # Handles networking 
   def network(self):
     option = -1
     back_option = len(self.options) + 1
@@ -265,7 +269,7 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
   
-  #Adds username to "pending" array of searched user if present         #FINISHED
+  #Adds username to "requests" array of searched user if present
   def send_request(self):
     first_name = input("First Name: ").capitalize()
     last_name = input("Last Name: ").capitalize()
@@ -284,6 +288,7 @@ class InCollege:
       input(f"An invite has been sent to {first_name} {last_name} to join InCollege")
       return False
 
+  #If user has requests, print. Else, show "No Friend Requests and return."
   def pending_requests(self):
     accounts = self.system.load_accounts()
     option = -1
@@ -321,7 +326,7 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
 
-  #accepts pending friend from 'requests' list of self.user             #FINISHED
+  #accepts pending friend from 'requests' list of self.user
   def accept_request(self, accounts, requests):
     option = -1
     back_option = len(requests) + 1
@@ -332,7 +337,7 @@ class InCollege:
       requests = accounts[self.user]['requests']
       back_option = len(requests) + 1
 
-      if (len(requests) == 0):
+      if (len(requests) == 0):  #If no more requests, print so and return
         input("No Friend Requests")
         return
       print_options(requests)
@@ -343,6 +348,7 @@ class InCollege:
           return
         choice = requests[option-1]
         
+        #Accepts request, adds sender to reciever's friends list and vice versa
         if (requests[option-1]):
           accounts[self.user]['friends_list'].append(choice)
           accounts[choice]['friends_list'].append(self.user)
@@ -360,7 +366,7 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
           
-  #denies pending friend from 'requests' list of self.user              #FINISHED
+  #denies pending friend from 'requests' list of self.user
   def delete_request(self, accounts, requests):
     option = -1
     back_option = len(requests) + 1
@@ -369,7 +375,7 @@ class InCollege:
       os.system("clear")
       print("Pending Requests:")
       requests = accounts[self.user]['requests']
-      if (len(requests) == 0):
+      if (len(requests) == 0):      #If no more requests, print so and return
         input("No Friend Requests")
         return
       back_option = len(requests) + 1
@@ -396,6 +402,7 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
     
+  #Prints friends if exist, gives user option to delete friend or return
   def manage_friends(self):
     accounts = self.system.load_accounts()
     option = -1
@@ -461,6 +468,7 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
 
+  #Sends user to privacy policy or set language
   def important_links(self):
     value = None
     value = links()
@@ -469,6 +477,7 @@ class InCollege:
     if value == "language":
       self.set_language()
   
+  #Prints privacy policy, sends user to guest controls if chosen
   def privacy_policy(self):
     file = open("Misc Files/privacy policy.txt", "r")
     os.system("clear")
@@ -495,13 +504,13 @@ class InCollege:
                 input(f"Error: {e} {type(e)}")
                 privacy_options()
     file.close()
-    
+  
+  #Gives user option to toggle email, sms, and targeted advertising
   def guest_controls(self):
     option = -1
     back_option = len(self.skills) + 1
     
     while option != back_option:
-      
       email = self.system.get_email(self.user)
       sms = self.system.get_SMS(self.user)
       targeted_advertising = self.system.get_targeted_advertising(self.user)
