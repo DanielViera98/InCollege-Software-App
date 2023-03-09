@@ -13,13 +13,14 @@ class InCollege:
      "Learn C", "Learn C#", "Learn Python", "Learn Java", "Learn HTML"
     ]
     self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links", "Important Links"]
-    self.options = ["Job Search/Internship", "Network", "Learn a new skill", "Important Links"]
+    self.options = ["Job Search/Internship", "Network", "Learn a new skill", "Important Links", "Profile Options"]
     self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
     self.job_options = ["Search for jobs", "Post a job"]
     self.lang_options = ["English", "Spanish"]
     self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List"]
     self.request_options = ["Accept Friend Request", "Deny Friend Request"]
     self.friends_options = ["Remove Friend", "View Profile"]
+    self.profile_options = ["View Profile", "Edit Profile"]
     self.system = AccountSystem()
     self.user = False
     self.profile = Profile_manager()
@@ -139,6 +140,8 @@ class InCollege:
           case 4:
             self.important_links()
           case 5:
+            self.profile_controls()
+          case 6:
             self.user = False
             return
           case _:
@@ -563,3 +566,29 @@ class InCollege:
                   input("Invalid input...")
               else:
                   input(f"Error guest: {e} {type(e)}")
+
+  def profile_controls(self):
+    option = -1
+    back_option = len(self.profile_options) + 1
+    while option != back_option:
+      os.system("clear")
+      print("Choose a task:\n")
+      print_options(self.profile_options)  
+      try:
+        option = int(input("> "))
+        match option:
+          case 1:
+            self.profile.view_profile(self.user)
+            input("Press ENTER to return to profile options. ")
+          case 2:
+            self.profile.edit_profile(self.user)
+          case 3:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")

@@ -72,7 +72,6 @@ class AccountSystem():
     question = input("Would you like to customize your profile?(y/n)")
     if(question == "y"):
       new_profile = Profile_manager()
-      new_profile.update_profiles(username,"-","-","-","-","-","-")
       new_profile.edit_profile(username)
     
   #Returns full name ("first" + " " + "last") of user "username"
