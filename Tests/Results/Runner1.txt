@@ -1,8 +1,208 @@
-============================= test session starts ==============================
-platform linux -- Python 3.10.8, pytest-7.2.1, pluggy-1.0.0
-rootdir: /home/runner/InCollege-Software-App
-collected 25 items
+============================= test session starts =============================
+platform win32 -- Python 3.10.10, pytest-7.2.1, pluggy-1.0.0
+rootdir: c:\Users\dvier\Documents\USF\Spring 2023\CEN4020\InCollege-Software-App
+collected 12 items
 
-Tests/testrunner.py .........................                            [100%]
+Tests\testrunner.py ........FF.F                                         [100%]
 
-============================== 25 passed in 0.10s ==============================
+================================== FAILURES ===================================
+____________________________ test_register_inputs _____________________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x0000027DE3DDC100>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000027DE3DDC040>
+
+    def test_register_inputs(capsys, monkeypatch):
+      input = StringIO('First\nTest1now*\nA\na\n\n')
+      monkeypatch.setattr('sys.stdin', input)
+>     assert system.register() == 'First'
+
+Tests\testrunner.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AccountSystem.AccountSystem object at 0x0000027DE3D821A0>
+
+    def register(self):
+      success = False
+      if self.num_accounts >= MAX_ACCOUNTS:
+        input(
+          "\nAll permitted accounts have been created, please come back later..."
+        )
+    
+      else:
+        username, password = "", ""
+        while not is_valid_username(username) and not is_secure_password(password):
+          os.system("clear")
+          print(
+            f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - self.num_accounts}:\n"
+          )
+          print(
+            "Password Requirements -\n\tMinimum of 8 characters\n\tMaximum of 12 characters\n\tAt least one capital letter\n\tOne digit\n\tOne special character\n"
+          )
+    
+          username = input("Username: ")
+          if is_valid_username(username):
+    
+            if username not in self.accounts:  # If username does not exist in the database
+              password = input("Password: ")
+              if is_secure_password(password):
+                first_name = input("First name: ").capitalize()
+                last_name = input("Last name: ").capitalize()
+                friends = []
+                requests = []
+                self.add_account(username, password, first_name, last_name, True, True, True, friends, requests)
+                success = True
+>               input("\nAccount registered...")
+E               EOFError: EOF when reading a line
+
+AccountSystem.py:184: EOFError
+---------------------------- Captured stdout call -----------------------------
+Account Registration (# of Accounts Available - 10:
+
+Password Requirements -
+	Minimum of 8 characters
+	Maximum of 12 characters
+	At least one capital letter
+	One digit
+	One special character
+
+Username: Password: First name: Last name: Would you like to customize your profile?(y/n)
+Account registered...
+---------------------------- Captured stderr call -----------------------------
+'clear' is not recognized as an internal or external command,
+operable program or batch file.
+___________________________ test_register_duplicate ___________________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x0000027DE3CB69E0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000027DE3CB6BC0>
+
+    def test_register_duplicate(capsys, monkeypatch):
+      test = StringIO("Duplicate\nI234567*\nFirst\nLast\n\n")
+      monkeypatch.setattr('sys.stdin', test)
+>     assert type(system.register()) == str
+
+Tests\testrunner.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AccountSystem.AccountSystem object at 0x0000027DE3D821A0>
+
+    def register(self):
+      success = False
+      if self.num_accounts >= MAX_ACCOUNTS:
+        input(
+          "\nAll permitted accounts have been created, please come back later..."
+        )
+    
+      else:
+        username, password = "", ""
+        while not is_valid_username(username) and not is_secure_password(password):
+          os.system("clear")
+          print(
+            f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - self.num_accounts}:\n"
+          )
+          print(
+            "Password Requirements -\n\tMinimum of 8 characters\n\tMaximum of 12 characters\n\tAt least one capital letter\n\tOne digit\n\tOne special character\n"
+          )
+    
+          username = input("Username: ")
+          if is_valid_username(username):
+    
+            if username not in self.accounts:  # If username does not exist in the database
+              password = input("Password: ")
+              if is_secure_password(password):
+                first_name = input("First name: ").capitalize()
+                last_name = input("Last name: ").capitalize()
+                friends = []
+                requests = []
+                self.add_account(username, password, first_name, last_name, True, True, True, friends, requests)
+                success = True
+>               input("\nAccount registered...")
+E               EOFError: EOF when reading a line
+
+AccountSystem.py:184: EOFError
+---------------------------- Captured stdout call -----------------------------
+Account Registration (# of Accounts Available - 9:
+
+Password Requirements -
+	Minimum of 8 characters
+	Maximum of 12 characters
+	At least one capital letter
+	One digit
+	One special character
+
+Username: Password: First name: Last name: Would you like to customize your profile?(y/n)
+Account registered...
+---------------------------- Captured stderr call -----------------------------
+'clear' is not recognized as an internal or external command,
+operable program or batch file.
+_________________________________ test_login __________________________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x0000027DE3E6B970>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000027DE3E6BA60>
+
+    def test_login(capsys, monkeypatch):
+      register =  ("XASASDDASD\nI234567*\nNobody\nHere\n\n", "TASDASDASD\nI234567*\nEmpty\nField\n\n")
+      login = ("XASASDDASD\nI234567*\n\nN\n", "TASDASDASD\nI234567*\n\nN\n")
+      for i in register:
+        test = StringIO(i)
+        monkeypatch.setattr('sys.stdin', test)
+>       assert type(system.register()) == str
+
+Tests\testrunner.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <AccountSystem.AccountSystem object at 0x0000027DE3D821A0>
+
+    def register(self):
+      success = False
+      if self.num_accounts >= MAX_ACCOUNTS:
+        input(
+          "\nAll permitted accounts have been created, please come back later..."
+        )
+    
+      else:
+        username, password = "", ""
+        while not is_valid_username(username) and not is_secure_password(password):
+          os.system("clear")
+          print(
+            f"Account Registration (# of Accounts Available - {MAX_ACCOUNTS - self.num_accounts}:\n"
+          )
+          print(
+            "Password Requirements -\n\tMinimum of 8 characters\n\tMaximum of 12 characters\n\tAt least one capital letter\n\tOne digit\n\tOne special character\n"
+          )
+    
+          username = input("Username: ")
+          if is_valid_username(username):
+    
+            if username not in self.accounts:  # If username does not exist in the database
+              password = input("Password: ")
+              if is_secure_password(password):
+                first_name = input("First name: ").capitalize()
+                last_name = input("Last name: ").capitalize()
+                friends = []
+                requests = []
+                self.add_account(username, password, first_name, last_name, True, True, True, friends, requests)
+                success = True
+>               input("\nAccount registered...")
+E               EOFError: EOF when reading a line
+
+AccountSystem.py:184: EOFError
+---------------------------- Captured stdout call -----------------------------
+Account Registration (# of Accounts Available - 8:
+
+Password Requirements -
+	Minimum of 8 characters
+	Maximum of 12 characters
+	At least one capital letter
+	One digit
+	One special character
+
+Username: Password: First name: Last name: Would you like to customize your profile?(y/n)
+Account registered...
+---------------------------- Captured stderr call -----------------------------
+'clear' is not recognized as an internal or external command,
+operable program or batch file.
+=========================== short test summary info ===========================
+FAILED Tests/testrunner.py::test_register_inputs - EOFError: EOF when reading...
+FAILED Tests/testrunner.py::test_register_duplicate - EOFError: EOF when read...
+FAILED Tests/testrunner.py::test_login - EOFError: EOF when reading a line
+========================= 3 failed, 9 passed in 0.44s =========================

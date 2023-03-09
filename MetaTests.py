@@ -1,4 +1,5 @@
 #To run, enter "python3 MetaTests.py" on Shell
+'''
 import os
 import subprocess
 
@@ -60,3 +61,4 @@ print(tempstr)
 empty_jobs()
 empty_students()
 print("echo Finished testrunner_jobs.py\n")
+'''
