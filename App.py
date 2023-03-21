@@ -226,11 +226,18 @@ class InCollege:
               break
             self.view_selected_jobs(accounts[self.user]['saved_jobs'])
           case 3:
-            input("NOT IMPLEMENTED")
-            #self.view_selected_jobs()
+            self.view_selected_jobs(accounts[self.user]['applied_jobs'])
           case 4:
-            input("NOT IMPLEMENTED")
-            #self.view_selected_jobs()
+            jobs = self.load_job_postings()
+            non_applied_jobs = []
+            for job in jobs:
+              match = False
+              for applied in accounts[self.user]['applied_jobs']:
+                if applied == job['title']:
+                  match = True
+              if match == False:
+                non_applied_jobs.append(job['title'])
+            self.view_selected_jobs(non_applied_jobs)
           case 5:
             return
           case _:
@@ -283,7 +290,7 @@ class InCollege:
     
     while option != back_option:
       os.system("clear")
-      
+      self.jobs = self.load_job_postings()
       i = 0
       print("Job Listings:\n------------------------")
       for job in self.jobs:
@@ -333,7 +340,6 @@ class InCollege:
           json.dump(accounts, file, indent=2)
         input("Job Saved! Press Enter to return. ")
         return
-        input("Press ENTER to return. ")
       case 2:
         # accounts = self.system.load_accounts()
          accounts[self.user]['applied_jobs'].append(job['title'])
@@ -341,7 +347,6 @@ class InCollege:
            json.dump(accounts, file, indent=2)
          input("Applied for job! Press Enter to return. ")
          return
-         input("Press ENTER to return. ")
       case 3:
         return
       
