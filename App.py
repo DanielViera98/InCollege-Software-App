@@ -220,7 +220,7 @@ class InCollege:
           case 1:
             self.view_all_jobs()
           case 2:
-            self.view_selected_jobs(accounts[self.user]['saved_jobs'])
+            self.view_selected_jobs(accounts[self.user]['saved_jobs'], "saved")
           case 3:
             input("NOT IMPLEMENTED")
             #self.view_selected_jobs()
@@ -273,7 +273,7 @@ class InCollege:
           else:
             input(f"Error: {e} {type(e)}")
 
-  def view_selected_jobs(self, jobs_list):
+  def view_selected_jobs(self, jobs_list, list_type):
     i = 0
     print("Job Listings:\n------------------------")
     for job in self.jobs:
@@ -282,6 +282,17 @@ class InCollege:
           print(i+1, ". ",  job['title'])
           i += 1
     print("------------------------")
+    if list_type == "saved":
+      accounts = self.system.load_accounts()
+      choice = input("Would you like to remove a saved job listing(y/n)? ")
+      if choice == "y":
+        num = int(input("Which would you like to remove? "))
+        accounts[self.user]['saved_jobs'].pop(num-1)     
+        self.view_selected_jobs(accounts[self.user]['saved_jobs'], list_type)
+      else:
+        return
+    
+        
     input("HIT ENTER TO RETURN. ")
     
 
