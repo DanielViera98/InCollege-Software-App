@@ -267,6 +267,8 @@ class InCollege:
           with open('job_postings.json', 'w') as file:
             json.dump(jobs, file, indent=2)
           self.jobs = self.load_job_postings()
+        else:
+          input("You did not post this job")
 
 
   def search_people(self,first_name,last_name):
