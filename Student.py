@@ -11,7 +11,8 @@ class Student:
   language=None, 
   friends=[],
   requests=[],
-  saved_jobs=[]
+  saved_jobs=[],
+  applied_jobs=[],
   ):
     self.username = username
     self.password = password

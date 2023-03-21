@@ -24,6 +24,7 @@ class InCollege:
     self.profile_options = ["View Profile", "Edit Profile"]
     self.display_jobs_options = ["View All Jobs", "View Saved Jobs", "View Applied Jobs", "View Non-Applied Jobs"]
     self.displayed_jobs_options = ["View Job Info"]
+    self.jobs_save_apply = ["Save","Apply"]
     self.system = AccountSystem()
     self.user = False
     self.profile = Profile_manager()
@@ -223,7 +224,7 @@ class InCollege:
             if accounts[self.user]['saved_jobs'] == []:
               input("No saved jobs. Hit ENTER to continue. ")
               break
-            self.view_selected_jobs(accounts[self.user]['saved_jobs'], "saved")
+            self.view_selected_jobs(accounts[self.user]['saved_jobs'])
           case 3:
             input("NOT IMPLEMENTED")
             #self.view_selected_jobs()
@@ -276,29 +277,41 @@ class InCollege:
           else:
             input(f"Error: {e} {type(e)}")
 
-  def view_selected_jobs(self, jobs_list, list_type):
-    i = 0
-    print("Job Listings:\n------------------------")
-    for job in self.jobs:
-      for item in jobs_list:
-        if job['title'] == item:
-          print(i+1, ". ",  job['title'])
-          i += 1
-    print("------------------------")
-    if list_type == "saved":
-      accounts = self.system.load_accounts()
-      choice = input("Would you like to remove a saved job listing(y/n)? ")
-      if choice == "y":
-        num = int(input("Which would you like to remove? "))
-        accounts[self.user]['saved_jobs'].pop(num-1)     
-        self.view_selected_jobs(accounts[self.user]['saved_jobs'], list_type)
-      else:
-        return
+  def view_selected_jobs(self, jobs_list):
+    option = -1
+    back_option = len(self.displayed_jobs_options) + 1
     
-        
-    input("HIT ENTER TO RETURN. ")
+    while option != back_option:
+      os.system("clear")
+      
+      i = 0
+      print("Job Listings:\n------------------------")
+      for job in self.jobs:
+        for item in jobs_list:
+          if job['title'] == item:
+            print(i+1, ". ",  job['title'])
+            i += 1
+      print("------------------------")
     
-
+      print("Choose a task:\n")
+      print_options(self.displayed_jobs_options)
+      
+      try:
+        option = int(input("> "))
+        match option:
+          case 1:
+            choice = int(input("Which job would you like to display? ")) - 1
+            self.show_job_info(self.jobs[choice])
+          case 2:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+          if type(e) == ValueError:
+            input("Invalid input...")
+          else:
+            input(f"Error: {e} {type(e)}")    
 
   def show_job_info(self, job):
     os.system("clear")
@@ -308,17 +321,42 @@ class InCollege:
     print("\tEmployer:", job['employer'])
     print("\tLocation:", job['location'])
     print("\tSalary:", job['salary'])
+    print_options(self.jobs_save_apply)
+    choice = int(input("> "))
+    accounts = self.system.load_accounts()
+    print(choice)
+    match choice: 
+      case 1:
+      #  accounts = self.system.load_accounts()
+        accounts[self.user]['saved_jobs'].append(job['title'])
+        with open('students.json', 'w') as file:
+          json.dump(accounts, file, indent=2)
+        input("Job Saved! Press Enter to return. ")
+        return
+        input("Press ENTER to return. ")
+      case 2:
+        # accounts = self.system.load_accounts()
+         accounts[self.user]['applied_jobs'].append(job['title'])
+         with open('students.json', 'w') as file:
+           json.dump(accounts, file, indent=2)
+         input("Applied for job! Press Enter to return. ")
+         return
+         input("Press ENTER to return. ")
+      case 3:
+        return
+      
     
-    choice = input("Would you like to save this job(y/n)? ")
-    if (choice == 'y'):
-      accounts = self.system.load_accounts()
-      accounts[self.user]['saved_jobs'].append(job['title'])
-      with open('students.json', 'w') as file:
-        json.dump(accounts, file, indent=2)
-      input("Job Saved! Press Enter to return. ")
-      return
-    input("Press ENTER to return. ")
+  def job_select(self):
+    os.system("clear")
+    job = input("Which job would you like to apply for: ")
+    return job
+  
+  def job_apply(self,job):
+    os.system("clear")
+    accounts = self.system.load_accounts()
+    accounts[self.user]['applied jobs'].append(job['title'])
 
+  
   def search_jobs(self):
     input("Under construction...")
   
