@@ -24,6 +24,7 @@ class InCollege:
     self.profile_options = ["View Profile", "Edit Profile"]
     self.display_jobs_options = ["View All Jobs", "View Saved Jobs", "View Applied Jobs", "View Non-Applied Jobs"]
     self.displayed_jobs_options = ["View Job Info"]
+    self.jobs_save_apply = ["Save","Apply"]
     self.system = AccountSystem()
     self.user = False
     self.profile = Profile_manager()
@@ -308,16 +309,30 @@ class InCollege:
     print("\tEmployer:", job['employer'])
     print("\tLocation:", job['location'])
     print("\tSalary:", job['salary'])
-    input("Press ENTER to return. ")
-    choice = input("Would you like to save this job(y/n)? ")
-    if (choice == 'y'):
-      accounts = self.system.load_accounts()
-      accounts[self.user]['saved_jobs'].append(job['title'])
-      with open('students.json', 'w') as file:
-        json.dump(accounts, file, indent=2)
-      input("Job Saved! Press Enter to return. ")
-      return
-    input("Press ENTER to return. ")
+    print_options(self.jobs_save_apply)
+    choice = int(input("> "))
+    accounts = self.system.load_accounts()
+    print(choice)
+    match choice: 
+      case 1:
+      #  accounts = self.system.load_accounts()
+        accounts[self.user]['saved_jobs'].append(job['title'])
+        with open('students.json', 'w') as file:
+          json.dump(accounts, file, indent=2)
+        input("Job Saved! Press Enter to return. ")
+        return
+        input("Press ENTER to return. ")
+      case 2:
+        # accounts = self.system.load_accounts()
+         accounts[self.user]['applied_jobs'].append(job['title'])
+         with open('students.json', 'w') as file:
+           json.dump(accounts, file, indent=2)
+         input("Applied for job! Press Enter to return. ")
+         return
+         input("Press ENTER to return. ")
+      case 3:
+        return
+      
     
   def job_select(self):
     os.system("clear")

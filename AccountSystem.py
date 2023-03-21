@@ -33,7 +33,7 @@ class AccountSystem():
 
   #Create an account with all user entered input and add to .json
   def add_account(self, username, password, first_name, last_name, email, SMS, targeted_advertising, 
-                  friends, requests, saved_jobs):
+                  friends, requests, saved_jobs,applied_jobs):
     # Load the contents of the JSON file into a Python dictionary
     with open('students.json', 'r') as file:
       data = json.load(file)
@@ -50,6 +50,7 @@ class AccountSystem():
       "friends_list" : friends,
       "requests" : requests,
       "saved_jobs" : saved_jobs,
+      "applied_jobs" : applied_jobs
     }
     
     # # Write the updated data back to the file
@@ -167,7 +168,7 @@ class AccountSystem():
             if is_secure_password(password):
               first_name = input("First name: ").capitalize()
               last_name = input("Last name: ").capitalize()
-              self.add_account(username, password, first_name, last_name, True, True, True, [], [], [])
+              self.add_account(username, password, first_name, last_name, True, True, True, [], [], [],[])
               success = True
               input("\nAccount registered...")
             else:
