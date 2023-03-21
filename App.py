@@ -16,7 +16,7 @@ class InCollege:
     self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links", "Important Links"]
     self.options = ["Job Search/Internship", "Network", "Learn a new skill", "Important Links", "Profile Options"]
     self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
-    self.job_options = ["Search for jobs", "Post a job"]
+    self.job_options = ["Display Job", "Search for jobs", "Post a job"]
     self.lang_options = ["English", "Spanish"]
     self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List"]
     self.request_options = ["Accept Friend Request", "Deny Friend Request"]
@@ -25,6 +25,7 @@ class InCollege:
     self.system = AccountSystem()
     self.user = False
     self.profile = Profile_manager()
+    self.jobs = self.load_job_postings()
     
   # Engine
   def run(self):
@@ -133,7 +134,7 @@ class InCollege:
         option = int(input("> "))
         match option:
           case 1:
-            self.search_opportunities()
+            self.jobs_info()
           case 2:
             self.network()
           case 3:
@@ -155,7 +156,7 @@ class InCollege:
           input(f"Error: {e} {type(e)}")
 
   #Manages Jobs options, both search & post
-  def search_opportunities(self):
+  def jobs_info(self):
     option = -1
     back_option = len(self.job_options) + 1
 
@@ -169,10 +170,12 @@ class InCollege:
         
         match option:
           case 1:
-            self.search_jobs()
+            self.display_jobs()
           case 2:
-            self.post_jobs()
+            self.search_jobs()
           case 3:
+            self.post_jobs()
+          case 4:
             return 
           case _:
             raise Exception() 
@@ -187,12 +190,20 @@ class InCollege:
     filename = "job_postings.json"
     if not os.path.exists(filename):
       with open(filename, 'w') as f:
-        f.write('{}')  
+        f.write('[]')  
         
     with open(filename, 'r') as file:
       jobs = json.load(file)
     
     return jobs
+
+  def display_jobs(self):
+    os.system("clear")
+    print("Job Listings:\n------------------------")
+    for job in self.jobs:
+      print(job['title'])
+      
+    input("------------------------\nHit enter to return to menu. ")
 
   def search_jobs(self):
     input("Under construction...")
@@ -200,9 +211,8 @@ class InCollege:
   # Handles job posting
   def update_jobs(self,name,job_title,description,employer,location,salary):
     jobs = self.load_job_postings()
-    
     #adding a new job
-    jobs[len(jobs)+1] = {
+    new_job = {
     "poster": name,
     "title": job_title,
     "description": description,
@@ -210,15 +220,17 @@ class InCollege:
     "location": location,
     "salary": salary
     }
+    jobs.append(new_job)
     # Write the updated data back to the file
     with open('job_postings.json', 'w') as file:
       json.dump(jobs, file, indent=2)
+    self.jobs = self.load_job_postings()
 
   def post_jobs(self):
     success = False
     jobs = self.load_job_postings()
     
-    if len(jobs) >= 5:
+    if len(jobs) >= 10:
       input(
         "\nAll permitted jobs have been created, please come back later..."
       )
