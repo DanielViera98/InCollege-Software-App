@@ -242,10 +242,19 @@ class InCollege:
     os.system("clear")
     print(job['title'], ":")
     print("\tPoster: ", job['poster'])
-    print("\tDescription", job['description'])
-    print("\tEmployer", job['employer'])
-    print("\tLocation", job['location'])
-    print("\tSalary", job['salary'])
+    print("\tDescription:", job['description'])
+    print("\tEmployer:", job['employer'])
+    print("\tLocation:", job['location'])
+    print("\tSalary:", job['salary'])
+    
+    choice = input("Would you like to save this job(y/n)? ")
+    if (choice == 'y'):
+      accounts = self.system.load_accounts()
+      accounts[self.user]['saved_jobs'].append(job['title'])
+      with open('students.json', 'w') as file:
+        json.dump(accounts, file, indent=2)
+      input("Job Saved! Press Enter to return. ")
+      return
     input("Press ENTER to return. ")
 
   def search_jobs(self):
