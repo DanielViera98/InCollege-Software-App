@@ -224,7 +224,7 @@ class InCollege:
             if accounts[self.user]['saved_jobs'] == []:
               input("No saved jobs. Hit ENTER to continue. ")
               break
-            self.view_selected_jobs(accounts[self.user]['saved_jobs'], "saved")
+            self.view_selected_jobs(accounts[self.user]['saved_jobs'])
           case 3:
             input("NOT IMPLEMENTED")
             #self.view_selected_jobs()
@@ -277,29 +277,41 @@ class InCollege:
           else:
             input(f"Error: {e} {type(e)}")
 
-  def view_selected_jobs(self, jobs_list, list_type):
-    i = 0
-    print("Job Listings:\n------------------------")
-    for job in self.jobs:
-      for item in jobs_list:
-        if job['title'] == item:
-          print(i+1, ". ",  job['title'])
-          i += 1
-    print("------------------------")
-    if list_type == "saved":
-      accounts = self.system.load_accounts()
-      choice = input("Would you like to remove a saved job listing(y/n)? ")
-      if choice == "y":
-        num = int(input("Which would you like to remove? "))
-        accounts[self.user]['saved_jobs'].pop(num-1)     
-        self.view_selected_jobs(accounts[self.user]['saved_jobs'], list_type)
-      else:
-        return
+  def view_selected_jobs(self, jobs_list):
+    option = -1
+    back_option = len(self.displayed_jobs_options) + 1
     
-        
-    input("HIT ENTER TO RETURN. ")
+    while option != back_option:
+      os.system("clear")
+      
+      i = 0
+      print("Job Listings:\n------------------------")
+      for job in self.jobs:
+        for item in jobs_list:
+          if job['title'] == item:
+            print(i+1, ". ",  job['title'])
+            i += 1
+      print("------------------------")
     
-
+      print("Choose a task:\n")
+      print_options(self.displayed_jobs_options)
+      
+      try:
+        option = int(input("> "))
+        match option:
+          case 1:
+            choice = int(input("Which job would you like to display? ")) - 1
+            self.show_job_info(self.jobs[choice])
+          case 2:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+          if type(e) == ValueError:
+            input("Invalid input...")
+          else:
+            input(f"Error: {e} {type(e)}")    
 
   def show_job_info(self, job):
     os.system("clear")
