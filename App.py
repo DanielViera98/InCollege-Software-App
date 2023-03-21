@@ -199,6 +199,10 @@ class InCollege:
 
   def display_jobs(self):
     os.system("clear")
+    if self.jobs == []:
+      input("No jobs posted, press ENTER to return. ")
+      return "Empty"
+    
     print("Job Listings:\n------------------------")
     for job in self.jobs:
       print(job['title'])
