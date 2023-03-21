@@ -16,7 +16,7 @@ class InCollege:
     self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links", "Important Links"]
     self.options = ["Job Search/Internship", "Network", "Learn a new skill", "Important Links", "Profile Options"]
     self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
-    self.job_options = ["Search for jobs", "Post a job"]
+    self.job_options = ["Search for jobs", "Post a job","Delete a job posting"]
     self.lang_options = ["English", "Spanish"]
     self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List"]
     self.request_options = ["Accept Friend Request", "Deny Friend Request"]
@@ -173,6 +173,8 @@ class InCollege:
           case 2:
             self.post_jobs()
           case 3:
+            self.delete_job()
+          case 4:
             return 
           case _:
             raise Exception() 
@@ -239,6 +241,19 @@ class InCollege:
         success = True
       
     return success
+  
+  def delete_job(self):
+    i = 0
+    jobs =  self.load_job_postings()
+    job_del=input("Which job would you like to delete?")
+    name = self.system.get_account_name(self.user)
+    full_name = ' '.join(name)
+    for job in jobs:
+      if (job[i]['title'] == job_del):
+        if(job[i]['poster']==full_name):
+          jobs.pop(job)
+      i+=1
+
 
   def search_people(self,first_name,last_name):
     success = False
