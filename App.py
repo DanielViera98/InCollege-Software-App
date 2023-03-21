@@ -24,7 +24,7 @@ class InCollege:
     self.profile_options = ["View Profile", "Edit Profile"]
     self.display_jobs_options = ["View All Jobs", "View Saved Jobs", "View Applied Jobs", "View Non-Applied Jobs"]
     self.displayed_jobs_options = ["View Job Info"]
-    self.jobs_save_apply = ["Save","Apply"]
+    self.jobs_save_apply = ["Save Job","Apply for Job"]
     self.system = AccountSystem()
     self.user = False
     self.profile = Profile_manager()
@@ -406,9 +406,19 @@ class InCollege:
   
   def delete_job(self):
     jobs =  self.load_job_postings()
-    job_del=input("Which job would you like to delete?")
     name = self.system.get_account_name(self.user)
     full_name = ' '.join(name)
+    count = 0
+    for job in jobs:
+      if full_name == job['poster']:
+        print(job['title'])
+        count+=1
+    
+    if(count == 0):
+      input("You have not yet posted any jobs to be deleted")
+      return
+    
+    job_del=input("Which job would you like to delete?")
     for job in jobs:
       if (job['title'] == job_del):
         if(job['poster']==full_name):
