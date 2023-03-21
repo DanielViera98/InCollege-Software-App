@@ -220,6 +220,9 @@ class InCollege:
           case 1:
             self.view_all_jobs()
           case 2:
+            if accounts[self.user]['saved_jobs'] == []:
+              input("No saved jobs. Hit ENTER to continue. ")
+              break
             self.view_selected_jobs(accounts[self.user]['saved_jobs'], "saved")
           case 3:
             input("NOT IMPLEMENTED")
