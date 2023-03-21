@@ -322,31 +322,52 @@ class InCollege:
 
   def show_job_info(self, job):
     os.system("clear")
+    accounts = self.system.load_accounts()
     print(job['title'], ":")
     print("\tPoster: ", job['poster'])
     print("\tDescription:", job['description'])
     print("\tEmployer:", job['employer'])
     print("\tLocation:", job['location'])
     print("\tSalary:", job['salary'])
-    print_options(self.jobs_save_apply)
+
+    if job['title'] not in accounts[self.user]['saved_jobs']:
+      print("1. Save Job")
+      save = True
+    else:
+      print("1. Unsave Job")
+      save = False
+
+    if job['title'] not in accounts[self.user]['applied_jobs']:
+      print("2. Submit Application")
+      submit = True
+    else:
+      print("2. Cancel Application")
+      submit = False
+    print("3. Return")
     choice = int(input("> "))
-    accounts = self.system.load_accounts()
+    
     print(choice)
     match choice: 
       case 1:
-      #  accounts = self.system.load_accounts()
-        accounts[self.user]['saved_jobs'].append(job['title'])
+        if save == True:
+          accounts[self.user]['saved_jobs'].append(job['title'])
+          input("Job Saved! Press Enter to return. ")
+        else:
+          accounts[self.user]['saved_jobs'].remove(job['title'])
+          input("Job Unsaved! Press Enter to return. ")
         with open('students.json', 'w') as file:
           json.dump(accounts, file, indent=2)
-        input("Job Saved! Press Enter to return. ")
         return
       case 2:
-        # accounts = self.system.load_accounts()
-         accounts[self.user]['applied_jobs'].append(job['title'])
-         with open('students.json', 'w') as file:
-           json.dump(accounts, file, indent=2)
-         input("Applied for job! Press Enter to return. ")
-         return
+        if submit == True:
+          accounts[self.user]['applied_jobs'].append(job['title'])
+          input("Application Submitted! Press Enter to return. ")
+        else:
+          accounts[self.user]['applied_jobs'].remove(job['title'])
+          input("Application Canceled. Press Enter to return. ")
+        with open('students.json', 'w') as file:
+          json.dump(accounts, file, indent=2)
+        return
       case 3:
         return
       
@@ -424,7 +445,6 @@ class InCollege:
           self.jobs = self.load_job_postings()
         else:
           input("You did not post this job")
-
 
   def search_people(self,first_name,last_name):
     success = False
