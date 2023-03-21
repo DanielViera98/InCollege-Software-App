@@ -308,7 +308,7 @@ class InCollege:
     print("\tEmployer:", job['employer'])
     print("\tLocation:", job['location'])
     print("\tSalary:", job['salary'])
-    
+    input("Press ENTER to return. ")
     choice = input("Would you like to save this job(y/n)? ")
     if (choice == 'y'):
       accounts = self.system.load_accounts()
@@ -318,7 +318,18 @@ class InCollege:
       input("Job Saved! Press Enter to return. ")
       return
     input("Press ENTER to return. ")
+    
+  def job_select(self):
+    os.system("clear")
+    job = input("Which job would you like to apply for: ")
+    return job
+  
+  def job_apply(self,job):
+    os.system("clear")
+    accounts = self.system.load_accounts()
+    accounts[self.user]['applied jobs'].append(job['title'])
 
+  
   def search_jobs(self):
     input("Under construction...")
   
