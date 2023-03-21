@@ -16,6 +16,7 @@ class AccountSystem():
   def load_accounts(self):
     filename = 'students.json'
     if not os.path.exists(filename):
+      input("DELETING STUDENTS")    #Trying to catch account removal
       with open(filename, 'w') as f:
         f.write('{}')  
         

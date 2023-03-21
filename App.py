@@ -22,6 +22,7 @@ class InCollege:
     self.request_options = ["Accept Friend Request", "Deny Friend Request"]
     self.friends_options = ["Remove Friend", "View Profile"]
     self.profile_options = ["View Profile", "Edit Profile"]
+    self.displayed_jobs_options = ["View Job Info"]
     self.system = AccountSystem()
     self.user = False
     self.profile = Profile_manager()
@@ -198,12 +199,52 @@ class InCollege:
     return jobs
 
   def display_jobs(self):
-    os.system("clear")
-    print("Job Listings:\n------------------------")
-    for job in self.jobs:
-      print(job['title'])
+    option = -1
+    back_option = len(self.displayed_jobs_options) + 1
+    
+    while option != back_option:
+      os.system("clear")
+      if self.jobs == []:
+        input("No jobs posted, press ENTER to return. ")
+        return "Empty"
       
-    input("------------------------\nHit enter to return to menu. ")
+      i = 0
+      print("Job Listings:\n------------------------")
+      for job in self.jobs:
+        print(i+1, ". ",  job['title'])
+        i += 1
+      print("------------------------")
+      print("Choose a task:\n")
+      print_options(self.displayed_jobs_options)
+      
+      try:
+        
+        option = int(input("> "))
+        
+        match option:
+          case 1:
+            choice = int(input("Which job would you like to display? ")) - 1
+            self.show_job_info(self.jobs[choice])
+          case 2:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+          if type(e) == ValueError:
+            input("Invalid input...")
+          else:
+            input(f"Error: {e} {type(e)}")
+
+  def show_job_info(self, job):
+    os.system("clear")
+    print(job['title'], ":")
+    print("\tPoster: ", job['poster'])
+    print("\tDescription", job['description'])
+    print("\tEmployer", job['employer'])
+    print("\tLocation", job['location'])
+    print("\tSalary", job['salary'])
+    input("Press ENTER to return. ")
 
   def search_jobs(self):
     input("Under construction...")
@@ -242,7 +283,7 @@ class InCollege:
         description = input("Description: ")
         employer = input("Employer: ")
         location = input("Location: ")
-        salary = input("salary: ")
+        salary = input("Salary: ")
 
         name = self.system.get_account_name(self.user)
         full_name = ' '.join(name)
