@@ -16,12 +16,13 @@ class InCollege:
     self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links", "Important Links"]
     self.options = ["Job Search/Internship", "Network", "Learn a new skill", "Important Links", "Profile Options"]
     self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
-    self.job_options = ["Display Job", "Search for jobs", "Post a job","Delete job"]
+    self.job_options = ["Display Jobs Options", "Search for jobs", "Post a job","Delete job"]
     self.lang_options = ["English", "Spanish"]
     self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List"]
     self.request_options = ["Accept Friend Request", "Deny Friend Request"]
     self.friends_options = ["Remove Friend", "View Profile"]
     self.profile_options = ["View Profile", "Edit Profile"]
+    self.display_jobs_options = ["View All Jobs", "View Saved Jobs", "View Applied Jobs", "View Non-Applied Jobs"]
     self.displayed_jobs_options = ["View Job Info"]
     self.system = AccountSystem()
     self.user = False
@@ -202,13 +203,47 @@ class InCollege:
 
   def display_jobs(self):
     option = -1
-    back_option = len(self.displayed_jobs_options) + 1
+    back_option = len(self.display_jobs_options) + 1
     
     while option != back_option:
       os.system("clear")
       if self.jobs == []:
         input("No jobs posted, press ENTER to return. ")
         return "Empty"
+      
+      try:
+        os.system("clear")
+        print_options(self.display_jobs_options)
+        option = int(input("> "))
+        accounts = self.system.load_accounts()
+        match option:
+          case 1:
+            self.view_all_jobs()
+          case 2:
+            self.view_selected_jobs(accounts[self.user]['saved_jobs'])
+          case 3:
+            input("NOT IMPLEMENTED")
+            #self.view_selected_jobs()
+          case 4:
+            input("NOT IMPLEMENTED")
+            #self.view_selected_jobs()
+          case 5:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+          if type(e) == ValueError:
+            input("Invalid input...")
+          else:
+            input(f"Error: {e} {type(e)}")
+  
+  def view_all_jobs(self):
+    option = -1
+    back_option = len(self.displayed_jobs_options) + 1
+    
+    while option != back_option:
+      os.system("clear")
       
       i = 0
       print("Job Listings:\n------------------------")
@@ -237,6 +272,19 @@ class InCollege:
             input("Invalid input...")
           else:
             input(f"Error: {e} {type(e)}")
+
+  def view_selected_jobs(self, jobs_list):
+    i = 0
+    print("Job Listings:\n------------------------")
+    for job in self.jobs:
+      for item in jobs_list:
+        if job['title'] == item:
+          print(i+1, ". ",  job['title'])
+          i += 1
+    print("------------------------")
+    input("HIT ENTER TO RETURN. ")
+    
+
 
   def show_job_info(self, job):
     os.system("clear")
