@@ -1,6 +1,7 @@
 import json
 from io import StringIO
 from Profiles import Profile_manager
+from Tests.helpers import MockUser1, MockUser2, empty_all
 
 class MockProfile():
     
@@ -55,3 +56,23 @@ def test_edit_profile_max_experience(monkeypatch):
     
     updated_profile = mp.pm.profiles[0]
     assert len(updated_profile['experience']) == 3  # The maximum number of experience sections should be 3
+    
+def test_view_friends_profile(monkeypatch):
+    
+    user1 = MockUser1()
+    user1.system.add_account(user1.username, user1.password, user1.first_name[0], user1.last_name[0], user1.email[0], user1.SMS[0], user1.targeted_advertising[0], user1.friends_list[0], user1.requests, [], [])
+    
+    user2 = MockUser2()
+    user2.system.add_account()
+    user1.system.add_account(user1.username, user1.password, user1.first_name[0], user1.last_name[0], user1.email[0], user1.SMS[0], user1.targeted_advertising[0], user1.friends_list[0], user1.requests, [], [])
+    
+    input = StringIO('Nobody2\nHere2\n')
+    monkeypatch.setattr('sys.stdin', input)
+    user1.college.send_request()
+    print(dir(user1))
+    
+    input = StringIO('1\n\n')
+    monkeypatch.setattr('sys.stdin', input)
+    user2.college.accept_request()
+    print(dir(user2))
+
