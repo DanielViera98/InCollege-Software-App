@@ -20,7 +20,7 @@ def test_delete_job(capsys, monkeypatch):
                               account2.targeted_advertising[0], account2.friends_list[0], account2.requests, [], [])
   
   #Attempt to delete job when it doesn't exist
-  input = StringIO("First\n\n\n\n\n\n\n")
+  input = StringIO("First\n\n")
   monkeypatch.setattr('sys.stdin', input)
   assert account.college.delete_job() == False
   
@@ -30,12 +30,12 @@ def test_delete_job(capsys, monkeypatch):
   assert account.college.post_jobs() == True
   
   #Attempt to delete account's created job with account2
-  input = StringIO("First\n\n\n\n\n\n\n")
+  input = StringIO("First\n\n")
   monkeypatch.setattr('sys.stdin', input)
   assert account2.college.delete_job() == False
   
   #Attempt to delete created job
-  input = StringIO("First\n\n\n\n\n\n\n")
+  input = StringIO("First\n\n")
   monkeypatch.setattr('sys.stdin', input)
   assert account.college.delete_job() == True
 
