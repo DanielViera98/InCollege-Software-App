@@ -60,19 +60,30 @@ def test_edit_profile_max_experience(monkeypatch):
 def test_view_friends_profile(monkeypatch):
     
     user1 = MockUser1()
+    input = StringIO('n\nn\n')
+    monkeypatch.setattr('sys.stdin', input)
     user1.system.add_account(user1.username, user1.password, user1.first_name[0], user1.last_name[0], user1.email[0], user1.SMS[0], user1.targeted_advertising[0], user1.friends_list[0], user1.requests, [], [])
     
     user2 = MockUser2()
-    user2.system.add_account()
-    user1.system.add_account(user1.username, user1.password, user1.first_name[0], user1.last_name[0], user1.email[0], user1.SMS[0], user1.targeted_advertising[0], user1.friends_list[0], user1.requests, [], [])
+    user2.system.add_account(user2.username, user2.password, user2.first_name[0], user2.last_name[0], user2.email[0], user2.SMS[0], user2.targeted_advertising[0], user2.friends_list[0], user2.requests, [], [])
     
-    input = StringIO('Nobody2\nHere2\n')
+    input = StringIO('Nobody2\nHere2\n\n')
     monkeypatch.setattr('sys.stdin', input)
     user1.college.send_request()
     print(dir(user1))
     
-    input = StringIO('1\n\n')
+    input = StringIO('1\n1\n\n\n\n')
     monkeypatch.setattr('sys.stdin', input)
-    user2.college.accept_request()
+    user2.college.pending_requests()
     print(dir(user2))
+    
+    ############################################
+    
+    try:
+        input = StringIO('2\n1\n\n\n3\n')
+        monkeypatch.setattr('sys.stdin', input)
+        user1.college.manage_friends()
+    except:
+        user1.college.manage_friends().assertFalse(True, 'Exception raised')
+
 
