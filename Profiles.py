@@ -46,7 +46,7 @@ class Profile_manager:
         profile = self.get_profile(username)
         if profile == False:
             input("No Profile for user. ")
-            return
+            return #should this be return - False#
         print("Username: ", profile['username'], "\nTitle: ", profile['title'], "\nMajor: ", profile['major'],
               "\nUniversity: ", profile['university'], "\nInfo: ", profile['info'])
         self.view_experiences(profile)
