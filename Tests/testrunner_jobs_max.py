@@ -1,6 +1,6 @@
 import pytest
 from io import StringIO
-from Tests.helpers import MockSystem1, empty_all
+from Tests.helpers import MockUser1, empty_all
 
 empty_all()
 
@@ -13,7 +13,7 @@ empty_all()
                       ("Tenth\n\n\n\n\n\n\n", True), ("Eleventh\n\n\n\n\n\n\n", False),])
 def test_post_jobs_max_five(capsys, monkeypatch, input, results):
   #create mock account to add jobs from
-  account = MockSystem1()
+  account = MockUser1()
   inp = ('n\nn\n')
   inp = StringIO(input)
   monkeypatch.setattr('sys.stdin', inp)

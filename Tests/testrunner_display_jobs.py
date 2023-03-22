@@ -1,10 +1,10 @@
 import pytest
 from io import StringIO
-from Tests.helpers import MockSystem1, empty_all
+from Tests.helpers import MockUser1, empty_all
 empty_all()
 
 def test_display_jobs(capsys, monkeypatch):
-  account = MockSystem1()
+  account = MockUser1()
   inp = ('n\nn\n')
   inp = StringIO(inp)
   monkeypatch.setattr('sys.stdin', inp)

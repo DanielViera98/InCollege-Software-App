@@ -1,14 +1,14 @@
 import pytest
 from io import StringIO
 from App import InCollege
-from Tests.helpers import MockSystem1, MockSystem2, empty_all
+from Tests.helpers import MockUser1, MockUser2, empty_all
 
 empty_all()
 
 
 def test_delete_job(capsys, monkeypatch):
-  account = MockSystem1()
-  account2 = MockSystem2()
+  account = MockUser1()
+  account2 = MockUser2()
   inp = ('n\nn\n')
   inp = StringIO(inp)
   monkeypatch.setattr('sys.stdin', inp)
