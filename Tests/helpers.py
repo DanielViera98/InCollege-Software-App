@@ -3,7 +3,7 @@ from io import StringIO
 from AccountSystem import AccountSystem
 from App import InCollege
 
-class MockSystem1():
+class MockUser1():
     def __init__(self):
         self.user = "Username"
         self.username = "Username"
@@ -19,8 +19,9 @@ class MockSystem1():
         self.system = AccountSystem()
         self.college = InCollege()
         self.college.user = "Username"
+      
 
-class MockSystem2():
+class MockUser2():
     def __init__(self):
         self.user = "Username2"
         self.username = "Username2"
