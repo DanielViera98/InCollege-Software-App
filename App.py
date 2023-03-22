@@ -440,7 +440,7 @@ class InCollege:
     
     if(count == 0):
       input("You have not yet posted any jobs to be deleted")
-      return
+      return False
     
     job_del=input("Which job would you like to delete?")
     for job in jobs:
@@ -451,8 +451,10 @@ class InCollege:
           with open('job_postings.json', 'w') as file:
             json.dump(jobs, file, indent=2)
           self.jobs = self.load_job_postings()
+          return True
         else:
           input("You did not post this job")
+          return False
 
   def search_people(self,first_name,last_name):
     success = False
