@@ -371,7 +371,6 @@ class InCollege:
       case 3:
         return
       
-    
   def job_select(self):
     os.system("clear")
     job = input("Which job would you like to apply for: ")
@@ -414,7 +413,6 @@ class InCollege:
       )
           
     else:
-
       while success==False:
         job_title = input("Job Title: ")
         description = input("Description: ")

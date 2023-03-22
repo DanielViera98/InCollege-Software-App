@@ -8,7 +8,7 @@ class MockSystem1():
         self.user = "Username"
         self.username = "Username"
         self.password = "I234567&"
-        self.first_name =  "Nobody",
+        self.first_name = "Nobody",
         self.last_name =  "Here",
         self.language = "en",
         self.email = True,
@@ -42,6 +42,15 @@ def empty_students():
   student.write("{\n}")
   
 def empty_jobs():
-  student = open("job_postings.json", "w")
-  student.write("[\n]")
+  f = open("job_postings.json", "w")
+  f.write("[\n]")
  
+def empty_profiles():
+  f = open("profiles.json", "w")
+  f.write("[\n]")
+  
+def empty_all():
+    empty_students()
+    empty_jobs()
+    empty_profiles()
+  

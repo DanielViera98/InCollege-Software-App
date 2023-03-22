@@ -1,9 +1,9 @@
 import pytest
 from io import StringIO
 from App import InCollege
-from Tests.helpers import MockSystem1, empty_jobs
+from Tests.helpers import MockSystem1, empty_all
 
-empty_jobs()
+empty_all()
 
 #Tests for adding more than required ten accounts. 
 @pytest.mark.parametrize("input, results", [("First\n\n\n\n\n\n\n", True), 
@@ -23,3 +23,5 @@ def test_post_jobs_max_five(capsys, monkeypatch, input, results):
   input = StringIO(input)
   monkeypatch.setattr('sys.stdin', input)
   assert account.college.post_jobs() == results
+  
+empty_all()
