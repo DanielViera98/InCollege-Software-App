@@ -2,14 +2,14 @@ import pytest
 from io import StringIO
 from AccountSystem import AccountSystem
 from App import InCollege
-from helpers import MockSystem1, MockSystem2, empty_students
+from helpers import MockUser1, MockUser2, empty_students
 
 empty_students()
 
 #Test search
 def test_request_reg(capsys, monkeypatch):
-    acc1 = MockSystem1()
-    acc2 = MockSystem2()
+    acc1 = MockUser1()
+    acc2 = MockUser2()
     
     input = ('n\nn\n')
     input = StringIO(input)

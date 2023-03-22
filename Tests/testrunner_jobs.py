@@ -1,13 +1,12 @@
 import pytest
 from io import StringIO
-from App import InCollege
-from Tests.helpers import MockSystem1, MockSystem2, empty_jobs
+from Tests.helpers import MockUser1, empty_jobs
 
 empty_jobs()
 
 #search_jobs To Be Implemented
 def test_search_jobs(capsys, monkeypatch):
-  account = MockSystem2()
+  account = MockUser1()
   input = StringIO("\n")
   monkeypatch.setattr('sys.stdin', input)
   assert account.college.search_jobs() == None
@@ -28,7 +27,7 @@ def test_search_jobs(capsys, monkeypatch):
 #Tests correct input, every empty field, all empty fields, long input
 #Empty fields will fail because checks currently not implemented due to not being required
 def test_post_jobs(capsys, monkeypatch, input, results):
-  account = MockSystem2()
+  account = MockUser1()
   inp = ('n\nn\n')
   inp = StringIO(input)
   monkeypatch.setattr('sys.stdin', inp)
