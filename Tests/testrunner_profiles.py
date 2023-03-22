@@ -84,6 +84,7 @@ def test_view_friends_profile(monkeypatch):
         monkeypatch.setattr('sys.stdin', input)
         user1.college.manage_friends()
     except:
-        user1.college.manage_friends().assertFalse(True, 'Exception raised')
+        assert False, "error unable to view profile"
+
 
 
