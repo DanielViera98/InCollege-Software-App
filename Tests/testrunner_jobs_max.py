@@ -1,6 +1,5 @@
 import pytest
 from io import StringIO
-from App import InCollege
 from Tests.helpers import MockSystem1, empty_all
 
 empty_all()

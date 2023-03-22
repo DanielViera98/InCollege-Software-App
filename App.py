@@ -352,12 +352,14 @@ class InCollege:
         if save == True:
           accounts[self.user]['saved_jobs'].append(job['title'])
           input("Job Saved! Press Enter to return. ")
+          saved = "Saved"
         else:
           accounts[self.user]['saved_jobs'].remove(job['title'])
           input("Job Unsaved! Press Enter to return. ")
+          saved = "Unsaved"
         with open('students.json', 'w') as file:
           json.dump(accounts, file, indent=2)
-        return
+        return saved
       case 2:
         if submit == True:
           accounts[self.user]['applied_jobs'].append(job['title'])

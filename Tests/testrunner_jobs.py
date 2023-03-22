@@ -1,7 +1,6 @@
 import pytest
 from io import StringIO
-from App import InCollege
-from Tests.helpers import MockSystem1, MockSystem2, empty_jobs
+from Tests.helpers import MockSystem2, empty_jobs
 
 empty_jobs()
 
