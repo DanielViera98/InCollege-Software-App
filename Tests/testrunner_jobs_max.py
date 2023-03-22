@@ -18,8 +18,10 @@ def test_post_jobs_max_five(capsys, monkeypatch, input, results):
   inp = ('n\nn\n')
   inp = StringIO(input)
   monkeypatch.setattr('sys.stdin', inp)
+  account.system.add_account(account.username, account.password, account.first_name[0], account.last_name[0], 
+                             account.email[0], account.SMS[0], account.targeted_advertising[0], 
+                             account.friends_list[0], account.requests, [], [])
   
-  account.system.add_account(account.username, account.password, account.first_name[0], account.last_name[0], account.email[0], account.SMS[0], account.targeted_advertising[0], account.friends_list[0], account.requests, [], [])
   input = StringIO(input)
   monkeypatch.setattr('sys.stdin', input)
   assert account.college.post_jobs() == results
