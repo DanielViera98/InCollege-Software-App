@@ -4,6 +4,7 @@ from UsefulLinks import useful_links
 from ImportantLinks import links
 from Helpers import print_options, print_toggle_options
 from Profiles import Profile_manager
+from Messaging import Messaging
 import os
 import json
 class InCollege:
@@ -20,7 +21,7 @@ class InCollege:
     self.lang_options = ["English", "Spanish"]
     self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List"]
     self.request_options = ["Accept Friend Request", "Deny Friend Request"]
-    self.friends_options = ["Remove Friend", "View Profile"]
+    self.friends_options = ["Remove Friend", "View Profile", "Send Message"]
     self.profile_options = ["View Profile", "Edit Profile"]
     self.display_jobs_options = ["View All Jobs", "View Saved Jobs", "View Applied Jobs", "View Non-Applied Jobs"]
     self.displayed_jobs_options = ["View Job Info"]
@@ -670,6 +671,14 @@ class InCollege:
             self.profile.view_profile(username)
             input("Press ENTER to return to friend's list. ")
           case 3:
+            choice = int(input("Which friend would you like to message? "))
+            friend = accounts[self.user]['friends_list'][choice-1]
+            new_message = Messaging(self.user, friend)
+            
+            message = input("Send a message: ")
+            new_message.send_message(message)
+            input("Press ENTER to return to friend's list. ")
+          case 4:
             return
           case _:
             raise Exception()

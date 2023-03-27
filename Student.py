@@ -13,6 +13,7 @@ class Student:
   requests=[],
   saved_jobs=[],
   applied_jobs=[],
+  inbox=[]
   ):
     self.username = username
     self.password = password
@@ -24,6 +25,9 @@ class Student:
     self.language = language
     self.friends = friends
     self.requests = requests
+    self.saved_jobs= saved_jobs,
+    self.applied_jobs= applied_jobs,
+    self.inbox=inbox
   
   def record(self):
     info = {
