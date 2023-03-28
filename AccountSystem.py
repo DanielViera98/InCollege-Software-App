@@ -59,7 +59,6 @@ class AccountSystem():
     question = input("Do you want to sign up for InColege+ (y/n)")
     if(question == "y"):
       data[username]['plus_status'] = True
-      print(data[username]['plus_status'])
       
     # # Write the updated data back to the file
     with open('students.json', 'w') as file:

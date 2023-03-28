@@ -1,0 +1,61 @@
+{
+  "Daniel": {
+    "password": "T1234567&",
+    "first_name": "Daniel",
+    "last_name": "Viera",
+    "plus_status": false,
+    "language": "en",
+    "email": true,
+    "SMS": true,
+    "targeted_advertising": true,
+    "friends_list": [
+      "Craig"
+    ],
+    "requests": [],
+    "saved_jobs": [],
+    "applied_jobs": [],
+    "message_inbox": [
+      [
+        "Craig",
+        "Testing a very long message which should be cut off when viewing the inbox"
+      ]
+    ]
+  },
+  "Craig": {
+    "password": "T1234567&",
+    "first_name": "Craig",
+    "last_name": "Sankar",
+    "plus_status": true,
+    "language": "en",
+    "email": true,
+    "SMS": true,
+    "targeted_advertising": true,
+    "friends_list": [
+      "Daniel"
+    ],
+    "requests": [],
+    "saved_jobs": [],
+    "applied_jobs": [],
+    "message_inbox": [
+      [
+        "Daniel",
+        "Test Message"
+      ]
+    ]
+  },
+  "Sumit": {
+    "password": "T1234567&",
+    "first_name": "Sumit",
+    "last_name": "Lastname",
+    "plus_status": true,
+    "language": "en",
+    "email": true,
+    "SMS": true,
+    "targeted_advertising": true,
+    "friends_list": [],
+    "requests": [],
+    "saved_jobs": [],
+    "applied_jobs": [],
+    "message_inbox": []
+  }
+}
