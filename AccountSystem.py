@@ -9,18 +9,18 @@ class AccountSystem():
 
   #Initialize
   def __init__(self):
+    self.filename = 'students.json'
     self.accounts = self.load_accounts()
     self.num_accounts = len(self.accounts)
 
   #Pull accounts from students.json and return them. If .json doesn't exist, create empty .json
   def load_accounts(self):
-    filename = 'students.json'
-    if not os.path.exists(filename):
+    if not os.path.exists(self.filename):
       input("DELETING STUDENTS")    #Trying to catch account removal
-      with open(filename, 'w') as f:
+      with open(self.filename, 'w') as f:
         f.write('{}')  
         
-    with open(filename, 'r') as f:
+    with open(self.filename, 'r') as f:
       data = json.load(f)
 
     return data
@@ -32,8 +32,7 @@ class AccountSystem():
     self.accounts = data
 
   #Create an account with all user entered input and add to .json
-  def add_account(self, username, password, first_name, last_name, email, SMS, targeted_advertising, 
-                  friends, requests, saved_jobs,applied_jobs):
+  def add_account(self, username, password, first_name, last_name):
     # Load the contents of the JSON file into a Python dictionary
     with open('students.json', 'r') as file:
       data = json.load(file)
@@ -43,16 +42,25 @@ class AccountSystem():
       "password": password,
       "first_name": first_name,
       "last_name": last_name,
+      "plus_status": False,
       "language": "en",
-      "email" : email,
-      "SMS" : SMS,
-      "targeted_advertising" : targeted_advertising,
-      "friends_list" : friends,
-      "requests" : requests,
-      "saved_jobs" : saved_jobs,
-      "applied_jobs" : applied_jobs
+      "email" : True,
+      "SMS" : True,
+      "targeted_advertising" : True,
+      "friends_list" : [],
+      "requests" : [],
+      "saved_jobs" : [],
+      "applied_jobs" : [],
+      "message_inbox" : []
     }
-    
+
+
+    # #asking if you want to sign up for InCollege+
+    question = input("Do you want to sign up for InColege+ (y/n)")
+    if(question == "y"):
+      data[username]['plus_status'] = True
+      print(data[username]['plus_status'])
+      
     # # Write the updated data back to the file
     with open('students.json', 'w') as file:
       json.dump(data, file, indent=2)
@@ -62,6 +70,7 @@ class AccountSystem():
     if(question == "y"):
       new_profile = Profile_manager()
       new_profile.edit_profile(username)
+      
     
     self.update_accounts()
  
@@ -71,7 +80,12 @@ class AccountSystem():
     name = [accounts[username]["first_name"], accounts[username]["last_name"]]
     return name
   
-  #The following six functions get and toggle user guest controls
+  #The following seven functions get and toggle user guest controls
+  def get_plus_status(self,username):
+    accounts = self.load_accounts()
+    plus_status = accounts[username]["plus_status"]
+    return plus_status
+  
   def get_targeted_advertising(self, username):
     accounts = self.load_accounts()
     targeted_advertising = accounts[username]["targeted_advertising"]
@@ -168,7 +182,7 @@ class AccountSystem():
             if is_secure_password(password):
               first_name = input("First name: ").capitalize()
               last_name = input("Last name: ").capitalize()
-              self.add_account(username, password, first_name, last_name, True, True, True, [], [], [],[])
+              self.add_account(username, password, first_name, last_name)
               success = True
               input("\nAccount registered...")
             else:
