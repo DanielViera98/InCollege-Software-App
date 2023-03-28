@@ -19,6 +19,7 @@ class MockUser1():
         self.system = AccountSystem()
         self.college = InCollege()
         self.college.user = "Username"
+        self.plus_status = True
       
 
 class MockUser2():
