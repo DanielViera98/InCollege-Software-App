@@ -5,6 +5,7 @@ class Student:
   password=None,
   first_name=None,
   last_name=None,
+  plus_status = False,
   email=True,
   SMS=True,
   targeted_advertising=True,
@@ -19,6 +20,7 @@ class Student:
     self.password = password
     self.first_name = first_name
     self.last_name = last_name
+    self.plus_status = plus_status
     self.email = email
     self.SMS = SMS
     self.targeted_advertising = targeted_advertising

@@ -21,7 +21,7 @@ class InCollege:
     self.lang_options = ["English", "Spanish"]
     self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List"]
     self.request_options = ["Accept Friend Request", "Deny Friend Request"]
-    self.friends_options = ["Remove Friend", "View Profile", "Send Message"]
+    self.friends_options = ["Remove Friend", "View Profile", "Send Message", "Send Message+"]
     self.profile_options = ["View Profile", "Edit Profile"]
     self.display_jobs_options = ["View All Jobs", "View Saved Jobs", "View Applied Jobs", "View Non-Applied Jobs"]
     self.displayed_jobs_options = ["View Job Info"]
@@ -679,6 +679,25 @@ class InCollege:
             new_message.send_message(message)
             input("Press ENTER to return to friend's list. ")
           case 4:
+              if(self.system.get_plus_status(self.user)):
+                print("All users:\n")
+                i = 1
+                for username in accounts:
+                    if username != self.user:
+                        print(f"{i}. {username}")
+                        i += 1
+                choice = int(input("Which user would you like to message? "))
+                if choice < 1 or choice > i:
+                    raise Exception("Invalid choice.")
+                username = [k for k in accounts.keys() if k != self.user][choice-1]
+                
+                new_message = Messaging(self.user, username)
+                message = input("Send a message: ")
+                new_message.send_message(message)
+                input("Press ENTER to return to friend's list. ")
+              else:
+                input("Must be a plus member to access(Press ENTER to return to friends list)")
+          case 5:
             return
           case _:
             raise Exception()

@@ -42,6 +42,7 @@ class AccountSystem():
       "password": password,
       "first_name": first_name,
       "last_name": last_name,
+      "plus_status": False,
       "language": "en",
       "email" : True,
       "SMS" : True,
@@ -71,7 +72,12 @@ class AccountSystem():
     name = [accounts[username]["first_name"], accounts[username]["last_name"]]
     return name
   
-  #The following six functions get and toggle user guest controls
+  #The following seven functions get and toggle user guest controls
+  def get_plus_satus(self,username):
+    accounts = self.load_accounts()
+    plus_status = accounts[username]["plus_status"]
+    return plus_status
+  
   def get_targeted_advertising(self, username):
     accounts = self.load_accounts()
     targeted_advertising = accounts[username]["targeted_advertising"]
