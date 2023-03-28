@@ -684,8 +684,8 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
 
+  #Lets user navigate to inbox or send a message to friends, or anyone if premium
   def inbox_and_messaging(self):
-    accounts = self.system.load_accounts()
     option = -1
     back_option = len(self.inbox_messaging_options) + 1
     while option != back_option:
@@ -712,6 +712,7 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
     
+  #Lets user view inbox and either view a message, reply, or delete messages
   def view_inbox(self):
     
     option = -1
@@ -754,7 +755,8 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
-    
+  
+  #View full message and reply or delete
   def view_message(self, message, num):
     option = -1
     back_option = len(self.message_options) + 1
@@ -783,7 +785,8 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
-    
+  
+  #deletes message from user inbox
   def delete_message(self, number):
     accounts = self.system.load_accounts()
     accounts[self.user]['message_inbox'].pop(number)
@@ -792,6 +795,7 @@ class InCollege:
     input("Message Deleted!")
     return True
     
+  #prompts user to send a messsage to a friend
   def send_message_friend(self):
     accounts = self.system.load_accounts()
     os.system("clear")
@@ -801,8 +805,7 @@ class InCollege:
         return False
     i = 0
     for u in accounts[self.user]['friends_list']:
-      if self.profile.get_profile(u) == False:
-        print(f"{i+1}. {u}")
+      print(f"{i+1}. {u}")
       i = i+1
     
     choice = int(input("Which friend would you like to message? "))
@@ -811,7 +814,33 @@ class InCollege:
     
     message = input("Send a message: ")
     new_message.send_message(message)
-    input("Press ENTER to return to friend's list. ")
+    input("Press ENTER to return. ")
+    return True
+    
+  def send_message_anyone(self):
+    os.system("clear")
+    accounts = self.system.load_accounts()
+    if accounts[self.user]['plus_status'] == False:
+      input("Function only available to InCollege Plus members. ")
+      return False
+    print("USERS")
+    i = 0
+    for u in accounts:
+      print(f"{i+1}. {u}")
+      i = i+1
+    
+    choice = int(input("Which user would you like to message? "))
+    i = 0
+    for u in accounts:
+      if i == choice-1:
+        recipient = u
+        break
+      i = i+1
+    new_message = Messaging(self.user, recipient)
+    
+    message = input("Send a message: ")
+    new_message.send_message(message)
+    input("Press ENTER to return. ")
     return True
     
   # Handles learning new skills

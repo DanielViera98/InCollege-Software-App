@@ -25,7 +25,7 @@
     "password": "T1234567&",
     "first_name": "Craig",
     "last_name": "Sankar",
-    "plus_status": false,
+    "plus_status": true,
     "language": "en",
     "email": true,
     "SMS": true,
@@ -42,5 +42,20 @@
         "Test Message"
       ]
     ]
+  },
+  "Sumit": {
+    "password": "T1234567&",
+    "first_name": "Sumit",
+    "last_name": "Lastname",
+    "plus_status": true,
+    "language": "en",
+    "email": true,
+    "SMS": true,
+    "targeted_advertising": true,
+    "friends_list": [],
+    "requests": [],
+    "saved_jobs": [],
+    "applied_jobs": [],
+    "message_inbox": []
   }
 }
