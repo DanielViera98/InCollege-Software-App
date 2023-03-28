@@ -53,7 +53,14 @@ class AccountSystem():
       "applied_jobs" : [],
       "message_inbox" : []
     }
-    
+
+
+    # #asking if you want to sign up for InCollege+
+    question = input("Do you want to sign up for InColege+ (y/n)")
+    if(question == "y"):
+      data[username]['plus_status'] = True
+      print(data[username]['plus_status'])
+      
     # # Write the updated data back to the file
     with open('students.json', 'w') as file:
       json.dump(data, file, indent=2)
@@ -63,6 +70,7 @@ class AccountSystem():
     if(question == "y"):
       new_profile = Profile_manager()
       new_profile.edit_profile(username)
+      
     
     self.update_accounts()
  
@@ -73,7 +81,7 @@ class AccountSystem():
     return name
   
   #The following seven functions get and toggle user guest controls
-  def get_plus_satus(self,username):
+  def get_plus_status(self,username):
     accounts = self.load_accounts()
     plus_status = accounts[username]["plus_status"]
     return plus_status
