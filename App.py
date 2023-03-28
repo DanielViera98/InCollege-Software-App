@@ -19,12 +19,14 @@ class InCollege:
     self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
     self.job_options = ["Display Jobs Options", "Search for jobs", "Post a job","Delete job"]
     self.lang_options = ["English", "Spanish"]
-    self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List"]
+    self.network_options = ["Send Friend Request", "Check Pending Requests", "Manage Friends List", "Inbox & Messaging"]
     self.request_options = ["Accept Friend Request", "Deny Friend Request"]
-    self.friends_options = ["Remove Friend", "View Profile", "Send Message", "Send Message+"]
+    self.friends_options = ["Remove Friend", "View Profile"]
     self.profile_options = ["View Profile", "Edit Profile"]
     self.display_jobs_options = ["View All Jobs", "View Saved Jobs", "View Applied Jobs", "View Non-Applied Jobs"]
     self.displayed_jobs_options = ["View Job Info"]
+    self.inbox_messaging_options = ["View Inbox", "Send Message to Friend", "Send Message to Anyone"]
+    self.message_options = ["View Message", "Reply to Message", "Delete Message"]
     self.jobs_save_apply = ["Save Job","Apply for Job"]
     self.system = AccountSystem()
     self.user = False
@@ -384,7 +386,6 @@ class InCollege:
     accounts = self.system.load_accounts()
     accounts[self.user]['applied jobs'].append(job['title'])
 
-  
   def search_jobs(self):
     input("Under construction...")
   
@@ -490,6 +491,8 @@ class InCollege:
           case 3:
             self.manage_friends()
           case 4:
+            self.inbox_and_messaging()
+          case 5:
             return
           case _:
             raise Exception()
@@ -671,33 +674,6 @@ class InCollege:
             self.profile.view_profile(username)
             input("Press ENTER to return to friend's list. ")
           case 3:
-            choice = int(input("Which friend would you like to message? "))
-            friend = accounts[self.user]['friends_list'][choice-1]
-            new_message = Messaging(self.user, friend)
-            
-            message = input("Send a message: ")
-            new_message.send_message(message)
-            input("Press ENTER to return to friend's list. ")
-          case 4:
-              if(self.system.get_plus_status(self.user)):
-                print("All users:\n")
-                i = 1
-                for username in accounts:
-                    if username != self.user:
-                        print(f"{i}. {username}")
-                        i += 1
-                choice = int(input("Which user would you like to message? "))
-                if choice < 1 or choice > i:
-                    raise Exception("Invalid choice.")
-                username = [k for k in accounts.keys() if k != self.user][choice-1]
-                
-                new_message = Messaging(self.user, username)
-                message = input("Send a message: ")
-                new_message.send_message(message)
-                input("Press ENTER to return to friend's list. ")
-              else:
-                input("Must be a plus member to access(Press ENTER to return to friends list)")
-          case 5:
             return
           case _:
             raise Exception()
@@ -708,6 +684,136 @@ class InCollege:
         else:
           input(f"Error: {e} {type(e)}")
 
+  def inbox_and_messaging(self):
+    accounts = self.system.load_accounts()
+    option = -1
+    back_option = len(self.inbox_messaging_options) + 1
+    while option != back_option:
+      os.system("clear")
+      print("\nChoose a task:\n")
+      print_options(self.inbox_messaging_options)
+      try:
+        option = int(input("> "))
+        match option:
+          case 1:
+            self.view_inbox()
+          case 2:
+            self.send_message_friend()
+          case 3:
+            self.send_message_anyone()
+          case 4:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+    
+  def view_inbox(self):
+    
+    option = -1
+    back_option = len(self.message_options) + 1
+    while option != back_option:
+      accounts = self.system.load_accounts()
+      os.system("clear")
+      if accounts[self.user]['message_inbox'] == []:
+        print("You have no messages!")
+        input("Press ENTER to return. ")
+        return "Empty"
+      print("INBOX: ")
+      i = 1
+      for item in accounts[self.user]['message_inbox']:
+        print("Message", i, ", from", item[0], ":\n[", item[1][:15], "]...\n")
+      
+      print("\nChoose a task:\n")
+      print_options(self.message_options)
+      try:
+        option = int(input("> "))
+        match option:
+          case 1:
+            choice = int(input("Which message would you like to view? "))
+            self.view_message(accounts[self.user]['message_inbox'][choice-1], choice-1)
+          case 2:
+            num = int(input("Which message would you like to reply to?"))
+            reply = input("Enter reply: ")
+            new_message = Messaging(self.user, accounts[self.user]['message_inbox'][num-1][0])
+            new_message.send_message(reply)
+          case 3:
+            num = int(input("Which message would you like to delete? "))
+            self.delete_message(num-1)
+          case 4:
+            return
+          case _:
+            raise Exception()
+          
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+    
+  def view_message(self, message, num):
+    option = -1
+    back_option = len(self.message_options) + 1
+    while option != back_option:
+      os.system("clear")
+      print("FULL MESSAGE")
+      print("Sender,", message[0])
+      print("Message:", message[1])
+      print("\nChoose a task:\n")
+      print_options(self.message_options[1:])
+      try:
+        option = int(input("> "))
+        match option:
+          case 1:
+            reply = input("Enter reply: ")
+            new_message = Messaging(self.user, message[0])
+            new_message.send_message(reply)
+          case 2:
+            return self.delete_message(num)
+          case 3:
+            return
+          case _:
+            raise Exception()
+      except Exception as e:
+        if type(e) == ValueError:
+          input("Invalid input...")
+        else:
+          input(f"Error: {e} {type(e)}")
+    
+  def delete_message(self, number):
+    accounts = self.system.load_accounts()
+    accounts[self.user]['message_inbox'].pop(number)
+    with open('students.json', 'w') as f:
+      json.dump(accounts, f, indent=2)
+    input("Message Deleted!")
+    return True
+    
+  def send_message_friend(self):
+    accounts = self.system.load_accounts()
+    os.system("clear")
+    print("FRIENDS")
+    if len(accounts[self.user]['friends_list']) == 0:
+        input("Nobody here, go to \"Network -> Send Friend Request\" to find a friend! ")
+        return False
+    i = 0
+    for u in accounts[self.user]['friends_list']:
+      if self.profile.get_profile(u) == False:
+        print(f"{i+1}. {u}")
+      i = i+1
+    
+    choice = int(input("Which friend would you like to message? "))
+    friend = accounts[self.user]['friends_list'][choice-1]
+    new_message = Messaging(self.user, friend)
+    
+    message = input("Send a message: ")
+    new_message.send_message(message)
+    input("Press ENTER to return to friend's list. ")
+    return True
+    
   # Handles learning new skills
   def learn_skills(self):
     option = -1

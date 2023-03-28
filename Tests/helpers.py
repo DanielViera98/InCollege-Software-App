@@ -2,7 +2,7 @@ import pytest
 from io import StringIO
 from AccountSystem import AccountSystem
 from App import InCollege
-
+from Messaging import Messaging
 class MockUser1():
     def __init__(self):
         self.user = "Username"
@@ -19,7 +19,8 @@ class MockUser1():
         self.system = AccountSystem()
         self.college = InCollege()
         self.college.user = "Username"
-        self.plus_status = True
+        self.plus_status = False
+        self.message_inbox = []
       
 
 class MockUser2():
@@ -38,6 +39,27 @@ class MockUser2():
         self.system = AccountSystem()
         self.college = InCollege()
         self.college.user = "Username2"
+        self.plus_status = False
+        self.message_inbox = []
+
+class MockUser3():
+    def __init__(self):
+        self.user = "Username3"
+        self.username = "Username3"
+        self.password = "I234567&"
+        self.first_name =  "Nobody3",
+        self.last_name =  "Here3",
+        self.language = "es",
+        self.email = True,
+        self.SMS = True,
+        self.targeted_advertising = True,
+        self.friends_list = [],
+        self.requests = []
+        self.system = AccountSystem()
+        self.college = InCollege()
+        self.college.user = "Username3"
+        self.plus_status = False
+        self.message_inbox = []
 
 def empty_students():
   student = open("students.json", "w")
