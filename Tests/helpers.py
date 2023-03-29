@@ -22,7 +22,6 @@ class MockUser1():
         self.plus_status = False
         self.message_inbox = []
       
-
 class MockUser2():
     def __init__(self):
         self.user = "Username2"
@@ -58,7 +57,7 @@ class MockUser3():
         self.system = AccountSystem()
         self.college = InCollege()
         self.college.user = "Username3"
-        self.plus_status = False
+        self.plus_status = True
         self.message_inbox = []
 
 def empty_students():
@@ -78,3 +77,14 @@ def empty_all():
     empty_jobs()
     empty_profiles()
   
+def create_account(num, input, monkeypatch):
+  if num == 1:
+    account = MockUser1()
+  elif num == 2:
+    account = MockUser2()
+  elif num == 3:
+    account = MockUser3()
+  input = StringIO(input)
+  monkeypatch.setattr('sys.stdin', input)
+  account.system.add_account(account.username, account.password, account.first_name[0], account.last_name[0])
+  return account

@@ -1,0 +1,62 @@
+============================= test session starts =============================
+platform win32 -- Python 3.10.10, pytest-7.2.1, pluggy-1.0.0
+rootdir: C:\Users\dvier\Documents\USF\Spring 2023\CEN4020\InCollege-Software-App
+collected 3 items
+
+Tests\TestPlus\test_messaging.py Do you want to sign up for InColege+ (y/n)Would you like to customize your profile?(y/n)[H[2J[3JYou have no messages!
+Press ENTER to return. .Do you want to sign up for InColege+ (y/n)Would you like to customize your profile?(y/n)Do you want to sign up for InColege+ (y/n)Would you like to customize your profile?(y/n)[H[2J[3JFunction only available to InCollege Plus members. [H[2J[3JUSERS
+1. Username
+2. Username2
+Which user would you like to message? Send a message: Message sent! Press ENTER to return. .Do you want to sign up for InColege+ (y/n)Would you like to customize your profile?(y/n)Do you want to sign up for InColege+ (y/n)Would you like to customize your profile?(y/n)First Name: Last Name: They are a part of the InCollege system
+A message has been sent to Nobody2 Here2 to log in and connect with you[H[2J[3JPending Requests:
+1. Username 
+2. Back 
+
+Choose a request to accept, or enter 2 to exit
+> Accepted Username![H[2J[3JPending Requests:
+No Friend RequestsF
+
+================================== FAILURES ===================================
+__________________________ test_send_message_friend ___________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000019453B87C70>
+
+    def test_send_message_friend(monkeypatch):
+      #test sending message in premium account
+      input = ('y\nn\nn\n\n')
+      account1 = create_account(1, input, monkeypatch)
+      input = ('n\nn\nn\n\n')
+      account2 = create_account(2, input, monkeypatch)
+    
+      input = StringIO('Nobody2\nHere2\n\n')
+      monkeypatch.setattr('sys.stdin', input)
+      account1.college.send_request()
+      input = StringIO('1\n\n')
+      monkeypatch.setattr('sys.stdin', input)
+>     account2.college.accept_request(account2.system.load_accounts(), account2.requests)
+
+Tests\TestPlus\test_messaging.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <App.InCollege object at 0x0000019453BA78E0>
+accounts = {'Username': {'SMS': True, 'applied_jobs': [], 'email': True, 'first_name': 'Nobody', ...}, 'Username2': {'SMS': True, 'applied_jobs': [], 'email': True, 'first_name': 'Nobody2', ...}}
+requests = []
+
+    def accept_request(self, accounts, requests):
+      option = -1
+      back_option = len(requests) + 1
+    
+      while option != back_option:
+        os.system("clear")
+        print("Pending Requests:")
+        requests = accounts[self.user]['requests']
+        back_option = len(requests) + 1
+    
+        if (len(requests) == 0):  #If no more requests, print so and return
+>         input("No Friend Requests")
+E         EOFError: EOF when reading a line
+
+App.py:575: EOFError
+=========================== short test summary info ===========================
+FAILED Tests/TestPlus/test_messaging.py::test_send_message_friend - EOFError:...
+========================= 1 failed, 2 passed in 0.46s =========================

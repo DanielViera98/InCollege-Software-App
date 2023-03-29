@@ -1,49 +1,65 @@
 from io import StringIO
-from Tests.helpers import empty_all, MockUser1, MockUser2, MockUser3
-from Messaging import Messaging
-import time
+from Tests.helpers import empty_all, create_account
+from App import AccountSystem
 empty_all()
 
-def create_account(num, input, monkeypatch):
-  if num == 1:
-    account = MockUser1()
-  elif num == 2:
-    account = MockUser2()
-  elif num == 3:
-    account = MockUser3()
-  input = StringIO(input)
-  monkeypatch.setattr('sys.stdin', input)
-  account.system.add_account(account.username, account.password, account.first_name[0], account.last_name[0])
-  return account
+sys = AccountSystem()
 
-#Works but only checks send_message
-def test_message(monkeypatch):
+#Test view_inbox with empty inbox returns empty
+def test_empty_inbox(monkeypatch):
   input = ('y\nn\nn\n\n')
   account1 = create_account(1, input, monkeypatch)
-  input = ('n\nn\nn\n\n')
-  account2 = create_account(2, input, monkeypatch)
+  
   input = ('\n')
   input = StringIO(input)
   monkeypatch.setattr('sys.stdin', input)
-  new_message = Messaging(account1.user, account2.user)
-  assert new_message.send_message("Message") == True
-  accounts = new_message.system.load_accounts()
-  print("\nMessage:", accounts["Username2"]["message_inbox"][0]) #use -s to see
-  assert accounts["Username2"]["message_inbox"][0] == "Message"
-  
-#Check to make sure you can't send friend request to someone you aren't friends with
-def test_message2(monkeypatch):
+  assert account1.college.view_inbox() == "Empty"
+
+#Test sending message from premium to nonfriend and standard to nonfriend
+def test_send_message_plus(monkeypatch):
+  #test sending message in premium account
   input = ('y\nn\nn\n\n')
   account1 = create_account(1, input, monkeypatch)
   input = ('n\nn\nn\n\n')
   account2 = create_account(2, input, monkeypatch)
-  account3 = create_account(3, input, monkeypatch)
-  input = ('3\n')
+  
+  #Attempt to send request in standard account to non-friend
+  input = ('\n')
   input = StringIO(input)
   monkeypatch.setattr('sys.stdin', input)
+  assert account2.college.send_message_anyone() == False
   
-  assert account1.college.manage_friends()
+  #Attempt to send request in premium account to non-friend
+  input = ('2\nMessage\n\n\n')
+  input = StringIO(input)
+  monkeypatch.setattr('sys.stdin', input)
+  assert account1.college.send_message_anyone() == True
+
+def test_send_message_friend(monkeypatch):
+  #test sending message in premium account
+  input = ('y\nn\nn\n\n')
+  account1 = create_account(1, input, monkeypatch)
+  input = ('n\nn\nn\n\n')
+  account2 = create_account(2, input, monkeypatch)
   
+  # input = StringIO('Nobody2\nHere2\n\n')
+  # monkeypatch.setattr('sys.stdin', input)
+  # account1.college.send_request()
+  # input = StringIO('1\n\n')
+  # monkeypatch.setattr('sys.stdin', input)
+  # account2.college.accept_request(account2.system.load_accounts(), account2.requests)
   
+  print(account2.friends_list)
+  #Attempt to send request in standard account to friend
+  input = ('1\n')
+  input = StringIO(input)
+  monkeypatch.setattr('sys.stdin', input)
+  print("DO SOMETHING", account2.friends_list)
+  account2.college.send_message_friend()
+  print(account1.requests)
   
-  
+  #Attempt to send request in premium account to friend
+  input = ('2\n\n\n\n\n\n\n\n')
+  input = StringIO(input)
+  monkeypatch.setattr('sys.stdin', input)
+  assert account1.college.send_message_anyone() == True
