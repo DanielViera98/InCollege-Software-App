@@ -221,3 +221,4 @@ class AccountSystem():
       for item in accounts[user]['removed_jobs']:
         notifications.append(f"A job you have applied for({item}) has been deleted. ")
       
+    return notifications
