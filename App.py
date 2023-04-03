@@ -15,7 +15,7 @@ class InCollege:
      "Learn C", "Learn C#", "Learn Python", "Learn Java", "Learn HTML"
     ]
     self.menu_options = ["Login", "Register", "Why join InCollege", "Useful Links", "Important Links"]
-    self.options = ["Job Search/Internship", "Network", "Learn a new skill", "Important Links", "Profile Options"]
+    self.options = ["Job Search/Internship", "Network", "Learn a new skill", "Important Links", "Profile Options", "Notifications"]
     self.guest_control_options = ["Toggle Email", "Toggle SMS", "Toggle Targeted Advertising"]
     self.job_options = ["Display Jobs Options", "Search for jobs", "Post a job","Delete job"]
     self.lang_options = ["English", "Spanish"]
@@ -150,6 +150,8 @@ class InCollege:
           case 5:
             self.profile_controls()
           case 6:
+            self.notifications()
+          case 7:
             self.user = False
             return
           case _:
@@ -975,3 +977,18 @@ class InCollege:
           input("Invalid input...")
         else:
           input(f"Error: {e} {type(e)}")
+
+  #Prints notifications if there are any
+  def notifications(self):
+    os.system("clear")
+    if self.system.get_notifications(self.user) == False:
+      input("No new Notifications, press ENTER to return. ")
+      return "empty"
+    
+    print("Notifications")
+    for item in self.system.get_notifications(self.user):
+      print(item)
+    
+    input("\nPress ENTER to return. ")
+    return True
+  

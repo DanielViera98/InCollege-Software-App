@@ -197,3 +197,23 @@ class AccountSystem():
       return username
     else:
       return False
+    
+  def get_notifications(self, user):
+    accounts = self.load_accounts()
+    notifications = []
+    if accounts[user]['apply_notif']:
+      notifications.append("Remember – you're going to want to have a job when you graduate. \
+                           Make sure that you start to apply for jobs today!")
+    if accounts[user]['is_profile_created']:
+      notifications.append("Don't forget to create a profile")
+    if accounts[user]['message_inbox']:
+      notifications.append("You have messages waiting for you")
+    if accounts[user]['applied_jobs']:
+      notifications.append(f"You have currently applied for {len(accounts[user]['applied_jobs'])} jobs")
+    if accounts[user]['new_jobs']:
+      for item in accounts[user]['new_jobs']:
+        notifications.append(f"A new job {item} has been posted.")
+    if accounts[user]['removed_jobs']:
+      for item in accounts[user]['removed_jobs']:
+        notifications.append(f"A job you have applied for({item}) has been deleted. ")
+      
