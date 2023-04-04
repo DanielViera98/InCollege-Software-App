@@ -134,6 +134,13 @@ class InCollege:
       if (accounts[self.user]['requests']):
         print(f">>>      You have {len(accounts[self.user]['requests'])} Friend Requests. To view them, go to Network      <<<")
       
+      #Prints any accounts created since last login, then deletes the notifications
+      for item in accounts[self.user]['is_new_account']:
+        print(f"{item[0]} {item[1]} has joined InCollege")
+      accounts[self.user]['is_new_account'] = []
+      with open('students.json', 'w') as file:
+        json.dump(accounts, file, indent=2)
+        
       print("Choose a task:\n")
       print_options(self.options)  
       try:

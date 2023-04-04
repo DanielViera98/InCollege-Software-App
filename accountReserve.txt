@@ -15,11 +15,13 @@
     "saved_jobs": [],
     "applied_jobs": [],
     "message_inbox": [
-      [
-        "Craig",
-        "Testing a very long message which should be cut off when viewing the inbox"
-      ]
-    ]
+      "Craig",
+      "Testing a very long message which should be cut off when viewing the inbox"
+    ],
+    "is_profile_created": false,
+    "new_jobs": [],
+    "removed_jobs": [],
+    "is_new_account": []
   },
   "Craig": {
     "password": "T1234567&",
@@ -37,17 +39,19 @@
     "saved_jobs": [],
     "applied_jobs": [],
     "message_inbox": [
-      [
-        "Daniel",
-        "Test Message"
-      ]
-    ]
+      "Daniel",
+      "Test Message"
+    ],
+    "is_profile_created": false,
+    "new_jobs": [],
+    "removed_jobs": [],
+    "is_new_account": []
   },
   "Sumit": {
     "password": "T1234567&",
     "first_name": "Sumit",
     "last_name": "Lastname",
-    "plus_status": true,
+    "plus_status": false,
     "language": "en",
     "email": true,
     "SMS": true,
@@ -56,6 +60,10 @@
     "requests": [],
     "saved_jobs": [],
     "applied_jobs": [],
-    "message_inbox": []
+    "message_inbox": [],
+    "is_profile_created": false,
+    "new_jobs": [],
+    "removed_jobs": [],
+    "is_new_account": []
   }
 }
