@@ -134,6 +134,8 @@ class InCollege:
       if (accounts[self.user]['requests']):
         print(f">>>      You have {len(accounts[self.user]['requests'])} Friend Requests. To view them, go to Network      <<<")
       
+      for item in accounts[self.user]['is_new_account']:
+        print(f"{item[0]} {item[1]} has joined InCollege")
       print("Choose a task:\n")
       print_options(self.options)  
       try:

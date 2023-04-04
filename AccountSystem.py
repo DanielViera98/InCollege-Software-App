@@ -54,18 +54,14 @@ class AccountSystem():
       "message_inbox" : [],
       "is_profile_created" : False,
       "new_jobs" : [],
-      "removed_jobs" : []
+      "removed_jobs" : [],
+      "is_new_account" : []
     }
 
-
     # #asking if you want to sign up for InCollege+
-    question = input("Do you want to sign up for InColege+ (y/n)")
+    question = input("Do you want to sign up for InCollege+ (y/n)")
     if(question == "y"):
-      data[username]['plus_status'] = True
-      
-    # # Write the updated data back to the file
-    with open('students.json', 'w') as file:
-      json.dump(data, file, indent=2)
+      data[username]['plus_status'] = True 
 
     # #asking if they want to edit profile:
     question = input("Would you like to customize your profile?(y/n)")
@@ -73,8 +69,15 @@ class AccountSystem():
       new_profile = Profile_manager()
       new_profile.edit_profile(username)
       data[username]['is_profile_created'] = True
-      
     
+    for account in data:
+      if account is not username:
+        data[account]['is_new_account'].append([first_name,last_name])
+                
+    # # Write the updated data back to the file
+    with open('students.json', 'w') as file:
+      json.dump(data, file, indent=2)
+      
     self.update_accounts()
  
   #Returns full name ("first" + " " + "last") of user "username"
