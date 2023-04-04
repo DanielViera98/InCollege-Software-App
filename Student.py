@@ -14,7 +14,10 @@ class Student:
   requests=[],
   saved_jobs=[],
   applied_jobs=[],
-  inbox=[]
+  inbox=[],
+  is_profile_created=False,
+  new_jobs=[],
+  removed_jobs=[]
   ):
     self.username = username
     self.password = password
@@ -29,7 +32,10 @@ class Student:
     self.requests = requests
     self.saved_jobs= saved_jobs,
     self.applied_jobs= applied_jobs,
-    self.inbox=inbox
+    self.inbox=inbox,
+    self.is_profile_created = is_profile_created,
+    self.new_jobs = new_jobs
+    self.removed_jobs = removed_jobs
   
   def record(self):
     info = {
