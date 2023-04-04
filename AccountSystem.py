@@ -70,6 +70,7 @@ class AccountSystem():
       new_profile.edit_profile(username)
       data[username]['is_profile_created'] = True
     
+    #Adds first and last name of new account to all other accounts 'is_new_account' array
     for account in data:
       if account is not username:
         data[account]['is_new_account'].append([first_name,last_name])
