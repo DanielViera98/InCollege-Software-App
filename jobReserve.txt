@@ -1,0 +1,18 @@
+[
+  {
+    "poster": "Daniel Viera",
+    "title": "NewJob",
+    "description": "",
+    "employer": "",
+    "location": "",
+    "salary": ""
+  },
+  {
+    "poster": "Daniel Viera",
+    "title": "Another Job",
+    "description": "",
+    "employer": "",
+    "location": "",
+    "salary": ""
+  }
+]
