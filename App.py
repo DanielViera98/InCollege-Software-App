@@ -133,6 +133,12 @@ class InCollege:
       #If user has requests, print alert message
       if (accounts[self.user]['requests']):
         print(f">>>      You have {len(accounts[self.user]['requests'])} Friend Requests. To view them, go to Network      <<<")
+        
+      # get number of posted jobs from job_postings.json file
+      posted_jobs = self.load_job_postings()
+      # if there are jobs posted, print alert message
+      if (len(posted_jobs) > 0):
+        print(f">>>      There are {len(posted_jobs)} jobs posted. To view them, go to Jobs Search/Internship      <<<")
       
       #Prints any accounts created since last login, then deletes the notifications
       for item in accounts[self.user]['is_new_account']:
@@ -172,11 +178,20 @@ class InCollege:
 
   #Manages Jobs options, both search & post
   def jobs_info(self):
+    accounts = self.system.load_accounts()
+    
     option = -1
     back_option = len(self.job_options) + 1
 
     while option != back_option:
-      os.system("clear")
+      os.system("clear")            
+            
+      # get number of applied jobs
+      if len(accounts[self.user]['applied_jobs']) > 0:
+        print("You have applied for " + str(len(accounts[self.user]['applied_jobs'])) + " jobs\n")
+      else:
+        print("You have not applied for any jobs in the past seven days\n")
+      
       print("Job Search/Internship:\n")
       print_options(self.job_options)
 
