@@ -474,6 +474,15 @@ class InCollege:
     for job in jobs:
       if (job['title'] == job_del):
         if(job['poster']==full_name):
+          accounts = self.system.load_accounts()
+          #Scans accounts, removes the job from applied_jobs and adds to removed_jobs if not current user
+          for item in accounts:
+            if str(item) != str(self.user):
+              if job['title'] in accounts[item]['applied_jobs']:
+                accounts[item]['removed_jobs'].append(job['title'])
+                accounts[item]['applied_jobs'].remove(job['title'])
+          with open('students.json', 'w') as file:
+            json.dump(accounts, file, indent=2)
           jobs.remove(job)
           print("DONE")
           with open('job_postings.json', 'w') as file:
