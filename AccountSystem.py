@@ -57,6 +57,7 @@ class AccountSystem():
       "removed_jobs" : [],
       "is_new_account" : []
     }
+    
 
     # #asking if you want to sign up for InCollege+
     question = input("Do you want to sign up for InCollege+ (y/n)")
