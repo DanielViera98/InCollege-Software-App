@@ -209,9 +209,9 @@ class AccountSystem():
   def get_notifications(self, user):
     accounts = self.load_accounts()
     notifications = []
-    if accounts[user]['applied_jobs']:
+    if not accounts[user]['applied_jobs']:
       notifications.append("Remember – you're going to want to have a job when you graduate. Make sure that you start to apply for jobs today!")
-    if accounts[user]['is_profile_created']:
+    if not accounts[user]['is_profile_created']:
       notifications.append("Don't forget to create a profile")
     if accounts[user]['message_inbox']:
       notifications.append("You have messages waiting for you")

@@ -187,7 +187,7 @@ class InCollege:
       os.system("clear")            
             
       # get number of applied jobs
-      if len(accounts[self.user]['applied_jobs']) > 0:
+      if accounts[self.user]['applied_jobs']:
         print("You have applied for " + str(len(accounts[self.user]['applied_jobs'])) + " jobs\n")
       else:
         print("You have not applied for any jobs in the past seven days\n")
@@ -1012,12 +1012,13 @@ class InCollege:
   #Prints notifications if there are any
   def notifications(self):
     os.system("clear")
-    if self.system.get_notifications(self.user) == False:
+    list = self.system.get_notifications(self.user)
+    if list == False:
       input("No new Notifications, press ENTER to return. ")
       return "empty"
     
     print("Notifications")
-    for item in self.system.get_notifications(self.user):
+    for item in list:
       print(item)
     
     input("\nPress ENTER to return. ")
